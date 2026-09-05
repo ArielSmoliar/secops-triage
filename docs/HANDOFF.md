@@ -19,6 +19,8 @@ Do not return to `/Users/arielsmoliar/Documents/Codex/2026-09-02/lo` for impleme
 
 ## Current implementation
 
+Phase 2 is complete locally; its implementation review and exact validation evidence are in `docs/PHASE2.md` and `outputs/phase2-validation.txt`.
+
 - Python standard-library fixture with `original`, `faulty`, and `corrected` revisions.
 - The cross-tenant invariant expects an alpha token requesting a beta document to receive HTTP 403.
 - The faulty revision returns 200 and exposes synthetic `id`, `tenant`, and `title` fields.
@@ -34,7 +36,7 @@ python3 -m unittest discover -s tests -v
 python3 -m migration_proof.probe
 ```
 
-The test suite currently contains four passing tests.
+The baseline four tests remain unchanged. Phase 2 adds comprehensive deterministic tests; see `outputs/phase2-validation.txt` for the verified suite result and `docs/PHASE2.md` for architecture, review, and limitations.
 
 ## Settled architecture
 
@@ -46,7 +48,7 @@ The test suite currently contains four passing tests.
   - `compare_tenant_boundary`
   - `apply_safe_patch`
 - Approval, promotion, arbitrary shell execution, and unrestricted filesystem/network access must not be exposed as agent tools.
-- Persistence will use SQLite plus run-scoped evidence directories and SHA-256 hashes.
+- Persistence now uses SQLite plus immutable run-scoped content-addressed artifacts and SHA-256 hashes.
 - Approved evidence becomes immutable; changed content invalidates the approval.
 - AWS hosts the public demo. AgentCore is optional stretch scope after the baseline works.
 - Claude is not required. Select a Strands-compatible model/provider only after confirming AWS region access, cost, and deployment fit.
@@ -54,19 +56,18 @@ The test suite currently contains four passing tests.
 
 ## Current gaps
 
-- No deterministic state/evidence record layer yet.
+- Phase 2 deterministic state/evidence, typed four-tool contracts, approval/promotion, and crash recovery are implemented in `migration_proof/core/`. Owner review before model integration is still required.
 - No Strands dependency or agent orchestration yet.
-- No SQLite persistence or run-scoped evidence storage yet.
 - No operator UI yet.
 - No AWS architecture, configuration, or deployment yet.
 - AWS region, model/provider, authentication posture, budget ceiling, retention, and teardown policy remain open.
 
 ## Next work, in order
 
-1. Implement typed inputs and outputs for the four operational tools.
-2. Implement the deterministic state machine, SQLite records, run isolation, artifact storage, and SHA-256 evidence hashing.
-3. Add thorough tests for legal and illegal transitions, hash mismatches, stale approval, concurrent-run isolation, restart recovery, and failed repairs.
-4. Review the registered tool list and deterministic safety layer before connecting a model.
+1. Review Phase 2 (`docs/PHASE2.md`) and its validation record.
+2. Rerun the full deterministic suite and probe from a clean commit.
+3. Resolve or explicitly accept the documented local-only constraints.
+4. Obtain owner review of the four-tool registry and deterministic safety layer before connecting a model.
 5. Add a pinned Strands Agents SDK dependency and bounded orchestration with tool-call, iteration, timeout, and cost limits.
 6. Build the operator UI around failure evidence, constrained repair, re-verification, human approval, and receipt states.
 7. Verify AWS access and select the smallest viable staging architecture; add budget alerts, secret handling, observability, rollback, and teardown.
@@ -79,4 +80,4 @@ Stop and preserve evidence if there is cross-run contamination, mutable approved
 
 ## Recommended next-session prompt
 
-> Restore the Migration Proof context and continue work in `/Users/arielsmoliar/Developer/migration-proof` on branch `main`. Read `docs/HANDOFF.md`, `docs/runbooks/migration-proof-build-release-demo-runbook.md`, and `outputs/migration-acceptance-steward-design.md` completely before editing. Verify the clean Git state and rerun the existing four tests and probe. Then implement Phase 2 only: typed deterministic contracts for the four scoped agent tools, the SQLite run/state/evidence/approval/promotion record layer, run-scoped artifact storage, SHA-256 hashing, legal transition enforcement, approval invalidation, and crash recovery. Add comprehensive tests for success and failure paths. Do not add Strands, a live model, UI, AWS resources, AgentCore, or Devpost submission work until the deterministic layer is complete, tested, and reviewed. Preserve the rule that approval and promotion are never agent tools. Commit and push the completed, verified Phase 2 as a logical unit, and report test evidence plus any unresolved risks.
+> Continue in `/Users/arielsmoliar/Developer/migration-proof` on `main`. Read this handoff, `docs/PHASE2.md`, the build runbook, and the approved design. Phase 2 is implemented; rerun its complete suite and probe before further changes. Review the deterministic boundary and resolve owner review before connecting Strands or a model. Do not add UI, AWS, AgentCore, or submission work without the corresponding later-phase authorization.

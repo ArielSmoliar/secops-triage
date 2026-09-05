@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Reviewed draft; executable through Phase 1 only |
+| Status | Phase 2 implemented and locally reviewed; owner review required before Phase 3 |
 | Owner | Ariel Smoliar |
 | Operators | Ariel Smoliar; Codex for implementation support |
 | Repository | `/Users/arielsmoliar/Developer/migration-proof` |
@@ -47,14 +47,14 @@ The agent uses the Strands Agents SDK for planning, tool selection, safe-repair 
 ## Verified facts
 
 - The repository is a clean Git repository on branch `main` at the reviewed baseline commit above.
-- No Git remote is configured at review time.
+- `origin` is configured for the private `ArielSmoliar/migration-proof` repository.
 - The standard-library fixture and probe exist.
 - `python3 -m unittest discover -s tests -v` passes four tests.
 - `python3 -m migration_proof.probe` produces the intended sequence:
   - `original`: expected 403, actual 403, pass
   - `faulty`: expected 403, actual 200 with `id`, `tenant`, and `title` exposed, fail
   - `corrected`: expected 403, actual 403, pass
-- The current repository does not yet contain the Strands orchestration, SQLite record store, evidence directory, operator UI, or AWS deployment configuration.
+- Phase 2 now contains the SQLite state/evidence/approval/promotion store and run-scoped artifacts. Strands, operator UI, and AWS deployment remain absent. See `docs/PHASE2.md` and `outputs/phase2-validation.txt`.
 
 ## Assumptions to resolve
 
@@ -136,7 +136,7 @@ Preservation invariant: the evidence, logs, hashes, approval record, and promoti
 
 **Expected result**
 
-- Four tests pass.
+- The full suite passes, including the original four fixture tests and the Phase 2 deterministic tests.
 - The probe reports `403 → 200 with leaked fields → 403` for original, faulty, and corrected revisions.
 
 **Verify**
@@ -414,4 +414,4 @@ The build is ready for submission only when all are true:
 
 ## Current review disposition
 
-**Proceed, with gates.** The core fixture is small, deterministic, and demonstrably supports the product story. The next safest action is Phase 2: implement the deterministic record/state layer and test its safety properties before adding Strands or provisioning AWS resources.
+**Phase 2 implemented, with later-phase gates intact.** The deterministic layer and failure-path tests are implemented and locally reviewed. Owner review of this layer remains required before connecting a model. See `docs/PHASE2.md` for decisions and unresolved limits; no later phase is authorized by this status update.

@@ -1,0 +1,102 @@
+Migration Proof Phase 2 validation — 2026-09-05
+
+Starting baseline: f3f0eeec3bd689b412529f73359412cd9c995c4f
+Branch: main; initial worktree clean, tracking origin/main.
+Python: 3.14 (standard-library implementation requires 3.11+).
+
+Baseline before edits:
+  python3 -m unittest discover -s tests -v
+  Ran 4 tests in 4.556s — OK
+  python3 -m migration_proof.probe
+  original 403/pass; faulty 200/fail with id, tenant, title; corrected 403/pass.
+  The first sandbox attempt was denied localhost socket binding; the same
+  unchanged commands passed with local socket access.
+
+Phase 2 verification before commit:
+  python3 -m unittest discover -s tests -v
+test_all_state_edges_enforced (test_deterministic_core.CoreTests.test_all_state_edges_enforced) ... ok
+test_approval_requires_current_packet_and_actor (test_deterministic_core.CoreTests.test_approval_requires_current_packet_and_actor) ... ok
+test_approved_blob_cannot_be_overwritten_through_storage_api (test_deterministic_core.CoreTests.test_approved_blob_cannot_be_overwritten_through_storage_api) ... ok
+test_artifact_publication_failure_does_not_reference_partial_blob (test_deterministic_core.CoreTests.test_artifact_publication_failure_does_not_reference_partial_blob) ... ok
+test_backend_change_invalidates_existing_approval (test_deterministic_core.CoreTests.test_backend_change_invalidates_existing_approval) ... ok
+test_budget_exhaustion_blocks (test_deterministic_core.CoreTests.test_budget_exhaustion_blocks) ... ok
+test_candidate_change_invalidates_approval (test_deterministic_core.CoreTests.test_candidate_change_invalidates_approval) ... ok
+test_canonical_digest_is_stable_and_binds_target (test_deterministic_core.CoreTests.test_canonical_digest_is_stable_and_binds_target) ... ok
+test_divergent_probe_result_cannot_claim_pass (test_deterministic_core.CoreTests.test_divergent_probe_result_cannot_claim_pass) ... ok
+test_evidence_change_invalidates_approval (test_deterministic_core.CoreTests.test_evidence_change_invalidates_approval) ... ok
+test_exact_four_scoped_contracts (test_deterministic_core.CoreTests.test_exact_four_scoped_contracts) ... ok
+test_expired_approval_blocks_and_invalidates (test_deterministic_core.CoreTests.test_expired_approval_blocks_and_invalidates) ... ok
+test_failed_promotion_rolls_back_atomically (test_deterministic_core.CoreTests.test_failed_promotion_rolls_back_atomically) ... ok
+test_missing_artifact_fails_closed (test_deterministic_core.CoreTests.test_missing_artifact_fails_closed) ... ok
+test_missing_gates_never_ready_and_packet_refreshes (test_deterministic_core.CoreTests.test_missing_gates_never_ready_and_packet_refreshes) ... ok
+test_owner_replacement_invalidates_approval_and_old_evidence (test_deterministic_core.CoreTests.test_owner_replacement_invalidates_approval_and_old_evidence) ... ok
+test_packet_change_invalidates_approval (test_deterministic_core.CoreTests.test_packet_change_invalidates_approval) ... ok
+test_partial_health_and_malformed_result_block (test_deterministic_core.CoreTests.test_partial_health_and_malformed_result_block) ... ok
+test_patch_parser_rejects_unsafe_or_arbitrary_code (test_deterministic_core.CoreTests.test_patch_parser_rejects_unsafe_or_arbitrary_code) ... ok
+test_patch_without_failure_is_rejected (test_deterministic_core.CoreTests.test_patch_without_failure_is_rejected) ... ok
+test_process_crash_after_pointer_commit_recovers_receipt (test_deterministic_core.CoreTests.test_process_crash_after_pointer_commit_recovers_receipt) ... ok
+test_process_crash_during_tool_leaves_no_false_evidence (test_deterministic_core.CoreTests.test_process_crash_during_tool_leaves_no_false_evidence) ... ok
+test_process_crash_then_verification_failure_rolls_back (test_deterministic_core.CoreTests.test_process_crash_then_verification_failure_rolls_back) ... ok
+test_real_fixture_success_and_failure_with_generated_test (test_deterministic_core.CoreTests.test_real_fixture_success_and_failure_with_generated_test) ... ok
+test_recovery_rejects_ambiguous_promotion (test_deterministic_core.CoreTests.test_recovery_rejects_ambiguous_promotion) ... ok
+test_restart_invalidates_expired_approval (test_deterministic_core.CoreTests.test_restart_invalidates_expired_approval) ... ok
+test_restart_recovers_approved_and_verified_runs (test_deterministic_core.CoreTests.test_restart_recovers_approved_and_verified_runs) ... ok
+test_runtime_change_invalidates_existing_approval (test_deterministic_core.CoreTests.test_runtime_change_invalidates_existing_approval) ... ok
+test_safe_patch_and_owner_correction_lineage (test_deterministic_core.CoreTests.test_safe_patch_and_owner_correction_lineage) ... ok
+test_stale_inputs_leave_state_unchanged (test_deterministic_core.CoreTests.test_stale_inputs_leave_state_unchanged) ... ok
+test_success_approval_promotion_replay (test_deterministic_core.CoreTests.test_success_approval_promotion_replay) ... ok
+test_symlink_artifact_and_path_traversal_rejected (test_deterministic_core.CoreTests.test_symlink_artifact_and_path_traversal_rejected) ... ok
+test_tool_timeout_and_exception_are_redacted (test_deterministic_core.CoreTests.test_tool_timeout_and_exception_are_redacted) ... ok
+test_tools_cannot_approve_or_replace_faulty_candidate (test_deterministic_core.CoreTests.test_tools_cannot_approve_or_replace_faulty_candidate) ... ok
+test_transaction_failure_cannot_consume_approval_or_move_pointer (test_deterministic_core.CoreTests.test_transaction_failure_cannot_consume_approval_or_move_pointer) ... ok
+test_two_runs_and_concurrent_replays_are_isolated (test_deterministic_core.CoreTests.test_two_runs_and_concurrent_replays_are_isolated) ... ok
+test_unknown_schema_is_not_silently_migrated (test_deterministic_core.CoreTests.test_unknown_schema_is_not_silently_migrated) ... ok
+test_wrong_owner_and_cross_run_scope (test_deterministic_core.CoreTests.test_wrong_owner_and_cross_run_scope) ... ok
+test_all_revisions_pass_the_ordinary_happy_path (test_fixture_baseline.BaselineFixtureTests.test_all_revisions_pass_the_ordinary_happy_path) ... ok
+test_all_revisions_reject_an_unknown_token (test_fixture_baseline.BaselineFixtureTests.test_all_revisions_reject_an_unknown_token) ... ok
+test_faulty_migration_exposes_the_regression (test_tenant_boundary.TenantBoundaryTests.test_faulty_migration_exposes_the_regression) ... ok
+test_original_and_corrected_revisions_preserve_the_boundary (test_tenant_boundary.TenantBoundaryTests.test_original_and_corrected_revisions_preserve_the_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 25.872s
+
+OK
+
+  python3 -m migration_proof.probe
+[
+  {
+    "revision": "original",
+    "expected_status": 403,
+    "actual_status": 403,
+    "leaked_document_fields": [],
+    "passed": true
+  },
+  {
+    "revision": "faulty",
+    "expected_status": 403,
+    "actual_status": 200,
+    "leaked_document_fields": [
+      "id",
+      "tenant",
+      "title"
+    ],
+    "passed": false
+  },
+  {
+    "revision": "corrected",
+    "expected_status": 403,
+    "actual_status": 403,
+    "leaked_document_fields": [],
+    "passed": true
+  }
+]
+
+Review: implementation and tests reviewed against docs/PHASE2.md and approved
+phase-2 design. Exactly four run-bound operational tools. No approval/promotion
+in the registry. No Strands, live model, UI, AWS, AgentCore, or Devpost changes.
+Owner review remains a prerequisite before model integration.
+
+Storage/API tests use controlled worker results to exercise failure boundaries;
+the integration test and original four tests execute real localhost HTTP. Crash
+tests terminate separate Python processes with os._exit after a persisted tool
+intent or promotion pointer/receipt transaction, then reopen the store.
