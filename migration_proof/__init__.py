@@ -1,0 +1,2 @@
+"""Migration Proof application package."""
+
