@@ -56,7 +56,7 @@ The baseline four tests remain unchanged. Phase 2 adds comprehensive determinist
 
 ## Current gaps
 
-- Phase 2 deterministic safety and Phase 3 offline integration are implemented and locally reviewed. Live-model provider selection, pricing/access validation, and paid-call authorization remain open.
+- Phase 2 deterministic safety and Phase 3 offline integration are implemented and locally reviewed. The owner selected the direct OpenAI API on 2026-09-06. A no-network model/budget preflight is implemented (see `docs/OPENAI-PREFLIGHT.md`); transport, durable spend accounting, account access, and paid-call authorization remain open.
 - Strands 1.54.0 is pinned with a locked optional dependency graph. The real SDK loop runs a zero-cost scripted provider with persistent budgets, a hard process deadline, and exactly four scoped tools. No live provider is enabled.
 - No operator UI yet.
 - No AWS architecture, configuration, or deployment yet.
@@ -68,7 +68,7 @@ The baseline four tests remain unchanged. Phase 2 adds comprehensive determinist
 2. Rerun the full deterministic suite and probe from a clean commit.
 3. Resolve or explicitly accept the documented local-only constraints.
 4. Obtain owner review of the four-tool registry and deterministic safety layer before connecting a model.
-5. Complete the remaining live-provider gate: select provider/model/region, confirm access and pricing, obtain explicit paid-call authorization and a budget ceiling, then implement and run a bounded live-model test. The offline Strands portion is already present.
+5. Continue the selected OpenAI API route in `docs/OPENAI-PREFLIGHT.md`: implement and test transport and durable spend accounting without paid calls, then obtain explicit paid-call authorization for the concrete test, confirm account access, and execute it. The offline Strands portion is already present.
 6. Build the operator UI around failure evidence, constrained repair, re-verification, human approval, and receipt states.
 7. Verify AWS access and select the smallest viable staging architecture; add budget alerts, secret handling, observability, rollback, and teardown.
 8. Deploy and verify staging, then obtain explicit approval before exposing a public endpoint.
@@ -80,4 +80,4 @@ Stop and preserve evidence if there is cross-run contamination, mutable approved
 
 ## Recommended next-session prompt
 
-> Continue in `/Users/arielsmoliar/Developer/migration-proof` on `main`. Read this handoff, `docs/PHASE2.md`, `docs/PHASE3.md`, the build runbook, and the approved design. Run `uv sync --frozen --extra agent`, the complete suite, and the probe. The offline Strands integration is implemented and explicitly scripted; do not present it as LLM judgment or live-model evidence. The next unresolved gate is provider/model/region selection and explicit paid-call authorization. Keep approval and promotion out of the tool registry. No UI, AWS resources, AgentCore, or submission work yet.
+> Continue in `/Users/arielsmoliar/Developer/migration-proof` on `main`. Read this handoff, `docs/PHASE2.md`, `docs/PHASE3.md`, the build runbook, and the approved design. Run `uv sync --frozen --extra agent`, the complete suite, and the probe. The offline Strands integration is implemented and explicitly scripted; do not present it as LLM judgment or live-model evidence. The owner selected OpenAI API; `docs/OPENAI-PREFLIGHT.md` records the model and budget proposal. The next work is tested transport and durable spend accounting, followed by explicit paid-call authorization. Keep approval and promotion out of the tool registry. No UI, AWS resources, AgentCore, or submission work yet.
