@@ -31,7 +31,10 @@ class Journal:
         with store._locked() as db:
             db.executescript(SCHEMA)
 
-    def start(self, run_id, token, limits):
+    def start(self, run_id, token, limits, *, model_id=MODEL_ID):
+        from .openai_preflight import MODEL_ID as OPENAI_MODEL_ID
+        if model_id not in (MODEL_ID, OPENAI_MODEL_ID):
+            raise Rejected("unsupported provider identity")
         # The caller must hold the run orchestration flock across this operation.
         with self.store._locked() as db:
             row = self.store._owner(db, run_id, token)
@@ -45,7 +48,7 @@ class Journal:
             session_id = uuid4().hex
             with transaction(db):
                 db.execute("INSERT INTO agent_sessions(id,run_id,initial_digest,model_id,sdk_version,limits_json,status,started) VALUES(?,?,?,?,?,?,?,?)",
-                           (session_id, run_id, row["digest"], MODEL_ID, SDK_VERSION,
+                           (session_id, run_id, row["digest"], model_id, SDK_VERSION,
                             canonical(asdict(limits)).decode(), "running", time.time()))
             return session_id
 
@@ -84,6 +87,9 @@ class Journal:
         with transaction(db):
             db.execute("UPDATE agent_sessions SET status=?,reason=?,final_digest=?,summary_hash=?,finished=? WHERE id=?",
                        ("completed" if reason == "completed" else "stopped", reason, run["digest"], content_hash, time.time(), session_id))
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='inference_grants'").fetchone():
+                db.execute("UPDATE inference_requests SET status='unknown',finished=? WHERE status='pending' AND grant_id IN (SELECT id FROM inference_grants WHERE session_id=?)", (time.time(), session_id))
+                db.execute("UPDATE inference_grants SET status='closed' WHERE session_id=? AND status='claimed'", (session_id,))
             if reason != "completed":
                 self.store._invalidate_in_transaction(db, run["id"], "orchestration stopped: " + reason)
 
@@ -101,6 +107,10 @@ class Journal:
             if row is None:
                 raise Rejected("unknown orchestration for run")
             result = dict(row)
+            if row["model_id"] != MODEL_ID:
+                # Historical SQL column is an offline-only zero-cost field.
+                result["cost_usd"] = None
+                result["cost_source"] = "inference_requests; unknown until usage is recorded"
             result["events"] = [dict(r) for r in db.execute("SELECT kind,label,at FROM agent_events WHERE session_id=? ORDER BY id", (session_id,))]
             result["summary"] = json.loads(self.store.artifacts.get(run_id, row["summary_hash"])) if row["summary_hash"] else None
             return result

@@ -60,14 +60,14 @@ def preflight(plan: OpenAIPlan | None = None, *,
     key = env.get("OPENAI_API_KEY")
     key_present = isinstance(key, str) and bool(key.strip())
     price_fresh = 0 <= (today - PRICE_CHECKED_ON).days <= 7
-    blockers = ["paid_call_authorization_missing", "live_transport_not_implemented",
-                "durable_spend_accounting_not_implemented", "account_model_access_unverified"]
+    blockers = ["paid_call_authorization_missing", "account_model_access_unverified"]
     if not key_present:
         blockers.append("openai_api_key_missing")
     if not price_fresh:
         blockers.append("pricing_reverification_required")
     return {
         "provider": "openai_api", "model_id": MODEL_ID,
+        "transport_implemented": True, "spend_ledger_implemented": True,
         "scenario": "one_faulty_candidate_attempt", "model_calls": plan.model_calls,
         "max_output_tokens": plan.max_output_tokens,
         "budget_microusd": plan.budget_microusd,

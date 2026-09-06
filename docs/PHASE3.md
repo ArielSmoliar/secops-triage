@@ -78,3 +78,5 @@ Exact results are recorded in `outputs/phase3-validation.txt`.
 A live provider is deliberately not configurable yet. Completing live-model Phase 3 requires selection of provider/model/region, access confirmation, provider-specific input/output limits and pricing, explicit paid-call authorization and a budget ceiling, and a bounded integration test. The offline fixture's synthetic token metadata is not billing evidence. General generated-test syntax, unrestricted prose, public authentication, and multi-host execution remain separate design work.
 
 The owner subsequently selected direct OpenAI API on 2026-09-06. See `docs/OPENAI-PREFLIGHT.md` for the implemented no-network configuration/budget preflight and remaining live-transport work. Offline execution and its zero-cost contract are unchanged.
+
+The OpenAI transport and owner-only spend ledger are now implemented and tested without paid calls. `docs/OPENAI-TRANSPORT.md` supersedes the historical live-provider gap above. Live quality, account access, and paid-call authorization remain unverified.

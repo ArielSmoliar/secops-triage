@@ -1,4 +1,4 @@
-"""Offline entrypoint: per-run exclusion and a hard process-group deadline."""
+"""Supervised entrypoints with per-run exclusion and hard process-group deadlines."""
 import fcntl
 import os
 from pathlib import Path
@@ -13,7 +13,20 @@ from .journal import Journal
 
 
 def run_offline(store, run_id, token, limits=None):
-    limits = limits or Limits()
+    return _run(store, run_id, token, limits or Limits())
+
+
+def run_openai(store, run_id, token, grant_id, *, api_key):
+    """Paid entrypoint. Requires a separately authorized, unclaimed owner grant."""
+    from .openai_model import validate_key
+    from .spend import SpendLedger
+    validate_key(api_key)
+    plan = SpendLedger(store).plan(run_id, token, grant_id)
+    return _run(store, run_id, token, Limits(model_calls=plan.model_calls, wall_seconds=120),
+                grant_id=grant_id, api_key=api_key)
+
+
+def _run(store, run_id, token, limits, *, grant_id=None, api_key=None):
     if type(limits) is not Limits:
         raise Rejected("typed limits required")
     identifier(run_id)
@@ -26,10 +39,18 @@ def run_offline(store, run_id, token, limits=None):
         except BlockingIOError:
             raise Rejected("orchestration already active for this run") from None
         journal = Journal(store)
-        session_id = journal.start(run_id, token, limits)
-        request = canonical({"root": str(store.root), "run_id": run_id, "token": token, "session_id": session_id})
+        from .contracts import MODEL_ID
+        from .openai_preflight import MODEL_ID as OPENAI_MODEL_ID
+        session_id = journal.start(run_id, token, limits, model_id=OPENAI_MODEL_ID if grant_id else MODEL_ID)
+        request_fields = {"root": str(store.root), "run_id": run_id, "token": token, "session_id": session_id}
+
         process = None
         try:
+            if grant_id:
+                from .spend import SpendLedger
+                SpendLedger(store).claim(run_id, token, grant_id, session_id)
+                request_fields["api_key"] = api_key
+            request = canonical(request_fields)
             process = subprocess.Popen(
                 [sys.executable, "-B", "-m", "migration_proof.agent.worker"],
                 cwd=Path(__file__).resolve().parents[2], stdin=subprocess.PIPE,
@@ -55,4 +76,7 @@ def run_offline(store, run_id, token, limits=None):
             fcntl.flock(lock, fcntl.LOCK_UN)
         if journal.row(session_id)["status"] == "running":
             journal.finish(session_id, "worker_failed")
-        return journal.read(run_id, token, session_id)
+        result = journal.read(run_id, token, session_id)
+        if grant_id:
+            result["spend"] = SpendLedger(store).read(run_id, token, grant_id)
+        return result

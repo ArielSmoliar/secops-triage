@@ -186,7 +186,7 @@ Preservation invariant: the evidence, logs, hashes, approval record, and promoti
 
 ### 3. Add Strands orchestration
 
-**Current status:** The pinned SDK, four guarded tools, persistent limits, and offline integration tests are implemented. The provider is a scripted fixture, not a live LLM. See `docs/PHASE3.md`; the paid-provider integration and its approval gate remain open.
+**Current status:** The pinned SDK, four guarded tools, persistent limits, and offline integration tests are implemented. Offline execution uses a scripted fixture. The OpenAI transport and durable spend ledger are also implemented and tested with fake responses; see `docs/OPENAI-TRANSPORT.md`. Real model access and the paid-call approval gate remain open.
 
 **Classification:** Reversible
 

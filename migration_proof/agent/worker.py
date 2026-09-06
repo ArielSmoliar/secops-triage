@@ -1,4 +1,4 @@
-"""Credential-free child process. Owner capability arrives only through stdin."""
+"""Isolated child. Owner capability and optional API key arrive only through stdin."""
 import asyncio
 import json
 import logging
@@ -11,7 +11,7 @@ def main():
     from .runtime import execute_session
     request = json.loads(sys.stdin.buffer.read(8193))
     store = Store(request["root"])
-    result = asyncio.run(execute_session(store, request["run_id"], request["token"], request["session_id"]))
+    result = asyncio.run(execute_session(store, request["run_id"], request["token"], request["session_id"], api_key=request.get("api_key")))
     print(json.dumps({"session_id": result["id"], "status": result["status"]}))
     return 0
 

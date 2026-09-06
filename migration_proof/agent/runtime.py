@@ -13,7 +13,7 @@ from strands.tools.executors import SequentialToolExecutor
 
 from migration_proof.core.artifacts import canonical
 from migration_proof.core.contracts import (BaselineInput, CompareInput, InspectInput, PatchInput, Rejected)
-from .contracts import SDK_VERSION, MODEL_ID, Limits, explanation
+from .contracts import SDK_VERSION, MODEL_ID, REASONS, Limits, explanation
 from .journal import Journal
 from .offline_model import OfflineModel
 
@@ -34,6 +34,7 @@ reason_codes from the fixed vocabulary. Your recommendation cannot waive gates.
 class Guard:
     def __init__(self, journal, session_id, run_id, limits):
         self.journal, self.session_id, self.run_id, self.limits = journal, session_id, run_id, limits
+        self.model_id = journal.row(session_id)["model_id"]
         self.started = time.monotonic()
         self.stopped = None
 
@@ -49,7 +50,7 @@ class Guard:
             self.stopped = "context_limit"
             raise Rejected(self.stopped)
         try:
-            self.journal.reserve(self.session_id, "model", MODEL_ID)
+            self.journal.reserve(self.session_id, "model", self.model_id)
         except Rejected:
             self.stopped = "model_limit"
             raise Rejected(self.stopped) from None
@@ -132,8 +133,8 @@ def adapters(bound_tools, guard):
     return [inspect_candidate, run_baseline_tests, compare_tenant_boundary, apply_safe_patch]
 
 
-async def execute_session(store, run_id, token, session_id, model=None):
-    """Internal offline test seam. Production entrypoint is runner.run_offline."""
+async def execute_session(store, run_id, token, session_id, model=None, *, api_key=None):
+    """Internal test seam; use supervised runner entrypoints for execution."""
     store.status(run_id, token)
     journal = Journal(store)
     session = journal.row(session_id)
@@ -150,10 +151,27 @@ async def execute_session(store, run_id, token, session_id, model=None):
             raise Rejected("candidate changed before orchestration")
         context = {"run_id": run_id, "version": bundle["revision"], "digest": status["digest"],
                    "original_digest": status["original_digest"], "has_patch": bool(bundle["patches"])}
-        if model is None:
-            model = OfflineModel(context)
-        if type(model) is not OfflineModel:
-            raise Rejected("live providers are not enabled")
+        provider_mode = "scripted_offline"
+        if session["model_id"] == MODEL_ID:
+            if model is None:
+                model = OfflineModel(context)
+            if type(model) is not OfflineModel:
+                raise Rejected("offline session requires offline provider")
+        else:
+            from .openai_preflight import MODEL_ID as OPENAI_MODEL_ID
+            from .openai_model import OpenAIModel
+            from .spend import SpendLedger
+            from migration_proof.core.artifacts import SAFE_PATCH
+            if session["model_id"] != OPENAI_MODEL_ID:
+                raise Rejected("unknown provider")
+            if model is None:
+                model = OpenAIModel(SpendLedger(store), session_id, api_key)
+            if (type(model) is not OpenAIModel or model.session_id != session_id
+                    or model.ledger.store is not store):
+                raise Rejected("live session/provider mismatch")
+            context.update({"allowed_reason_codes": list(REASONS), "allowlisted_patch": SAFE_PATCH})
+            provider_mode = "openai_api"
+
         bound = store.agent_tools(run_id, token, session_id=session_id)
         agent = Agent(model=model, tools=adapters(bound, guard), system_prompt=SYSTEM_PROMPT,
                       callback_handler=None, load_tools_from_directory=False,
@@ -179,8 +197,8 @@ async def execute_session(store, run_id, token, session_id, model=None):
             raise Rejected("invalid final content")
         assessment = explanation(json.loads(content[0]["text"]))
         status = store.status(run_id, token)
-        assessment.update({"run_id": run_id, "candidate_digest": status["digest"], "model_id": MODEL_ID,
-                           "sdk_version": SDK_VERSION, "provider_mode": "scripted_offline"})
+        assessment.update({"run_id": run_id, "candidate_digest": status["digest"], "model_id": session["model_id"],
+                           "sdk_version": SDK_VERSION, "provider_mode": provider_mode})
         assessment_hash = store.artifacts.put(run_id, canonical(assessment))
         packet = store.assemble_decision_packet(run_id, token, status["digest"], assessment_hash=assessment_hash, agent_session_id=session_id)
         summary = {"packet_id": packet["packet_id"], "candidate_digest": status["digest"],
