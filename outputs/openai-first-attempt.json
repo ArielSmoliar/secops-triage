@@ -1,0 +1,16 @@
+{
+  "commit": "10679fccd06ff508588861f227ecb1592a737413",
+  "evidence_directory": "/Users/arielsmoliar/Developer/migration-proof/data/openai-first-authorized-20260906",
+  "model_calls": 1,
+  "provider_requests": 1,
+  "reason": "model_failed",
+  "reported_estimate_microusd": 0,
+  "reserved_microusd": 422308,
+  "run_id": "72905944fafb4333ad8569baff32d825",
+  "session_id": "50cd871e27e84210bf62931aee45862a",
+  "state": "blocked",
+  "status": "stopped",
+  "summary": null,
+  "tool_calls": 0,
+  "usage_complete": false
+}

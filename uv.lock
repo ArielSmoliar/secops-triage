@@ -371,11 +371,15 @@ source = { virtual = "." }
 
 [package.optional-dependencies]
 agent = [
+    { name = "certifi" },
     { name = "strands-agents" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "strands-agents", marker = "extra == 'agent'", specifier = "==1.54.0" }]
+requires-dist = [
+    { name = "certifi", marker = "extra == 'agent'", specifier = "==2026.7.22" },
+    { name = "strands-agents", marker = "extra == 'agent'", specifier = "==1.54.0" },
+]
 provides-extras = ["agent"]
 
 [[package]]

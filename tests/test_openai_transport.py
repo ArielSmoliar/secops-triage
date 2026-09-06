@@ -5,6 +5,7 @@ from contextlib import closing
 import copy
 import importlib.util
 import json
+import ssl
 from pathlib import Path
 import sqlite3
 import subprocess
@@ -390,3 +391,17 @@ class TransportTests(LedgerFixture):
         self.assertIsNotNone(children[0].poll())
         self.assertEqual(result['spend']['requests'][0]['status'], 'unknown')
         self.assertEqual(result['spend']['reserved_microusd'], 422308)
+
+    def test_tls_verifies_host_with_pinned_ca_bundle_when_system_roots_missing(self):
+        conn = MagicMock()
+        answer = conn.getresponse.return_value
+        answer.status = 200
+        answer.getheader.return_value = 'identity'
+        answer.read.return_value = json.dumps(response(content='{}')).encode()
+        with patch.dict('os.environ', {'SSL_CERT_FILE':'/missing-ca-file', 'SSL_CERT_DIR':'/missing-ca-directory'}), \
+             patch('migration_proof.agent.openai_model.http.client.HTTPSConnection', return_value=conn) as factory:
+            _post(b'{}', 'test-key')
+        context = factory.call_args.kwargs['context']
+        self.assertTrue(context.check_hostname)
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertGreater(context.cert_store_stats()['x509_ca'], 0)

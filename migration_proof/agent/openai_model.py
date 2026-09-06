@@ -5,6 +5,7 @@ import json
 import re
 import ssl
 
+import certifi
 from strands.models import Model
 
 from migration_proof.core.artifacts import canonical
@@ -25,7 +26,7 @@ def _post(body, key):
     """Exactly one HTTPS request. No proxy discovery, redirects, or retries."""
     validate_key(key)
     connection = http.client.HTTPSConnection("api.openai.com", timeout=20,
-                                              context=ssl.create_default_context())
+                                              context=ssl.create_default_context(cafile=certifi.where()))
     try:
         connection.request("POST", "/v1/chat/completions", body=body,
                            headers={"Authorization": "Bearer " + key, "Content-Type": "application/json",
