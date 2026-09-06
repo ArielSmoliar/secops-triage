@@ -145,18 +145,26 @@ class Store:
         db.execute("INSERT INTO transitions(run_id,previous,next,reason,at) VALUES(?,?,?,?,?)",
                    (run_id, previous, state, reason, time.time()))
 
+    def _invalidate_in_transaction(self, db, run_id, reason):
+        db.execute("UPDATE approvals SET status='invalidated' WHERE run_id=? AND status='active'", (run_id,))
+        db.execute("UPDATE runs SET packet_id=NULL WHERE id=?", (run_id,))
+        if "blocked" in STATES[self._run(db, run_id)["state"]]:
+            self._transition(db, run_id, "blocked", reason)
+
     def _invalidate(self, db, run_id, reason):
         with transaction(db):
-            db.execute("UPDATE approvals SET status='invalidated' WHERE run_id=? AND status='active'", (run_id,))
-            db.execute("UPDATE runs SET packet_id=NULL WHERE id=?", (run_id,))
-            if "blocked" in STATES[self._run(db, run_id)["state"]]:
-                self._transition(db, run_id, "blocked", reason)
+            self._invalidate_in_transaction(db, run_id, reason)
 
     @staticmethod
     def _backend_identity():
-        directory = Path(__file__).parent
-        return sha(canonical({name: (directory / name).read_text() for name in
-                              ("store.py", "contracts.py", "artifacts.py", "worker.py")}))
+        package = Path(__file__).parents[1]
+        sources = sorted([*package.joinpath("core").glob("*.py"), *package.joinpath("agent").glob("*.py")])
+        inputs = {}
+        for path in [*sources, package.parent / "pyproject.toml", package.parent / "uv.lock"]:
+            if path.exists():
+                Artifacts._safe(path)
+                inputs[path.relative_to(package.parent).as_posix()] = path.read_text()
+        return sha(canonical(inputs))
 
     def _bundle(self, run_id, digest):
         return json.loads(self.artifacts.get(run_id, digest))
@@ -180,7 +188,9 @@ class Store:
                                     (row["packet_id"], row["id"])).fetchone()
                 if packet is None:
                     raise Rejected("missing packet")
-                self.artifacts.get(row["id"], packet["blob_hash"])
+                packet_body = json.loads(self.artifacts.get(row["id"], packet["blob_hash"]))
+                if packet_body.get("agent_assessment_hash"):
+                    self.artifacts.get(row["id"], packet_body["agent_assessment_hash"])
         except (Rejected, KeyError, ValueError) as error:
             self._invalidate(db, row["id"], "content integrity failure")
             raise Rejected("content integrity failure; approval invalidated") from error
@@ -206,7 +216,7 @@ class Store:
             return {"original_revision": "original", "revision": version,
                     "files": files, "policy": POLICY, "target": target,
                     "tool_version": TOOL_VERSION, "backend_hash": self._backend_identity(),
-                    "provenance": provenance, "lockfile": None,
+                    "provenance": provenance, "lockfile": sha((package.parent / "uv.lock").read_bytes()) if (package.parent / "uv.lock").exists() else None,
                     "runtime": {"python": sys.version, "mode": "isolated-subprocess"},
                     "artifact_hash": sha(canonical(files)), "patches": []}
         with self._locked() as db:
@@ -234,17 +244,25 @@ class Store:
                 raise Rejected("unknown evidence in this run")
             return json.loads(self.artifacts.get(run_id, record["blob_hash"]))
 
-    def agent_tools(self, run_id, token):
+    @staticmethod
+    def _agent_scope(db, run_id, session_id=None):
+        table = db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='agent_sessions'").fetchone()
+        active = db.execute("SELECT id FROM agent_sessions WHERE run_id=? AND status='running'", (run_id,)).fetchone() if table else None
+        if (active is not None and active[0] != session_id) or (session_id is not None and active is None):
+            raise Rejected("operation conflicts with active orchestration")
+
+    def agent_tools(self, run_id, token, *, session_id=None):
         """Bind a run once; returned callables accept only their exact typed contract."""
         with self._locked() as db:
             self._owner(db, run_id, token)
+            self._agent_scope(db, run_id, session_id)
         def bind(name, expected):
             def tool(request):
                 if type(request) is not expected or request.run_id != run_id:
                     raise Rejected("tool contract or run scope mismatch")
                 # Revalidate even frozen dataclasses potentially constructed by an adapter.
                 request.__post_init__()
-                return self._tool(name, request)
+                return self._tool(name, request, session_id)
             tool.__name__ = name
             return tool
         return MappingProxyType({
@@ -289,8 +307,9 @@ class Store:
                    (evidence_id, run_id, digest, invocation, check, content_hash, int(result["passed"]), body["at"]))
         return evidence_id, content_hash
 
-    def _tool(self, name, request):
+    def _tool(self, name, request, session_id=None):
         with self._locked() as db:
+            self._agent_scope(db, request.run_id, session_id)
             row = self._run(db, request.run_id)
             bundle = self._integrity(db, row)
             if name == "inspect_candidate":
@@ -392,6 +411,7 @@ class Store:
             raise Rejected("explicit owner and corrected revision required")
         with self._locked() as db:
             row = self._owner(db, run_id, token)
+            self._agent_scope(db, run_id)
             bundle = self._integrity(db, row)
             if row["state"] not in ("blocked", "ready_for_approval", "approved"):
                 raise Rejected("candidate replacement not allowed here")
@@ -417,24 +437,34 @@ class Store:
             exceptions.append("failed_or_contradictory_evidence")
         return records, exceptions
 
-    def assemble_decision_packet(self, run_id, token, digest, agent_explanation=""):
+    def assemble_decision_packet(self, run_id, token, digest, agent_explanation="", *, assessment_hash=None, agent_session_id=None):
         # Explanations are deliberately not persisted in Phase 2: unrestricted text
         # needs a dedicated redaction boundary before model integration.
         if agent_explanation:
             raise Rejected("free-text model explanations are not enabled in Phase 2")
         with self._locked() as db:
             row = self._owner(db, run_id, token)
+            self._agent_scope(db, run_id, agent_session_id)
             self._integrity(db, row)
             if digest != row["digest"]:
                 raise Rejected("stale packet digest")
+            if assessment_hash is not None:
+                assessment = json.loads(self.artifacts.get(run_id, assessment_hash))
+                if assessment.get("run_id") != run_id or assessment.get("candidate_digest") != digest:
+                    raise Rejected("assessment scope mismatch")
             if row["packet_id"]:
                 record = db.execute("SELECT * FROM packets WHERE id=?", (row["packet_id"],)).fetchone()
-                return json.loads(self.artifacts.get(run_id, record["blob_hash"]))
+                prior_packet = json.loads(self.artifacts.get(run_id, record["blob_hash"]))
+                if assessment_hash is not None and prior_packet.get("agent_assessment_hash") != assessment_hash:
+                    self._invalidate(db, run_id, "agent assessment changed")
+                    raise Rejected("packet assessment changed; approval invalidated")
+                return prior_packet
             if row["state"] not in ("checking", "blocked"):
                 raise Rejected("packet assembly not legal here")
             records, exceptions = self._readiness(db, row)
             ready = not exceptions and row["state"] == "checking"
             packet = {"packet_id": uuid4().hex, "run_id": run_id, "candidate_digest": digest,
+                      "agent_assessment_hash": assessment_hash,
                       "policy_version": POLICY["policy_version"], "required_check_ids": list(CHECKS),
                       "evidence_ids": [r["id"] for r in records],
                       "repair_ids": [r[0] for r in db.execute("SELECT id FROM repairs WHERE run_id=? ORDER BY at,id", (run_id,))],
@@ -455,6 +485,7 @@ class Store:
             raise Rejected("approval expiry must be within one hour")
         with self._locked() as db:
             row = self._owner(db, run_id, token)
+            self._agent_scope(db, run_id)
             self._integrity(db, row)
             if row["state"] != "ready_for_approval" or row["packet_id"] != packet_id:
                 raise Rejected("current ready packet required")
@@ -477,6 +508,7 @@ class Store:
             raise Rejected("bounded idempotency key required")
         with self._locked() as db:
             row = self._owner(db, run_id, token)
+            self._agent_scope(db, run_id)
             prior = db.execute("SELECT * FROM promotions WHERE run_id=? AND (approval_id=? OR idempotency_key=?)",
                                (run_id, approval_id, idempotency_key)).fetchone()
             if prior:

@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Evidence-backed acceptance for software migrations"
 requires-python = ">=3.11"
 
+[project.optional-dependencies]
+agent = ["strands-agents==1.54.0"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 

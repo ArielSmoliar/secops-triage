@@ -2,7 +2,7 @@
 
 Evidence-backed acceptance for software migrations. The deterministic fixture demonstrates a green ordinary test suite alongside a cross-tenant authorization regression.
 
-Phase 2 implements the local deterministic acceptance backend. It does not connect a model, expose a web server, deploy AWS resources, or submit to Devpost.
+Phase 2 implements the local deterministic acceptance backend. Phase 3 now adds a real Strands loop with an explicitly scripted offline provider. No live model calls, web UI, AWS resources, or Devpost submission are enabled.
 
 ## Verify
 
@@ -14,6 +14,15 @@ python3 -m migration_proof.probe
 ```
 
 The probe must report `403 → 200 with synthetic leaked fields → 403`. The expanded suite includes real HTTP checks, generated-regression execution, promotion rollback, concurrent replay, and subprocess crash recovery.
+
+## Offline Strands integration
+
+```sh
+uv sync --frozen --extra agent
+uv run --frozen --extra agent python -m unittest discover -s tests -v
+```
+
+The `agent` extra pins Strands 1.54.0; `uv.lock` records its dependency graph and hashes. Without this extra, the standard-library tests still run and agent tests explicitly skip. Full verification requires the extra and zero skips. See [Phase 3 integration and limits](docs/PHASE3.md) for `run_offline` usage and the remaining live-provider gate.
 
 ## Local API
 

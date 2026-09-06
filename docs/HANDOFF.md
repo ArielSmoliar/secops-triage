@@ -1,6 +1,6 @@
 # Migration Proof — Session Handoff
 
-Updated: 2026-09-05
+Updated: 2026-09-06
 
 ## Project
 
@@ -19,7 +19,7 @@ Do not return to `/Users/arielsmoliar/Documents/Codex/2026-09-02/lo` for impleme
 
 ## Current implementation
 
-Phase 2 is complete locally; its implementation review and exact validation evidence are in `docs/PHASE2.md` and `outputs/phase2-validation.txt`.
+Phase 2 is committed as `bfd7a61178704936d5e2997d1dc3b822310e735b`. Phase 3 offline Strands integration is now implemented; see `docs/PHASE3.md` and `outputs/phase3-validation.txt`. Its provider is explicitly scripted, not a live LLM.
 
 - Python standard-library fixture with `original`, `faulty`, and `corrected` revisions.
 - The cross-tenant invariant expects an alpha token requesting a beta document to receive HTTP 403.
@@ -56,8 +56,8 @@ The baseline four tests remain unchanged. Phase 2 adds comprehensive determinist
 
 ## Current gaps
 
-- Phase 2 deterministic state/evidence, typed four-tool contracts, approval/promotion, and crash recovery are implemented in `migration_proof/core/`. Owner review before model integration is still required.
-- No Strands dependency or agent orchestration yet.
+- Phase 2 deterministic safety and Phase 3 offline integration are implemented and locally reviewed. Live-model provider selection, pricing/access validation, and paid-call authorization remain open.
+- Strands 1.54.0 is pinned with a locked optional dependency graph. The real SDK loop runs a zero-cost scripted provider with persistent budgets, a hard process deadline, and exactly four scoped tools. No live provider is enabled.
 - No operator UI yet.
 - No AWS architecture, configuration, or deployment yet.
 - AWS region, model/provider, authentication posture, budget ceiling, retention, and teardown policy remain open.
@@ -68,7 +68,7 @@ The baseline four tests remain unchanged. Phase 2 adds comprehensive determinist
 2. Rerun the full deterministic suite and probe from a clean commit.
 3. Resolve or explicitly accept the documented local-only constraints.
 4. Obtain owner review of the four-tool registry and deterministic safety layer before connecting a model.
-5. Add a pinned Strands Agents SDK dependency and bounded orchestration with tool-call, iteration, timeout, and cost limits.
+5. Complete the remaining live-provider gate: select provider/model/region, confirm access and pricing, obtain explicit paid-call authorization and a budget ceiling, then implement and run a bounded live-model test. The offline Strands portion is already present.
 6. Build the operator UI around failure evidence, constrained repair, re-verification, human approval, and receipt states.
 7. Verify AWS access and select the smallest viable staging architecture; add budget alerts, secret handling, observability, rollback, and teardown.
 8. Deploy and verify staging, then obtain explicit approval before exposing a public endpoint.
@@ -80,4 +80,4 @@ Stop and preserve evidence if there is cross-run contamination, mutable approved
 
 ## Recommended next-session prompt
 
-> Continue in `/Users/arielsmoliar/Developer/migration-proof` on `main`. Read this handoff, `docs/PHASE2.md`, the build runbook, and the approved design. Phase 2 is implemented; rerun its complete suite and probe before further changes. Review the deterministic boundary and resolve owner review before connecting Strands or a model. Do not add UI, AWS, AgentCore, or submission work without the corresponding later-phase authorization.
+> Continue in `/Users/arielsmoliar/Developer/migration-proof` on `main`. Read this handoff, `docs/PHASE2.md`, `docs/PHASE3.md`, the build runbook, and the approved design. Run `uv sync --frozen --extra agent`, the complete suite, and the probe. The offline Strands integration is implemented and explicitly scripted; do not present it as LLM judgment or live-model evidence. The next unresolved gate is provider/model/region selection and explicit paid-call authorization. Keep approval and promotion out of the tool registry. No UI, AWS resources, AgentCore, or submission work yet.

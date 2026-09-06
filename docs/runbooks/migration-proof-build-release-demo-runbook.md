@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Phase 2 implemented and locally reviewed; owner review required before Phase 3 |
+| Status | Phase 2 and offline Phase 3 implemented; live-provider authorization remains open |
 | Owner | Ariel Smoliar |
 | Operators | Ariel Smoliar; Codex for implementation support |
 | Repository | `/Users/arielsmoliar/Developer/migration-proof` |
@@ -54,7 +54,7 @@ The agent uses the Strands Agents SDK for planning, tool selection, safe-repair 
   - `original`: expected 403, actual 403, pass
   - `faulty`: expected 403, actual 200 with `id`, `tenant`, and `title` exposed, fail
   - `corrected`: expected 403, actual 403, pass
-- Phase 2 now contains the SQLite state/evidence/approval/promotion store and run-scoped artifacts. Strands, operator UI, and AWS deployment remain absent. See `docs/PHASE2.md` and `outputs/phase2-validation.txt`.
+- Phase 2 now contains the SQLite state/evidence/approval/promotion store and run-scoped artifacts. Offline Strands integration is also implemented; a live provider, operator UI, and AWS deployment remain absent. See `docs/PHASE2.md` and `outputs/phase2-validation.txt`.
 
 ## Assumptions to resolve
 
@@ -185,6 +185,8 @@ Preservation invariant: the evidence, logs, hashes, approval record, and promoti
 - Owner review required before connecting a model.
 
 ### 3. Add Strands orchestration
+
+**Current status:** The pinned SDK, four guarded tools, persistent limits, and offline integration tests are implemented. The provider is a scripted fixture, not a live LLM. See `docs/PHASE3.md`; the paid-provider integration and its approval gate remain open.
 
 **Classification:** Reversible
 
