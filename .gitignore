@@ -5,3 +5,4 @@ __pycache__/
 data/
 evidence/
 .DS_Store
+.env
