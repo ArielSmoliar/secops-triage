@@ -122,7 +122,14 @@ def assess(bundle, evidence):
             observations.append({'text': ('Source intelligence labels a matching activity observable malicious; source validity covers the snapshot time.' if r['kind'] == 'indicator'
                                          else 'External account change follows successful access.'),
                                  'evidence_id': eid, 'event_id': r['id'], 'role': 'suspicious'})
-        contradiction = bool(malicious and authorizations)
+        suspicious_activity_ids = {r['attributes']['target_id'] if r['kind'] == 'indicator' else r['id']
+                                   for r, _ in malicious}
+        # Similar messages/entities do not extend an authorization to another
+        # activity. Only an applicable assertion about suspicious activity conflicts.
+        contradiction = any(not failures and suspicious_activity_ids.intersection(
+                                activity['id'] for activity in authorization_activity(
+                                    record_by_id[r['attributes']['target_id']], records, alert.family))
+                            for r, _, failures in authorization_checks)
         if malicious:
             recommendation, reason = 'escalate', 'suspicious_evidence'
         elif gaps:

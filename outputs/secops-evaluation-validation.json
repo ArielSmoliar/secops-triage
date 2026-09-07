@@ -1,0 +1,93 @@
+{
+  "full_suite": {
+    "passed": 249,
+    "seconds": 64.524,
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "log": "/private/tmp/secops-evaluation-frozen-tests.txt",
+    "source_unchanged_during_tests": true
+  },
+  "source_sha256": {
+    "secops_triage/evaluation.py": "bbd65340f2d0c5177e0403f78ba9eb455539362ae6748b0d58a7de048fab96af",
+    "secops_triage/evaluation_cases.py": "488271db9f64ebf0d34d1d45c60b3c72409f99020dc5f59929d2f1dff1ec0340",
+    "secops_triage/investigation.py": "1b5b9d84fdba6d57c17960913ad4f4d632d2ecaf261d8ac9c9a308652a2e8226",
+    "secops_triage/live.py": "628ace6c5e603877a270e374972568426035e8fa7d77081564a903b0fe6d6c82",
+    "tests/test_secops_evaluation.py": "2716c301f921406c2dc01c6741cb9d33d7c0567894bfa082a886d37dcddab9c9",
+    "tests/test_secops_evaluation_cases.py": "974f1f874af56969f3c996d6a7b8c33e7babe5ebca44a38b9e71ab81ef326929"
+  },
+  "focused_secops_tests": {
+    "passed": 124,
+    "seconds": 5.621
+  },
+  "independent_review": {
+    "type": "Fresh-context AI agent",
+    "focused_tests_passed": 21,
+    "record": "outputs/secops-evaluation-independent-review.md",
+    "disposition": "No remaining blockers after validated-activity conflict correction; draft case requires human domain acceptance."
+  },
+  "superseded_test_run": {
+    "tests": 247,
+    "failures": 1,
+    "log": "/private/tmp/secops-evaluation-full-tests.txt",
+    "failing_test": "test_cli_preserves_artifacts_without_capabilities_or_implicit_reviews",
+    "source_freeze_verified": false,
+    "disposition": "Superseded during conflict-scope changes; final frozen source passed all 249 tests."
+  },
+  "scripted_replay": {
+    "run_id": "5e131cb4e08bac767883b4df1d5323f4",
+    "packet_hash": "3858cb98d281f25a298d8b983bb32f3c1e22dccb96836d9ec3a9561126ac373c",
+    "snapshot_hash": "7ba8064ffb58b0cae7d09119ab282231ca82cac714a702b44324ffa9e3074560",
+    "engine_hash": "0511c075cf72943fa54d05dd0d06eef5cdb50ab503056c60d53e0638f77d356d",
+    "recommendation": "escalate",
+    "investigation_status": "needs_review",
+    "contradiction": false,
+    "reads": 9,
+    "execution": "Strands SDK with scripted provider (no live model)",
+    "report": "data/case04-final-scripted/investigation.md",
+    "evaluation_score": {
+      "campaign_acceptance": false,
+      "case_status": "draft_teaching_case",
+      "claim_support": {
+        "supported": 0,
+        "unreviewed": 1,
+        "unsupported": 0,
+        "unverifiable": 0
+      },
+      "deterministic_matches_expected": true,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "final_packet_matches_expected": true,
+      "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance.",
+      "omitted_requirements": [],
+      "outcome": "pending_review",
+      "raw_model_matches_expected": true,
+      "raw_model_recommendation": "escalate",
+      "reconciliation_disagreement": false,
+      "review_hash": "978b8952173719b2c9d0681440f8d44cfdc44dc7b85b8394be7258dd0f894c47",
+      "reviewer": "",
+      "reviewer_kind": "",
+      "schema_version": 1,
+      "source_hash": "a48238f3a9e75103cf79fe7bd2ac7cf621f7e9db637411952bf51a995ff9a2fd",
+      "unreviewed_requirements": [
+        "distinct_messages",
+        "delivered_followup",
+        "clicked_followup",
+        "authorization_limited",
+        "stale_domain",
+        "exact_followup",
+        "credential_theft",
+        "provider_accuracy"
+      ]
+    }
+  },
+  "prior_replay_preserved": "data/case04-scripted",
+  "runbook_validation": "PASS; eight references checked, zero missing",
+  "migration_probe": {
+    "original_status": 403,
+    "faulty_status": 200,
+    "faulty_leak_detected": true,
+    "corrected_status": 403
+  },
+  "paid_calls": 0,
+  "grants_issued": 0,
+  "analyst_sessions": 0,
+  "historical_live_stores_opened": 0
+}

@@ -7,7 +7,7 @@ import secrets
 import subprocess
 import time
 
-from .contracts import Rejected, canonical
+from .contracts import Rejected, canonical, sha
 from .fixtures import scenario
 from .store import Store, engine_digest
 
@@ -18,17 +18,22 @@ def write_private(path, value):
         stream.write(canonical(value)); stream.flush(); os.fsync(stream.fileno())
 
 
-def prepare(output):
+def prepare(output, case_id=None):
+    if case_id is None:
+        bundle = scenario('phishing', 'malicious_alternative')
+    else:
+        from .evaluation_cases import get_case
+        bundle = get_case(case_id)
     output = Path(output).absolute()
     Store._safe(output)
     output.mkdir(parents=True, mode=0o700, exist_ok=False)
     store = Store(output / 'store')
     token = secrets.token_urlsafe(32)
-    bundle = scenario('phishing', 'malicious_alternative')
     run = store.ingest(bundle, token, secrets.token_hex(16))
     write_private(output / 'owner.json', {'run_id': run, 'token': token})
     write_private(output / 'incident.json', bundle)
     proposal = {'run_id': run, 'engine_hash': engine_digest(), 'scenario': 'one synthetic reported-phishing incident',
+                'case_id': case_id, 'snapshot_sha256': sha(canonical(bundle)),
                 'model': 'gpt-4.1-mini-2025-04-14', 'requests_max': 10, 'tool_calls_max': 9,
                 'wall_seconds_max': 120, 'budget_microusd': 4250000, 'authorization': 'not issued'}
     write_private(output / 'proposal.json', proposal)
@@ -91,6 +96,16 @@ def execute(output, key_file, actor, authorize_usd):
     if proposal['engine_hash'] != engine_digest() or proposal['run_id'] != owner['run_id']:
         raise Rejected('prepared implementation changed; create a fresh run')
     store = Store(output / 'store'); run, token = owner['run_id'], owner['token']
+    with store._locked() as db:
+        row = store._owner(db, run, token)
+        store._current(db, row)
+        store._load(row)
+        if proposal['snapshot_sha256'] != row['snapshot'] or sha(canonical(json.loads((output / 'incident.json').read_text()))) != row['snapshot']:
+            raise Rejected('prepared fixture changed; create a fresh run')
+        if proposal.get('case_id') is not None:
+            from .evaluation_cases import case_digest
+            if case_digest(proposal['case_id']) != row['snapshot']:
+                raise Rejected('named case changed; create a fresh run')
     key = load_key(key_file)
     grant = authorize(store, run, token, actor)
     started = time.monotonic(); outcome = 'stopped'
@@ -111,16 +126,17 @@ def execute(output, key_file, actor, authorize_usd):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Host-only single synthetic phishing attempt. Never an agent tool.')
+    parser = argparse.ArgumentParser(description='Host-only single synthetic investigation attempt. Never an agent tool.')
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--output', required=True, type=Path)
+    p.add_argument('--case', choices=['case-04'], help='Named draft evaluation case; default is historical single-message fixture')
     p = sub.add_parser('execute'); p.add_argument('--output', required=True, type=Path)
     p.add_argument('--key-file', required=True, type=Path); p.add_argument('--actor', required=True)
     p.add_argument('--authorize-usd', required=True, choices=['4.25'])
     args = parser.parse_args()
     try:
         if args.command == 'prepare':
-            result = prepare(args.output)
+            result = prepare(args.output, args.case)
         else:
             result = execute(args.output, args.key_file, args.actor, args.authorize_usd)
         print(json.dumps(result))
