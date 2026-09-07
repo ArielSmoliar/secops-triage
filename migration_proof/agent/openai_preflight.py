@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import date, datetime, timezone
 import json
 import os
-from typing import Mapping
+from typing import Literal, Mapping
 
 from migration_proof.core.contracts import Rejected
 
@@ -18,13 +18,16 @@ OUTPUT_NANODOLLARS_PER_TOKEN = 1600
 
 @dataclass(frozen=True)
 class OpenAIPlan:
-    """One synthetic faulty-candidate attempt. Money is integer USD millionths."""
+    """One explicitly scoped synthetic-candidate attempt. Money is integer USD millionths."""
 
     model_calls: int = 8
     max_output_tokens: int = 2048
     budget_microusd: int = 3_500_000
+    scenario: Literal["faulty", "corrected"] = "faulty"
 
     def __post_init__(self):
+        if type(self.scenario) is not str or self.scenario not in ("faulty", "corrected"):
+            raise Rejected("unknown evaluation scenario")
         for value, ceiling in ((self.model_calls, 8), (self.max_output_tokens, 2048),
                                (self.budget_microusd, 3_500_000)):
             if type(value) is not int or not 1 <= value <= ceiling:
@@ -68,7 +71,7 @@ def preflight(plan: OpenAIPlan | None = None, *,
     return {
         "provider": "openai_api", "model_id": MODEL_ID,
         "transport_implemented": True, "spend_ledger_implemented": True,
-        "scenario": "one_faulty_candidate_attempt", "model_calls": plan.model_calls,
+        "scenario": "one_" + plan.scenario + "_candidate_attempt", "model_calls": plan.model_calls,
         "max_output_tokens": plan.max_output_tokens,
         "budget_microusd": plan.budget_microusd,
         "per_call_reservation_microusd": plan.per_call_microusd,

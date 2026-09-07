@@ -4,7 +4,7 @@ import json
 import time
 from uuid import uuid4
 
-from migration_proof.core.artifacts import canonical
+from migration_proof.core.artifacts import PATCH_PATH, REGRESSION, canonical
 from migration_proof.core.contracts import Rejected
 from migration_proof.core.store import transaction
 from .journal import Journal
@@ -13,11 +13,13 @@ from .openai_preflight import (OpenAIPlan, MODEL_ID, MODEL_CONTEXT_TOKENS,
 
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS inference_grants(
- id TEXT PRIMARY KEY, run_id TEXT NOT NULL UNIQUE REFERENCES runs(id),
+ id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES runs(id),
  initial_digest TEXT NOT NULL, model_id TEXT NOT NULL, plan_json TEXT NOT NULL,
  actor TEXT NOT NULL, issued REAL NOT NULL, expires REAL NOT NULL,
  status TEXT NOT NULL CHECK(status IN ('issued','claimed','closed','revoked')),
- session_id TEXT UNIQUE REFERENCES agent_sessions(id));
+ session_id TEXT UNIQUE REFERENCES agent_sessions(id), UNIQUE(run_id,initial_digest));
+CREATE UNIQUE INDEX IF NOT EXISTS one_outstanding_inference_grant ON inference_grants(run_id)
+ WHERE status IN ('issued','claimed');
 CREATE TABLE IF NOT EXISTS inference_requests(
  id TEXT PRIMARY KEY, grant_id TEXT NOT NULL REFERENCES inference_grants(id),
  ordinal INTEGER NOT NULL, reserved_microusd INTEGER NOT NULL CHECK(reserved_microusd>0),
@@ -27,12 +29,48 @@ CREATE TABLE IF NOT EXISTS inference_requests(
 '''
 
 
+SCHEMA_VERSION = 2
+
+
+def _create_schema(db):
+    # executescript commits implicitly; execute each statement to keep migration atomic.
+    for statement in SCHEMA.split(";"):
+        if statement.strip():
+            db.execute(statement)
+    db.execute("CREATE TABLE inference_schema(version INTEGER NOT NULL)")
+    db.execute("INSERT INTO inference_schema VALUES(?)", (SCHEMA_VERSION,))
+
+
+def _ensure_schema(db):
+    versioned = db.execute("SELECT 1 FROM sqlite_master WHERE name='inference_schema'").fetchone()
+    if versioned:
+        versions = db.execute("SELECT version FROM inference_schema").fetchall()
+        if len(versions) != 1 or versions[0][0] != SCHEMA_VERSION:
+            raise Rejected("unsupported inference schema")
+        return
+    legacy = db.execute("SELECT 1 FROM sqlite_master WHERE name='inference_grants'").fetchone()
+    if legacy and db.execute("SELECT 1 FROM agent_sessions WHERE status='running'").fetchone():
+        raise Rejected("recover or finish active sessions before inference migration")
+    with transaction(db):
+        if legacy:
+            db.execute("ALTER TABLE inference_requests RENAME TO inference_requests_v1")
+            db.execute("ALTER TABLE inference_grants RENAME TO inference_grants_v1")
+        _create_schema(db)
+        if legacy:
+            db.execute("INSERT INTO inference_grants SELECT * FROM inference_grants_v1")
+            db.execute("INSERT INTO inference_requests SELECT * FROM inference_requests_v1")
+            db.execute("DROP TABLE inference_requests_v1")
+            db.execute("DROP TABLE inference_grants_v1")
+        if db.execute("PRAGMA foreign_key_check").fetchone():
+            raise Rejected("inference migration failed integrity check")
+
+
 class SpendLedger:
     def __init__(self, store):
         self.store = store
         Journal(store)
         with store._locked() as db:
-            db.executescript(SCHEMA)
+            _ensure_schema(db)
 
     def authorize(self, run_id, token, plan, actor, *, ttl_seconds=600):
         """Backend owner action. Call only after explicit authorization to spend."""
@@ -45,10 +83,19 @@ class SpendLedger:
             run = self.store._owner(db, run_id, token)
             self.store._integrity(db, run)
             self.store._agent_scope(db, run_id)
-            if run["state"] != "created" or self.store._bundle(run_id, run["digest"])["revision"] != "faulty":
-                raise Rejected("grant requires a fresh faulty-candidate run")
-            if db.execute("SELECT 1 FROM inference_grants WHERE run_id=?", (run_id,)).fetchone():
-                raise Rejected("this run already has an inference grant")
+            bundle = self.store._bundle(run_id, run["digest"])
+            if plan.scenario == "faulty":
+                eligible = run["state"] == "created" and bundle["revision"] == "faulty"
+            else:
+                # Only the existing owner-only corrected transition may enter this path.
+                eligible = (run["state"] == "candidate_replaced" and bundle["revision"] == "corrected"
+                            and bundle["files"].get(PATCH_PATH) == REGRESSION
+                            and bool(bundle["patches"]))
+            if not eligible:
+                raise Rejected("candidate does not match authorized evaluation scenario")
+            if db.execute("SELECT 1 FROM inference_grants WHERE run_id=? AND (initial_digest=? OR status IN ('issued','claimed'))",
+                          (run_id, run["digest"])).fetchone():
+                raise Rejected("digest already granted or prior grant still outstanding")
             grant_id = uuid4().hex
             now = time.time()
             with transaction(db):

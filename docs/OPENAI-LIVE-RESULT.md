@@ -35,3 +35,5 @@ The redacted report, per-request accounting, evidence checks, tool sequence, and
 This is one successful live investigation of the faulty candidate, not a reliability evaluation. The corrected-candidate live path, repeatability, richer explanation coverage, and evaluation across failure cases remain unverified. The present spending grant implementation deliberately accepts only a fresh faulty candidate; a corrected-candidate evaluation requires a reviewed scope change and separate paid-call authorization.
 
 The existing 110-test suite and TLS verification passed for the execution commit before this run. This follow-up changes only documentation and redacted evidence. No UI, AWS resources, AgentCore, candidate promotion, or submission work was performed.
+
+The corrected scope and migration have since been implemented and tested without paid calls; see `docs/CORRECTED-EVALUATION.md`. This live faulty-candidate evidence is unchanged.

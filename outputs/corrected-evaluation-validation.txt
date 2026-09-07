@@ -1,0 +1,194 @@
+Corrected evaluation validation — 2026-09-07
+Baseline: 334e680fe40f5869251416e14a4e6008165185d0; clean main before changes.
+All model responses in this validation are mocked; no additional paid calls.
+Existing real-run directories were not opened or migrated.
+Command: .venv/bin/python -B -m unittest discover -s tests -v
+
+test_assessment_tampering_invalidates_approval (test_agent_orchestration.AgentTests.test_assessment_tampering_invalidates_approval) ... ok
+test_async_model_timeout_stops (test_agent_orchestration.AgentTests.test_async_model_timeout_stops) ... ok
+test_changed_assessment_cannot_reuse_approval (test_agent_orchestration.AgentTests.test_changed_assessment_cannot_reuse_approval) ... ok
+test_concurrent_session_on_same_run_is_rejected (test_agent_orchestration.AgentTests.test_concurrent_session_on_same_run_is_rejected) ... ok
+test_context_cap_prevents_model_call (test_agent_orchestration.AgentTests.test_context_cap_prevents_model_call) ... ok
+test_cross_run_tool_request_does_not_touch_other_run (test_agent_orchestration.AgentTests.test_cross_run_tool_request_does_not_touch_other_run) ... ok
+test_extra_arguments_are_rejected_without_silently_dropping_them (test_agent_orchestration.AgentTests.test_extra_arguments_are_rejected_without_silently_dropping_them) ... ok
+test_faulty_candidate_uses_all_four_tools_and_preserves_human_boundary (test_agent_orchestration.AgentTests.test_faulty_candidate_uses_all_four_tools_and_preserves_human_boundary) ... ok
+test_hard_process_deadline_is_enforced (test_agent_orchestration.AgentTests.test_hard_process_deadline_is_enforced) ... ok
+test_live_provider_objects_are_rejected_before_calling (test_agent_orchestration.AgentTests.test_live_provider_objects_are_rejected_before_calling) ... ok
+test_malformed_arguments_block (test_agent_orchestration.AgentTests.test_malformed_arguments_block) ... ok
+test_model_call_cap_stops_before_another_turn (test_agent_orchestration.AgentTests.test_model_call_cap_stops_before_another_turn) ... ok
+test_model_claim_cannot_replace_missing_checks (test_agent_orchestration.AgentTests.test_model_claim_cannot_replace_missing_checks) ... ok
+test_nonzero_spend_and_unbounded_limits_are_rejected (test_agent_orchestration.AgentTests.test_nonzero_spend_and_unbounded_limits_are_rejected) ... ok
+test_other_owner_cannot_read_agent_journal (test_agent_orchestration.AgentTests.test_other_owner_cannot_read_agent_journal) ... ok
+test_packet_cannot_be_approved_until_session_is_finalized (test_agent_orchestration.AgentTests.test_packet_cannot_be_approved_until_session_is_finalized) ... ok
+test_preexisting_tool_capability_cannot_mutate_active_session (test_agent_orchestration.AgentTests.test_preexisting_tool_capability_cannot_mutate_active_session) ... ok
+test_process_exit_preserves_interrupted_session_and_blocks (test_agent_orchestration.AgentTests.test_process_exit_preserves_interrupted_session_and_blocks) ... ok
+test_promotion_and_shell_are_not_tools (test_agent_orchestration.AgentTests.test_promotion_and_shell_are_not_tools) ... ok
+test_provider_failures_do_not_retry_indefinitely (test_agent_orchestration.AgentTests.test_provider_failures_do_not_retry_indefinitely) ... ok
+test_real_sdk_selects_three_tools_and_stops_before_approval (test_agent_orchestration.AgentTests.test_real_sdk_selects_three_tools_and_stops_before_approval) ... ok
+test_response_cap_prevents_tool_dispatch (test_agent_orchestration.AgentTests.test_response_cap_prevents_tool_dispatch) ... ok
+test_restart_keeps_completed_summary_and_packet (test_agent_orchestration.AgentTests.test_restart_keeps_completed_summary_and_packet) ... ok
+test_stale_digest_tool_request_blocks (test_agent_orchestration.AgentTests.test_stale_digest_tool_request_blocks) ... ok
+test_stop_record_and_run_invalidation_are_atomic (test_agent_orchestration.AgentTests.test_stop_record_and_run_invalidation_are_atomic) ... ok
+test_tool_call_cap_stops_before_execution (test_agent_orchestration.AgentTests.test_tool_call_cap_stops_before_execution) ... ok
+test_two_real_processes_execute_isolated_http_and_four_tool_repair (test_agent_orchestration.AgentTests.test_two_real_processes_execute_isolated_http_and_four_tool_repair) ... ok
+test_unregistered_approval_request_is_cancelled_without_execution (test_agent_orchestration.AgentTests.test_unregistered_approval_request_is_cancelled_without_execution) ... ok
+test_unsafe_generated_patch_is_rejected (test_agent_orchestration.AgentTests.test_unsafe_generated_patch_is_rejected) ... ok
+test_untrusted_text_and_credentials_are_not_persisted (test_agent_orchestration.AgentTests.test_untrusted_text_and_credentials_are_not_persisted) ... ok
+test_worker_launch_failure_leaves_no_running_session (test_agent_orchestration.AgentTests.test_worker_launch_failure_leaves_no_running_session) ... ok
+test_wrong_owner_cannot_stop_someone_elses_session (test_agent_orchestration.AgentTests.test_wrong_owner_cannot_stop_someone_elses_session) ... ok
+test_concurrent_corrected_authorization_issues_only_one_grant (test_corrected_evaluation.CorrectedTests.test_concurrent_corrected_authorization_issues_only_one_grant) ... ok
+test_corrected_live_adapter_reruns_all_gates_preserves_patch_and_history (test_corrected_evaluation.CorrectedTests.test_corrected_live_adapter_reruns_all_gates_preserves_patch_and_history) ... ok
+test_corrected_seed_without_carried_regression_is_rejected (test_corrected_evaluation.CorrectedTests.test_corrected_seed_without_carried_regression_is_rejected) ... ok
+test_forged_readiness_cannot_skip_current_boundary_check (test_corrected_evaluation.CorrectedTests.test_forged_readiness_cannot_skip_current_boundary_check) ... ok
+test_offline_preparation_can_feed_separately_authorized_corrected_attempt (test_corrected_evaluation.CorrectedTests.test_offline_preparation_can_feed_separately_authorized_corrected_attempt) ... ok
+test_outstanding_prior_grant_must_be_explicitly_revoked (test_corrected_evaluation.CorrectedTests.test_outstanding_prior_grant_must_be_explicitly_revoked) ... ok
+test_wrong_owner_cannot_authorize_corrected_scope (test_corrected_evaluation.CorrectedTests.test_wrong_owner_cannot_authorize_corrected_scope) ... ok
+test_wrong_scenario_or_no_owner_correction_rejected (test_corrected_evaluation.CorrectedTests.test_wrong_scenario_or_no_owner_correction_rejected) ... ok
+test_active_legacy_session_must_be_recovered_first (test_corrected_evaluation.MigrationTests.test_active_legacy_session_must_be_recovered_first) ... ok
+test_concurrent_migration_is_idempotent (test_corrected_evaluation.MigrationTests.test_concurrent_migration_is_idempotent) ... ok
+test_explicit_scenario_is_validated_and_preflight_stays_disabled (test_corrected_evaluation.MigrationTests.test_explicit_scenario_is_validated_and_preflight_stays_disabled) ... ok
+test_failure_mid_migration_rolls_back_ddl_and_data (test_corrected_evaluation.MigrationTests.test_failure_mid_migration_rolls_back_ddl_and_data) ... ok
+test_migration_preserves_every_historical_value_and_foreign_key (test_corrected_evaluation.MigrationTests.test_migration_preserves_every_historical_value_and_foreign_key) ... ok
+test_process_exit_during_migration_recovers_original_schema (test_corrected_evaluation.MigrationTests.test_process_exit_during_migration_recovers_original_schema) ... ok
+test_unknown_schema_version_fails_closed (test_corrected_evaluation.MigrationTests.test_unknown_schema_version_fails_closed) ... ok
+test_all_state_edges_enforced (test_deterministic_core.CoreTests.test_all_state_edges_enforced) ... ok
+test_approval_requires_current_packet_and_actor (test_deterministic_core.CoreTests.test_approval_requires_current_packet_and_actor) ... ok
+test_approved_blob_cannot_be_overwritten_through_storage_api (test_deterministic_core.CoreTests.test_approved_blob_cannot_be_overwritten_through_storage_api) ... ok
+test_artifact_publication_failure_does_not_reference_partial_blob (test_deterministic_core.CoreTests.test_artifact_publication_failure_does_not_reference_partial_blob) ... ok
+test_backend_change_invalidates_existing_approval (test_deterministic_core.CoreTests.test_backend_change_invalidates_existing_approval) ... ok
+test_budget_exhaustion_blocks (test_deterministic_core.CoreTests.test_budget_exhaustion_blocks) ... ok
+test_candidate_change_invalidates_approval (test_deterministic_core.CoreTests.test_candidate_change_invalidates_approval) ... ok
+test_canonical_digest_is_stable_and_binds_target (test_deterministic_core.CoreTests.test_canonical_digest_is_stable_and_binds_target) ... ok
+test_divergent_probe_result_cannot_claim_pass (test_deterministic_core.CoreTests.test_divergent_probe_result_cannot_claim_pass) ... ok
+test_evidence_change_invalidates_approval (test_deterministic_core.CoreTests.test_evidence_change_invalidates_approval) ... ok
+test_exact_four_scoped_contracts (test_deterministic_core.CoreTests.test_exact_four_scoped_contracts) ... ok
+test_expired_approval_blocks_and_invalidates (test_deterministic_core.CoreTests.test_expired_approval_blocks_and_invalidates) ... ok
+test_failed_promotion_rolls_back_atomically (test_deterministic_core.CoreTests.test_failed_promotion_rolls_back_atomically) ... ok
+test_missing_artifact_fails_closed (test_deterministic_core.CoreTests.test_missing_artifact_fails_closed) ... ok
+test_missing_gates_never_ready_and_packet_refreshes (test_deterministic_core.CoreTests.test_missing_gates_never_ready_and_packet_refreshes) ... ok
+test_owner_replacement_invalidates_approval_and_old_evidence (test_deterministic_core.CoreTests.test_owner_replacement_invalidates_approval_and_old_evidence) ... ok
+test_packet_change_invalidates_approval (test_deterministic_core.CoreTests.test_packet_change_invalidates_approval) ... ok
+test_partial_health_and_malformed_result_block (test_deterministic_core.CoreTests.test_partial_health_and_malformed_result_block) ... ok
+test_patch_parser_rejects_unsafe_or_arbitrary_code (test_deterministic_core.CoreTests.test_patch_parser_rejects_unsafe_or_arbitrary_code) ... ok
+test_patch_without_failure_is_rejected (test_deterministic_core.CoreTests.test_patch_without_failure_is_rejected) ... ok
+test_process_crash_after_pointer_commit_recovers_receipt (test_deterministic_core.CoreTests.test_process_crash_after_pointer_commit_recovers_receipt) ... ok
+test_process_crash_during_tool_leaves_no_false_evidence (test_deterministic_core.CoreTests.test_process_crash_during_tool_leaves_no_false_evidence) ... ok
+test_process_crash_then_verification_failure_rolls_back (test_deterministic_core.CoreTests.test_process_crash_then_verification_failure_rolls_back) ... ok
+test_real_fixture_success_and_failure_with_generated_test (test_deterministic_core.CoreTests.test_real_fixture_success_and_failure_with_generated_test) ... ok
+test_recovery_rejects_ambiguous_promotion (test_deterministic_core.CoreTests.test_recovery_rejects_ambiguous_promotion) ... ok
+test_restart_invalidates_expired_approval (test_deterministic_core.CoreTests.test_restart_invalidates_expired_approval) ... ok
+test_restart_recovers_approved_and_verified_runs (test_deterministic_core.CoreTests.test_restart_recovers_approved_and_verified_runs) ... ok
+test_runtime_change_invalidates_existing_approval (test_deterministic_core.CoreTests.test_runtime_change_invalidates_existing_approval) ... ok
+test_safe_patch_and_owner_correction_lineage (test_deterministic_core.CoreTests.test_safe_patch_and_owner_correction_lineage) ... ok
+test_stale_inputs_leave_state_unchanged (test_deterministic_core.CoreTests.test_stale_inputs_leave_state_unchanged) ... ok
+test_success_approval_promotion_replay (test_deterministic_core.CoreTests.test_success_approval_promotion_replay) ... ok
+test_symlink_artifact_and_path_traversal_rejected (test_deterministic_core.CoreTests.test_symlink_artifact_and_path_traversal_rejected) ... ok
+test_tool_timeout_and_exception_are_redacted (test_deterministic_core.CoreTests.test_tool_timeout_and_exception_are_redacted) ... ok
+test_tools_cannot_approve_or_replace_faulty_candidate (test_deterministic_core.CoreTests.test_tools_cannot_approve_or_replace_faulty_candidate) ... ok
+test_transaction_failure_cannot_consume_approval_or_move_pointer (test_deterministic_core.CoreTests.test_transaction_failure_cannot_consume_approval_or_move_pointer) ... ok
+test_two_runs_and_concurrent_replays_are_isolated (test_deterministic_core.CoreTests.test_two_runs_and_concurrent_replays_are_isolated) ... ok
+test_unknown_schema_is_not_silently_migrated (test_deterministic_core.CoreTests.test_unknown_schema_is_not_silently_migrated) ... ok
+test_wrong_owner_and_cross_run_scope (test_deterministic_core.CoreTests.test_wrong_owner_and_cross_run_scope) ... ok
+test_all_revisions_pass_the_ordinary_happy_path (test_fixture_baseline.BaselineFixtureTests.test_all_revisions_pass_the_ordinary_happy_path) ... ok
+test_all_revisions_reject_an_unknown_token (test_fixture_baseline.BaselineFixtureTests.test_all_revisions_reject_an_unknown_token) ... ok
+test_bad_plan_and_date_types_rejected (test_openai_preflight.OpenAIPreflightTests.test_bad_plan_and_date_types_rejected) ... ok
+test_cli_exit_is_not_live_readiness (test_openai_preflight.OpenAIPreflightTests.test_cli_exit_is_not_live_readiness) ... ok
+test_credential_presence_never_enables_execution (test_openai_preflight.OpenAIPreflightTests.test_credential_presence_never_enables_execution) ... ok
+test_exact_budget_boundary (test_openai_preflight.OpenAIPreflightTests.test_exact_budget_boundary) ... ok
+test_full_context_reservation_rounds_up_per_call (test_openai_preflight.OpenAIPreflightTests.test_full_context_reservation_rounds_up_per_call) ... ok
+test_invalid_limits_fail_closed (test_openai_preflight.OpenAIPreflightTests.test_invalid_limits_fail_closed) ... ok
+test_missing_empty_and_whitespace_keys (test_openai_preflight.OpenAIPreflightTests.test_missing_empty_and_whitespace_keys) ... ok
+test_model_endpoint_and_authorization_cannot_be_overridden (test_openai_preflight.OpenAIPreflightTests.test_model_endpoint_and_authorization_cannot_be_overridden) ... ok
+test_preflight_has_no_network_or_environment_mutations (test_openai_preflight.OpenAIPreflightTests.test_preflight_has_no_network_or_environment_mutations) ... ok
+test_pricing_date_window (test_openai_preflight.OpenAIPreflightTests.test_pricing_date_window) ... ok
+test_reduced_attempt_can_fit_reduced_budget (test_openai_preflight.OpenAIPreflightTests.test_reduced_attempt_can_fit_reduced_budget) ... ok
+test_concurrent_reservations_only_one_pending (test_openai_transport.SpendTests.test_concurrent_reservations_only_one_pending) ... ok
+test_cross_run_claim_read_revoke_and_settlement_rejected (test_openai_transport.SpendTests.test_cross_run_claim_read_revoke_and_settlement_rejected) ... ok
+test_expiry_revocation_and_claim_replay (test_openai_transport.SpendTests.test_expiry_revocation_and_claim_replay) ... ok
+test_failure_finalization_is_atomic_with_grant_and_run (test_openai_transport.SpendTests.test_failure_finalization_is_atomic_with_grant_and_run) ... ok
+test_grant_rejects_candidate_change_before_claim (test_openai_transport.SpendTests.test_grant_rejects_candidate_change_before_claim) ... ok
+test_grant_requires_owner_fresh_faulty_and_once_only (test_openai_transport.SpendTests.test_grant_requires_owner_fresh_faulty_and_once_only) ... ok
+test_invalid_authorization_and_stale_pricing (test_openai_transport.SpendTests.test_invalid_authorization_and_stale_pricing) ... ok
+test_missing_negative_excessive_and_inconsistent_usage (test_openai_transport.SpendTests.test_missing_negative_excessive_and_inconsistent_usage) ... ok
+test_price_expiry_after_grant_prevents_reservation (test_openai_transport.SpendTests.test_price_expiry_after_grant_prevents_reservation) ... ok
+test_process_exit_pending_request_is_preserved_on_recovery (test_openai_transport.SpendTests.test_process_exit_pending_request_is_preserved_on_recovery) ... ok
+test_reserve_before_dispatch_usage_and_non_refundable_budget (test_openai_transport.SpendTests.test_reserve_before_dispatch_usage_and_non_refundable_budget) ... ok
+test_stop_closes_grant_preserves_pending_and_never_promotes (test_openai_transport.SpendTests.test_stop_closes_grant_preserves_pending_and_never_promotes) ... ok
+test_unknown_usage_retains_reservation_and_blocks_more_calls (test_openai_transport.SpendTests.test_unknown_usage_retains_reservation_and_blocks_more_calls) ... ok
+test_credentials_and_runner_require_valid_grant (test_openai_transport.TransportTests.test_credentials_and_runner_require_valid_grant) ... ok
+test_forbidden_tool_rejected_by_real_guard (test_openai_transport.TransportTests.test_forbidden_tool_rejected_by_real_guard) ... ok
+test_https_fixed_destination_caps_and_no_redirect_retry (test_openai_transport.TransportTests.test_https_fixed_destination_caps_and_no_redirect_retry) ... ok
+test_malformed_usage_stops_real_loop_before_any_tool (test_openai_transport.TransportTests.test_malformed_usage_stops_real_loop_before_any_tool) ... ok
+test_network_failure_has_one_attempt_and_keeps_reservation (test_openai_transport.TransportTests.test_network_failure_has_one_attempt_and_keeps_reservation) ... ok
+test_no_grant_means_no_dispatch (test_openai_transport.TransportTests.test_no_grant_means_no_dispatch) ... ok
+test_real_strands_loop_fake_openai_real_fixture_four_tools (test_openai_transport.TransportTests.test_real_strands_loop_fake_openai_real_fixture_four_tools) ... ok
+test_request_rejects_multimodal_extra_tools_and_oversize (test_openai_transport.TransportTests.test_request_rejects_multimodal_extra_tools_and_oversize) ... ok
+test_response_identity_usage_shape_and_incomplete_output (test_openai_transport.TransportTests.test_response_identity_usage_shape_and_incomplete_output) ... ok
+test_supervised_worker_key_stdin_and_durable_usage (test_openai_transport.TransportTests.test_supervised_worker_key_stdin_and_durable_usage) ... ok
+test_supervisor_kills_hanging_provider_retains_uncertainty (test_openai_transport.TransportTests.test_supervisor_kills_hanging_provider_retains_uncertainty) ... ok
+test_tls_verifies_host_with_pinned_ca_bundle_when_system_roots_missing (test_openai_transport.TransportTests.test_tls_verifies_host_with_pinned_ca_bundle_when_system_roots_missing) ... ok
+test_faulty_migration_exposes_the_regression (test_tenant_boundary.TenantBoundaryTests.test_faulty_migration_exposes_the_regression) ... ok
+test_original_and_corrected_revisions_preserve_the_boundary (test_tenant_boundary.TenantBoundaryTests.test_original_and_corrected_revisions_preserve_the_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 125 tests in 58.426s
+
+OK
+
+Probe:
+[
+  {
+    "revision": "original",
+    "expected_status": 403,
+    "actual_status": 403,
+    "leaked_document_fields": [],
+    "passed": true
+  },
+  {
+    "revision": "faulty",
+    "expected_status": 403,
+    "actual_status": 200,
+    "leaked_document_fields": [
+      "id",
+      "tenant",
+      "title"
+    ],
+    "passed": false
+  },
+  {
+    "revision": "corrected",
+    "expected_status": 403,
+    "actual_status": 403,
+    "leaked_document_fields": [],
+    "passed": true
+  }
+]
+
+Proposed additional corrected-only plan (not authorized):
+{
+  "account_access_verified": false,
+  "api_key_present": false,
+  "blockers": [
+    "paid_call_authorization_missing",
+    "account_model_access_unverified",
+    "openai_api_key_missing"
+  ],
+  "budget_microusd": 1700000,
+  "execution_enabled": false,
+  "max_output_tokens": 2048,
+  "model_calls": 4,
+  "model_id": "gpt-4.1-mini-2025-04-14",
+  "paid_calls_authorized": false,
+  "per_call_reservation_microusd": 422308,
+  "price_checked_on": "2026-09-06",
+  "price_source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+  "pricing_fresh": true,
+  "provider": "openai_api",
+  "reservation_basis": "full_model_context_plus_output_no_cache_discount",
+  "scenario": "one_corrected_candidate_attempt",
+  "spend_ledger_implemented": true,
+  "total_reservation_microusd": 1689232,
+  "transport_implemented": true
+}
+
+Review: scenario validated; corrected owner transition and carried regression required; grant unique per run/digest; one outstanding grant per run; prior records unchanged; no same-digest retries. Atomic schema/data migration, foreign keys, concurrent initialization, exception rollback, and process-exit recovery verified. Core user_version remains 1. All four current gates required before readiness; approval/promotion remain human-only.

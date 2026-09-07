@@ -43,3 +43,5 @@ No UI, AWS provisioning, AgentCore, or submission work is included. The implemen
 The first explicitly authorized live attempt subsequently stopped before any tool call; usage remains unknown. The certificate diagnosis, fix, and remaining authorization gate are recorded in `docs/OPENAI-FIRST-ATTEMPT.md`.
 
 A separately authorized replacement completed with real OpenAI responses on 2026-09-07. See `docs/OPENAI-LIVE-RESULT.md` for observed behavior, usage, and remaining evaluation limits.
+
+Corrected-candidate grant scope and spend-schema version 2 are now implemented; `docs/CORRECTED-EVALUATION.md` supersedes the original fresh-faulty-only and one-grant-per-run restrictions above. Each grant is still single-use for one run/digest, with explicit owner authority and preserved history. No additional paid evaluation has run yet.
