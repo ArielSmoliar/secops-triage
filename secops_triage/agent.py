@@ -22,8 +22,10 @@ Use the provided window. Missing/unauthorized/truncated telemetry is not benign.
 A prior benign case or successful MFA alone cannot justify closure. Explain uncertainty.
 For the FINAL RESPONSE ONLY, return JSON with recommendation equal to close, escalate or needs_review:
 {"recommendation":"escalate", "findings":[
-{"evidence_id":"returned evidence id", "event_id":"event inside that evidence", "summary":"brief evidence-based finding"}]}.
-Use actual returned citation IDs, at least one finding, at most 12. Cite the material observations behind
+{"citation":"C1", "summary":"brief evidence-based finding"}]}.
+Use only the exact short citation handles listed in available_citations, at least one finding and at
+most 12. Do not copy evidence hashes, incident IDs or event IDs into the citation field. A handle with
+scope=result_metadata supports query coverage/absence or entity context, not an invented event. Cite the material observations behind
 your conclusion, including message, delivery, intelligence and interactions when those records exist.
 Distinguish observed delivery/clicks from unproven credential theft, execution or account compromise.
 Complete empty business context is not authorization and is not proof of maliciousness. You cannot create or close incidents,
@@ -38,22 +40,59 @@ CREATE TABLE IF NOT EXISTS secops_agent_events(
 
 
 def validate_assessment(value, evidence):
+    def reject(reason):
+        raise Rejected(reason)
     if type(value) is not dict or set(value) != {'recommendation', 'findings', 'execution', 'session_id'}:
-        raise Rejected('invalid agent assessment fields')
+        reject('assessment_fields')
     if value['execution'] not in (OFFLINE, LIVE) or value['recommendation'] not in ('close', 'escalate', 'needs_review'):
-        raise Rejected('invalid agent assessment vocabulary')
+        reject('assessment_vocabulary')
     if type(value['session_id']) is not str or len(value['session_id']) != 32:
-        raise Rejected('invalid session identity')
+        reject('session_identity')
     findings = value['findings']
     if type(findings) is not list or not 1 <= len(findings) <= 12:
-        raise Rejected('bounded findings required')
+        reject('findings_count')
     ids = {e['id']: {r['id'] for r in e['result']['records']} for e in evidence}
     for f in findings:
-        if (type(f) is not dict or set(f) != {'evidence_id', 'event_id', 'summary'}
-                or type(f['summary']) is not str or not 1 <= len(f['summary']) <= 1000
-                or type(f['evidence_id']) is not str or type(f['event_id']) is not str
-                or f['event_id'] not in ids.get(f['evidence_id'], set())):
-            raise Rejected('unsupported agent citation or finding')
+        if type(f) is not dict or set(f) != {'evidence_id', 'event_id', 'summary'}:
+            reject('finding_fields')
+        if type(f['summary']) is not str or not 1 <= len(f['summary'].strip()) <= 1000:
+            reject('summary_bounds')
+        if type(f['evidence_id']) is not str or f['evidence_id'] not in ids:
+            reject('unknown_evidence')
+        # Null cites the result metadata (coverage/count/ownership), never an event.
+        if f['event_id'] is not None and (type(f['event_id']) is not str or f['event_id'] not in ids[f['evidence_id']]):
+            reject('unknown_event')
+
+
+def citation_handles(evidence):
+    handles = {}
+    for e in evidence:
+        events = [r['id'] for r in e['result']['records']]
+        for event_id in events or [None]:
+            handles['C'+str(len(handles)+1)] = (e['id'], event_id)
+    return handles
+
+
+def resolve_findings(value, evidence):
+    """Only exact session-local handles can resolve to stored source identities."""
+    if type(value) is not dict or set(value) != {'recommendation', 'findings'}:
+        raise Rejected('final_fields')
+    if value['recommendation'] not in ('close', 'escalate', 'needs_review'):
+        raise Rejected('recommendation_vocabulary')
+    if type(value['findings']) is not list or not 1 <= len(value['findings']) <= 12:
+        raise Rejected('findings_count')
+    handles = citation_handles(evidence)
+    findings = []
+    for f in value['findings']:
+        if type(f) is not dict or set(f) != {'citation', 'summary'}:
+            raise Rejected('finding_fields')
+        if type(f['citation']) is not str or f['citation'] not in handles:
+            raise Rejected('unknown_citation')
+        if type(f['summary']) is not str or not 1 <= len(f['summary'].strip()) <= 1000:
+            raise Rejected('summary_bounds')
+        eid, event = handles[f['citation']]
+        findings.append({'evidence_id': eid, 'event_id': event, 'summary': f['summary']})
+    return {'recommendation': value['recommendation'], 'findings': findings}
 
 
 def reconcile(assessment, agent_assessment):
@@ -106,8 +145,8 @@ def fixture_model(bundle, attack=None):
             from .investigation import assess
             decision = assess(bundle, self.evidence)['recommendation'] or 'needs_review'
             e = next(e for e in self.evidence if e['result']['records'])
-            return {'recommendation': decision, 'findings': [{'evidence_id': e['id'],
-                    'event_id': e['result']['records'][0]['id'], 'summary': 'Scripted fixture observed this source record.'}]}
+            handle = next(k for k,v in citation_handles(self.evidence).items() if v == (e['id'],e['result']['records'][0]['id']))
+            return {'recommendation': decision, 'findings': [{'citation': handle, 'summary': 'Scripted fixture observed this source record.'}]}
     return Fixture()
 
 
@@ -177,7 +216,9 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
             result = call(name, REQUEST_TYPES[name](**args))
             evidence.append(result)
             calls = db.execute('SELECT tool_calls FROM secops_agent_sessions WHERE id=?', (session,)).fetchone()[0]
-            return dict(result, collection_progress={'tool_calls_remaining': max_calls-1-calls,
+            return dict(result, available_citations=[{'citation': k, 'event_id': v[1],
+                'scope': 'event' if v[1] is not None else 'result_metadata'}
+                for k,v in citation_handles(evidence).items() if v[0]==result['id']], collection_progress={'tool_calls_remaining': max_calls-1-calls,
                 'completed_checks': [{'alert_id': e['request']['alert_id'], 'template': e['request']['template']}
                                      for e in evidence if e['tool']=='query_activity']})
         except Exception:
@@ -225,9 +266,15 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
     value = json.loads(blocks[0]['text'])
     if type(value) is not dict or set(value) != {'recommendation', 'findings'}:
         fail('invalid final fields')
-    value.update(execution=mode, session_id=session)
     audit('validate_final')
-    validate_assessment(value, evidence)
+    try:
+        value = resolve_findings(value, evidence)
+        value.update(execution=mode, session_id=session)
+        validate_assessment(value, evidence)
+    except Rejected as error:
+        # These functions emit fixed reason codes only, never rejected values.
+        audit('final_rejected', str(error))
+        raise
     audit('assessment_validated')
     # Model's prose is untrusted even when its citation exists. The backend verdict is separate.
     return value

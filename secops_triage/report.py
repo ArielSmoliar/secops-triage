@@ -33,7 +33,8 @@ def markdown(store, packet):
                   f"Agent recommendation: **{safe(a['recommendation'])}**. The recommendation above comes from deterministic evidence checks.", '',
                   'Citations identify retrieved records; they do not independently validate the model’s interpretation.', '']
         for finding in a['findings']:
-            lines.append(f"- {safe(finding['summary'])} {citation(finding['evidence_id'])}")
+            scope = 'query/context evidence' if finding['event_id'] is None else 'event evidence'
+            lines.append(f"- {safe(finding['summary'])} ({scope}) {citation(finding['evidence_id'])}")
         if a['recommendation'] != (packet['recommendation'] or 'needs_review'):
             lines += ['', '**Agent and deterministic assessment disagree: analyst review required.**', '']
     lines += ['## Entities and ownership', '']

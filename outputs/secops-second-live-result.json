@@ -1,0 +1,255 @@
+{
+  "elapsed_seconds": 22.221,
+  "events": [
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "inspect_incident",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "lookup_entity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "lookup_entity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "find_related_cases",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "parse_final"
+    },
+    {
+      "label": "",
+      "stage": "validate_final"
+    },
+    {
+      "label": "see_last_stage",
+      "stage": "session_stopped"
+    }
+  ],
+  "grants": [
+    {
+      "id": "94155f619f80ac32b2650835224e52d1",
+      "state": "closed"
+    }
+  ],
+  "outcome": "stopped",
+  "run_id": "bc4d4acd62ddeb7be26fd40a08cc3ada",
+  "sessions": [
+    {
+      "id": "0804daf5e173426f6c0fc5858131dda3",
+      "mode": "Strands SDK with OpenAI; synthetic replay evidence",
+      "model_calls": 10,
+      "result_hash": null,
+      "run_id": "bc4d4acd62ddeb7be26fd40a08cc3ada",
+      "state": "stopped",
+      "tool_calls": 9
+    }
+  ],
+  "source_commit": "66c8abf4f8df5e2e3e7cba1f913a8aaf3e2546ce",
+  "spend": {
+    "estimated_microusd": 12979,
+    "requests": 10,
+    "reserved_microusd": 4223080,
+    "usage_complete": true
+  },
+  "status": {
+    "is_latest": true,
+    "reviews": [],
+    "run_id": "bc4d4acd62ddeb7be26fd40a08cc3ada",
+    "state": "failed",
+    "upstream_status": "unchanged"
+  },
+  "tools": [
+    {
+      "request": "{}",
+      "state": "completed",
+      "tool": "inspect_incident"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"messages\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"delivery\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"interactions\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"intelligence\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"business_context\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"entity_id\":\"user-1\"}",
+      "state": "completed",
+      "tool": "lookup_entity"
+    },
+    {
+      "request": "{\"entity_id\":\"device-1\"}",
+      "state": "completed",
+      "tool": "lookup_entity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\"}",
+      "state": "completed",
+      "tool": "find_related_cases"
+    }
+  ],
+  "review": {
+    "verified": "Real model executed all nine reads, all four tool types, and produced parseable final JSON.",
+    "failure": "Final assessment validation failed; exact invalid field was not retained.",
+    "scope": "One synthetic phishing incident; no upstream changes",
+    "additional_paid_requests": 0
+  }
+}

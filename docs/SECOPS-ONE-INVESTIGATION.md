@@ -35,3 +35,11 @@ The current owner request to complete the investigation is carried out as one fr
 - Produce a persisted packet with materially supported citations, explicit execution provenance, settled usage and a closed grant. SIEM status remains unchanged. Analyst disposition is a later human action, not performed by this investigation.
 
 The expected recommendation and this rubric are review material, not passed to the live model as an answer key. A success demonstrates this one bounded synthetic investigation, not reliability across the three families or a production SOC efficacy result.
+
+## Second live attempt: collection completed, final validation stopped
+
+At execution commit 66c8abf4f8df5e2e3e7cba1f913a8aaf3e2546ce, run bc4d4acd62ddeb7be26fd40a08cc3ada completed all nine reads through all four tool types. The model chose to query all five phishing sources before the entity lookups and prior cases. Final JSON parsed, but assessment validation failed; no packet was published. All ten requests settled: estimated $0.012979, reserved $4.223080. Grant closed. See outputs/secops-second-live-result.json. No conclusion or unapproved retry is claimed.
+
+The parallel review confirmed another interface defect: incident/ownership results and complete empty business-context queries could not be cited under an event-only finding contract. This is a verified design gap, not proof of the exact lost invalid final field. The fix supplies short session-local citation handles and resolves them into canonical evidence/event references. Empty result and ownership handles resolve to result metadata with event_id null. The renderer labels those query/context citations. Fixed rejection codes now identify invalid vocabulary, finding shape, unknown citation and summary bounds without preserving rejected prose.
+
+All 61 focused SecOps tests pass, including exact handle resolution, result-metadata references, cross-record/unknown evidence rejection, and proof that metadata citations cannot erase missing checks. A separate reviewer found no blocker in the updated citation path. A new fresh attempt requires a new explicit spending decision because the preceding grant used all ten requests and closed.

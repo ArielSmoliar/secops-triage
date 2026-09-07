@@ -282,3 +282,67 @@ execute_session(Store(v['root']),v['run'],v['token'],model_factory=factory)
         session=self.rows('secops_agent_sessions')[0]
         self.assertEqual((session['model_calls'],session['tool_calls']),(4,3))
         self.assertTrue(any(e['stage']=='tool_rejected' and e['label']=='typed_contract' for e in self.rows('secops_agent_events')))
+
+    def test_final_handles_support_empty_query_and_ownership_context(self):
+        from secops_triage.agent import fixture_model,citation_handles
+        from secops_triage.report import markdown
+        def factory(bundle):
+            m=fixture_model(bundle);original=m._next
+            def response(messages):
+                value=original(messages)
+                if 'recommendation' in value:
+                    value['findings']=[{'citation':k,'summary':'Source record or query context was collected.'} for k in citation_handles(m.evidence)]
+                return value
+            m._next=response;return m
+        p=self.execute(self.ingest(scenario('phishing','malicious_alternative')),model_factory=factory)
+        metadata=[f for f in p['agent_assessment']['findings'] if f['event_id'] is None]
+        self.assertEqual(len(metadata),4)
+        self.assertIn('query/context evidence',markdown(self.store,p))
+        self.assertEqual(p['recommendation'],'escalate')
+
+    def test_unknown_handle_has_specific_safe_diagnostic(self):
+        from secops_triage.agent import fixture_model
+        final={'recommendation':'close','findings':[{'citation':'foreign-secret-canary','summary':'Claim'}]}
+        with self.assertRaises(Rejected):self.execute(self.ingest(),model_factory=lambda b:fixture_model(b,final))
+        events=self.rows('secops_agent_events')
+        self.assertTrue(any(e['stage']=='final_rejected' and e['label']=='unknown_citation' for e in events))
+        self.assertNotIn('foreign-secret-canary',json.dumps(events))
+
+    def test_metadata_citation_cannot_erase_missing_evidence(self):
+        from secops_triage.agent import fixture_model,citation_handles
+        def factory(bundle):
+            m=fixture_model(bundle);original=m._next
+            def response(messages):
+                value=original(messages)
+                if 'recommendation' in value:
+                    k=next(k for k,v in citation_handles(m.evidence).items() if v[1] is None)
+                    value={'recommendation':'close','findings':[{'citation':k,'summary':'Collected context.'}]}
+                return value
+            m._next=response;return m
+        p=self.execute(self.ingest(scenario('phishing','unavailable')),model_factory=factory)
+        self.assertIsNone(p['recommendation'])
+        self.assertEqual(p['investigation_status'],'needs_review')
+
+    def test_canonical_citations_reject_unknown_evidence_and_cross_record(self):
+        from secops_triage.agent import validate_assessment,OFFLINE
+        evidence=[{'id':'one','result':{'records':[{'id':'event-one'}]}},
+                  {'id':'two','result':{'records':[{'id':'event-two'}]}}]
+        base={'recommendation':'needs_review','execution':OFFLINE,'session_id':'a'*32}
+        for eid,event in (('foreign',None),('one','event-two'),('one',1),('one','')):
+            with self.assertRaises(Rejected):validate_assessment(dict(base,findings=[{'evidence_id':eid,'event_id':event,'summary':'claim'}]),evidence)
+        validate_assessment(dict(base,findings=[{'evidence_id':'one','event_id':None,'summary':'query coverage'}]),evidence)
+
+    def test_final_resolver_rejects_shape_and_blank_summary(self):
+        from secops_triage.agent import resolve_findings
+        evidence=[{'id':'one','result':{'records':[]}}]
+        for findings in ([{'citation':'C1','summary':'   '}],[{'citation':'C1','summary':1}],
+                         [{'citation':'C1','summary':'ok','event_id':'invented'}],[]):
+            with self.assertRaises(Rejected):resolve_findings({'recommendation':'close','findings':findings},evidence)
+
+    def test_short_handles_resolve_only_current_collection(self):
+        from secops_triage.agent import resolve_findings
+        final={'recommendation':'needs_review','findings':[{'citation':'C1','summary':'context'}]}
+        first=resolve_findings(final,[{'id':'first-run','result':{'records':[]}}])
+        second=resolve_findings(final,[{'id':'second-run','result':{'records':[]}}])
+        self.assertEqual(first['findings'][0]['evidence_id'],'first-run')
+        self.assertEqual(second['findings'][0]['evidence_id'],'second-run')

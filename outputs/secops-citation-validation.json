@@ -1,0 +1,14 @@
+{
+  "tests_passed": 186,
+  "seconds": 62.585,
+  "command": "python -m unittest discover -s tests -v",
+  "log": "/private/tmp/secops-citations-full-tests.txt",
+  "source_sha256": {
+    "secops_triage/agent.py": "2ca89aafa660baf41a57dc2be5c6a29268c44c8dd34c660d1eb51513d751ec91",
+    "secops_triage/report.py": "bd0c746f8a2af8a621cbc4a2537c6b0c054ee50a625ca01bbab47df2384b5fdf",
+    "tests/test_secops_agent.py": "ceef45734aa40a229055ff296cb2287302baca5862f9a1b9ff8dcd19cf00301e"
+  },
+  "review": "Parallel reviewer found no blocker in session-local handles, metadata references and fixed-code final validation.",
+  "paid_calls_for_tests": 0,
+  "additional_attempt_authorization": "Owner explicitly approved one additional fresh 10-request/120-second/$4.25 attempt in this task."
+}
