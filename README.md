@@ -131,3 +131,7 @@ For a faulty candidate, a failed comparison blocks acceptance. `apply_safe_patch
 See [Phase 2 architecture and review](docs/PHASE2.md), [handoff](docs/HANDOFF.md), and [build runbook](docs/runbooks/migration-proof-build-release-demo-runbook.md). Owner review remains required before any model integration.
 
 </details>
+
+## AWS integration status
+
+Ohio (`us-east-2`) is the selected deployment region. A private EC2/EBS/SSM/CloudWatch package and scripted smoke helper are prepared; AWS deployment and service verification remain pending. See the [AWS integration procedure](docs/runbooks/secops-aws-integration-runbook.md). Local verification is not cloud execution evidence.

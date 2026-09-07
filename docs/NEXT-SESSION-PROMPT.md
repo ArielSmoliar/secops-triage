@@ -1,3 +1,9 @@
+## Owner update — AWS integration is now the active goal
+
+The owner selected completing AWS integration as the goal and Ohio (`us-east-2`) as the region. This supersedes older instructions to postpone AWS preparation until after UI milestones. Read docs/runbooks/secops-aws-integration-runbook.md. The first package targets a private single EC2 host, retained encrypted EBS, SSM access and allowlisted CloudWatch events, preserving existing one-host storage assumptions. AgentCore, Bedrock inference and live security ingestion remain separate unimplemented capabilities.
+
+Offline CloudFormation and a one-shot scripted smoke helper are implemented. No cloud resource was created: AWS CLI profile listing is empty and STS returned NoCredentials. Authentication method is requested from the owner. Resolve actual account/network/AMI, current Ohio pricing and the exact resource/teardown proposal before requesting provisioning approval. No new paid calls are authorized. Analyst feedback remains waived; case acceptance and publication gates remain unchanged. Do not report AWS integration complete from local checks.
+
 ## Owner update — 2026-09-07: analyst feedback skipped
 
 The owner explicitly said “it's ok, skip feedback.” The actual analyst walkthrough/feedback requirement is waived for this demo; do not request it again or block demo preparation solely on it. This supersedes older feedback prerequisites below and in the saved runbook. No analyst session occurred, so record this as waived, not completed or evidence of usefulness. Human case acceptance remains pending; this instruction does not accept the hero rubric, authorize paid calls, or waive other saved gates.

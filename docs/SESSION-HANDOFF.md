@@ -1,3 +1,9 @@
+## Owner update — AWS integration is now the active goal
+
+The owner selected completing AWS integration as the goal and Ohio (`us-east-2`) as the region. This supersedes older instructions to postpone AWS preparation until after UI milestones. Read docs/runbooks/secops-aws-integration-runbook.md. The first package targets a private single EC2 host, retained encrypted EBS, SSM access and allowlisted CloudWatch events, preserving existing one-host storage assumptions. AgentCore, Bedrock inference and live security ingestion remain separate unimplemented capabilities.
+
+Offline CloudFormation and a one-shot scripted smoke helper are implemented. No cloud resource was created: AWS CLI profile listing is empty and STS returned NoCredentials. Authentication method is requested from the owner. Resolve actual account/network/AMI, current Ohio pricing and the exact resource/teardown proposal before requesting provisioning approval. No new paid calls are authorized. Analyst feedback remains waived; case acceptance and publication gates remain unchanged. Do not report AWS integration complete from local checks.
+
 # SecOps Triage session handoff
 
 ## Owner update — 2026-09-07: analyst feedback skipped
@@ -82,3 +88,5 @@ Use the pinned .venv and uv.lock; do not silently update dependencies. Real SDK 
 ## Workflow alignment update
 
 The owner requested alignment with the researched Splunk/Datadog workflows. docs/SECOPS-WORKFLOW-ALIGNMENT.md maps the five-step flow to implemented capabilities and gaps, and supplies the correct case-04 facilitator sequence. PRODUCT.md and the flow review link it. This is documentation-only alignment; no video playback review, analyst session, UI completion or case acceptance is claimed.
+
+AWS offline verification: 295 tests passed in 65.953 seconds with source unchanged; cfn-lint 1.56.0 passed, final scripted case-04 smoke completed nine reads, independent review findings resolved. Evidence: outputs/secops-aws-preparation-validation.json. This is not AWS deployment evidence.

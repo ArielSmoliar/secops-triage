@@ -241,3 +241,9 @@ The owner explicitly said “it's ok, skip feedback.” The actual analyst walkt
 ## 2026-09-07: vendor workflow alignment
 
 Added docs/SECOPS-WORKFLOW-ALIGNMENT.md with primary references, implementation mapping and the two-message case-04 facilitator sequence. Updated product/flow/session guidance. The existing incident-to-evidence-to-handoff sequence aligns at the task level; CLI/Markdown presentation gaps remain explicit. Feedback remains waived; no runtime, authority or historical evidence changed.
+
+## Owner update — AWS integration is now the active goal
+
+The owner selected completing AWS integration as the goal and Ohio (`us-east-2`) as the region. This supersedes older instructions to postpone AWS preparation until after UI milestones. Read docs/runbooks/secops-aws-integration-runbook.md. The first package targets a private single EC2 host, retained encrypted EBS, SSM access and allowlisted CloudWatch events, preserving existing one-host storage assumptions. AgentCore, Bedrock inference and live security ingestion remain separate unimplemented capabilities.
+
+Offline CloudFormation and a one-shot scripted smoke helper are implemented. No cloud resource was created: AWS CLI profile listing is empty and STS returned NoCredentials. Authentication method is requested from the owner. Resolve actual account/network/AMI, current Ohio pricing and the exact resource/teardown proposal before requesting provisioning approval. No new paid calls are authorized. Analyst feedback remains waived; case acceptance and publication gates remain unchanged. Do not report AWS integration complete from local checks.
