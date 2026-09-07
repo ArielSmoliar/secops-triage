@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-07",
+  "baseline": "b5ae5ab699d0cdd7e6ec2939315d366b627738c3",
+  "verification": "Clean clone with identical final source overlay; frozen offline dependency sync",
+  "tests_passed": 173,
+  "test_seconds": 60.938,
+  "new_agent_test_methods": 18,
+  "commands": [
+    "uv sync --frozen --extra agent --offline",
+    "python -m unittest discover -s tests -v",
+    "python -m migration_proof.probe",
+    "python -m secops_triage demo --strands --output <fresh-directory>"
+  ],
+  "probe_statuses": [
+    403,
+    200,
+    403
+  ],
+  "sdk_demo": {
+    "tools": 19,
+    "model_turns": 20,
+    "recommendation": "escalate",
+    "investigation_status": "complete",
+    "provider": "scripted, not live"
+  },
+  "fake_openai_test": {
+    "requests": 10,
+    "usage_complete": true,
+    "paid": false
+  },
+  "paid_secops_requests": 0,
+  "live_test_authorized": false,
+  "pending_live_budget_usd": 4.25,
+  "source_sha256": {
+    "secops_triage/store.py": "7c198fb70d61d06bc7613887a1ba0e00283609837fbfadedb16b37cdbae0804f",
+    "secops_triage/agent_spend.py": "86100c845a44d5673b3cf1acdf0697e6b8a8cf5411214e00a28d5dfa9c9b8ce9",
+    "secops_triage/agent_runner.py": "c90c0a50f729ec2e135fd24a3217de2ae330b6b4866a3716f4d1131455d2540d",
+    "secops_triage/__init__.py": "9cb590d0c889170c7d1acc95e061ac6c435021543373064af1cdc8a42598dc10",
+    "secops_triage/replay.py": "8aad4b0b6c82ca2ec4d2056eb90673225b1104852125769361deb6f1be732684",
+    "secops_triage/agent.py": "300058864eb05af8287ecff36d2fea3fa0753c37db8a6106caa646bcca962df8",
+    "secops_triage/contracts.py": "b544fd78ef1fce801c290a089e267de31b6af876c1cdccbb0662816522066b6c",
+    "secops_triage/investigation.py": "b5fc0c764ce31a0dde64023e54371a6496b1594b8504ce56a3a555856d192739",
+    "secops_triage/__main__.py": "ec60980f195b77ea1682ac493efdfe743ac68d8eade78b1364885ee0037e4b5e",
+    "secops_triage/report.py": "6b385f7a7b6f12603ba40ec24b82225e0c457222d07cdb51be7ac57a4ef4761f",
+    "secops_triage/fixtures.py": "bf1d156186262003d8504e44bcf1785f50e32bd4294869cb673c9c4256ed1cef",
+    "migration_proof/agent/openai_model.py": "8daac0225664e0b10e7ea75f37c273efd49ae31a8da8818b9b9282eb2fabd237",
+    "tests/test_secops_agent.py": "b8a52dc29435a091fc6eee990eb93a33fcc92f288fe6095e7c4529a0390601c2"
+  },
+  "temporary_log": "/private/tmp/secops-strands-clean-0onk_8ha/validation.txt",
+  "limitations": [
+    "No live SecOps model-quality evidence",
+    "Citation existence does not establish semantic support",
+    "Single-host store serializes investigations",
+    "Synthetic fixtures, no live security connectors or AWS deployment"
+  ]
+}

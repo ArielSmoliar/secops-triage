@@ -1,3 +1,5 @@
+Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. Live SecOps inference awaits a separately authorized bounded attempt.
+
 # Incident investigation demo
 
 Help a Tier 1 SOC analyst investigate an **existing incident created by a SIEM or another security tool**. Gather identity, email, endpoint and historical context, then prepare an evidence-linked close-or-escalate recommendation. One incident can contain multiple related alerts.

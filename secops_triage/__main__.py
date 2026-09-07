@@ -25,6 +25,7 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
     for command in ('demo', 'investigate'):
         p = sub.add_parser(command)
+        p.add_argument('--strands', action='store_true', help='Use real Strands SDK with zero-cost scripted provider')
         p.add_argument('--output', required=True, type=Path, help='New private output directory')
         if command == 'investigate':
             p.add_argument('incident', type=Path, help='Normalized incident JSON snapshot, maximum 2 MB')
@@ -49,7 +50,11 @@ def main():
             f.write(canonical({'run_id': run_id, 'token': token}))
             f.flush()
             os.fsync(f.fileno())
-        packet = store.investigate(run_id, token)
+        if args.strands:
+            from .agent_runner import run_agent
+            packet = run_agent(store, run_id, token)
+        else:
+            packet = store.investigate(run_id, token)
         (args.output / 'packet.json').write_bytes(canonical(packet))
         (args.output / 'investigation.md').write_text(markdown(store, packet))
         print(json.dumps({'report': str((args.output / 'investigation.md').absolute()),

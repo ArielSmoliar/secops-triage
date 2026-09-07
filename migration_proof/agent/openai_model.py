@@ -44,8 +44,9 @@ def _post(body, key):
         connection.close()
 
 
-def payload(messages, tool_specs, system_prompt, output_tokens):
-    if type(system_prompt) is not str or {s["name"] for s in tool_specs or []} != TOOL_NAMES or len(tool_specs) != 4:
+def payload(messages, tool_specs, system_prompt, output_tokens, *, allowed_tools=None):
+    names = TOOL_NAMES if allowed_tools is None else allowed_tools
+    if type(system_prompt) is not str or {s["name"] for s in tool_specs or []} != names or len(tool_specs) != 4:
         raise Rejected("fixed text prompt and four tools required")
     converted = [{"role": "system", "content": system_prompt}]
     for message in messages:
@@ -103,7 +104,8 @@ def parse_response(response):
 
 
 class OpenAIModel(Model):
-    def __init__(self, ledger, session_id, api_key):
+    def __init__(self, ledger, session_id, api_key, *, allowed_tools=None):
+        self.allowed_tools = TOOL_NAMES if allowed_tools is None else frozenset(allowed_tools)
         validate_key(api_key)
         self.ledger, self.session_id, self._api_key = ledger, session_id, api_key
 
@@ -121,10 +123,10 @@ class OpenAIModel(Model):
     async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         # Validate and cap the payload before reserving; the authoritative plan is
         # read again at reservation. No network work occurs without a durable intent.
-        body = payload(messages, tool_specs, system_prompt, 1)
+        body = payload(messages, tool_specs, system_prompt, 1, allowed_tools=self.allowed_tools)
         request_id, plan = self.ledger.reserve(self.session_id)
         try:
-            body = payload(messages, tool_specs, system_prompt, plan.max_output_tokens)
+            body = payload(messages, tool_specs, system_prompt, plan.max_output_tokens, allowed_tools=self.allowed_tools)
             response = await asyncio.to_thread(_post, body, self._api_key)
             content, stop = parse_response(response)
             if len(canonical(content)) > 16384:

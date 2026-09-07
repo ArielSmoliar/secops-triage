@@ -48,8 +48,12 @@ def now():
 
 def engine_digest():
     root = Path(__file__).parent
-    return sha(canonical({name: sha((root / name).read_bytes()) for name in
-                          ('contracts.py', 'replay.py', 'investigation.py', 'store.py')}))
+    local = {name: sha((root / name).read_bytes()) for name in
+             ('contracts.py', 'replay.py', 'investigation.py', 'store.py', 'agent.py', 'agent_spend.py', 'agent_runner.py')}
+    for name in ('migration_proof/agent/openai_model.py', 'migration_proof/agent/openai_preflight.py', 'uv.lock'):
+        local[name] = sha((root.parent / name).read_bytes())
+    return sha(canonical(local))
+
 
 
 class Store:
@@ -246,6 +250,9 @@ class Store:
         return {name: bind(name) for name in REQUEST_TYPES}
 
     def investigate(self, run_id, token):
+        return self._investigate(run_id, token)
+
+    def _investigate(self, run_id, token, collector=None):
         """Runs real replay queries under a fixed, explicitly deterministic plan."""
         with self._locked() as db:
             row = self._owner(db, run_id, token)
@@ -260,15 +267,23 @@ class Store:
             def call(name, request):
                 result = self._call(db, row, bundle, name, request)
                 evidence.append(result)
+                return result
             try:
-                call('inspect_incident', InspectIncident())
-                for entity in bundle.entities:
-                    call('lookup_entity', LookupEntity(entity.id))
-                for alert in bundle.alerts:
-                    for template in REQUIRED[alert.family]:
-                        call('query_activity', QueryActivity(alert.id, template, bundle.start, bundle.end))
-                    call('find_related_cases', FindRelatedCases(alert.id))
+                agent_assessment = None
+                if collector is not None:
+                    agent_assessment = collector(db, row, bundle, call)
+                else:
+                    call('inspect_incident', InspectIncident())
+                    for entity in bundle.entities:
+                        call('lookup_entity', LookupEntity(entity.id))
+                    for alert in bundle.alerts:
+                        for template in REQUIRED[alert.family]:
+                            call('query_activity', QueryActivity(alert.id, template, bundle.start, bundle.end))
+                        call('find_related_cases', FindRelatedCases(alert.id))
                 assessment = investigation.assess(bundle, evidence)
+                if agent_assessment is not None:
+                    from .agent import reconcile
+                    assessment = reconcile(assessment, agent_assessment)
                 packet = dict(assessment, run_id=run_id, tenant_id=row['tenant'], source=row['source'],
                               incident_id=row['incident'], title=bundle.title, snapshot_hash=row['snapshot'],
                               engine_hash=row['engine'], execution=investigation.ENGINE_LABEL,
@@ -278,6 +293,9 @@ class Store:
                                          'request': e['request'], 'outcome': e['result']['outcome'],
                                          'complete': e['result']['complete']} for e in evidence],
                               upstream_status='unchanged; local investigation only')
+                if agent_assessment is not None:
+                    packet["agent_assessment"] = agent_assessment
+                    packet["execution"] = agent_assessment["execution"]
                 self._validate_packet(db, row, packet)
                 packet_hash = self._put(run_id, packet)
                 self._transition(db, run_id, 'packet_ready' if packet['investigation_status'] == 'complete' else 'needs_review',
@@ -306,6 +324,16 @@ class Store:
             if e['run_id'] != row['id'] or e['tenant_id'] != row['tenant'] or e['snapshot_hash'] != row['snapshot']:
                 raise Rejected('evidence scope mismatch')
             evidence[item['id']] = e
+        if "agent_assessment" in packet:
+            from .agent import validate_assessment
+            value = packet["agent_assessment"]
+            validate_assessment(value, list(evidence.values()))
+            session = db.execute('SELECT * FROM secops_agent_sessions WHERE id=? AND run_id=?',
+                                 (value['session_id'], row['id'])).fetchone()
+            if (not session or session['state'] != 'assessed' or session['result_hash'] != sha(canonical(value))
+                    or session['mode'] != value['execution'] or packet['execution'] != value['execution']):
+                raise Rejected('agent assessment session mismatch')
+            self._get(row['id'], session['result_hash'])
         for alert in packet['alerts']:
             for observation in alert['observations']:
                 e = evidence.get(observation['evidence_id'])
@@ -316,6 +344,9 @@ class Store:
                     raise Rejected('unsupported gap citation')
         # Recompute demo decisions from stored evidence; no caller can forge close.
         expected = investigation.assess(IncidentBundle.from_dict(self._get(row['id'], row['snapshot'])), list(evidence.values()))
+        if 'agent_assessment' in packet:
+            from .agent import reconcile
+            expected = reconcile(expected, packet['agent_assessment'])
         if any(packet[k] != expected[k] for k in ('recommendation', 'investigation_status', 'alerts')):
             raise Rejected('packet assessment is inconsistent with evidence')
 

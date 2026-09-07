@@ -27,6 +27,15 @@ def markdown(store, packet):
     def citation(id):
         item = next(x for x in packet['evidence'] if x['id'] == id)
         return f"[evidence {id[:8]}](<{store.blob_path(packet['run_id'], item['hash'])}>)"
+    if 'agent_assessment' in packet:
+        a = packet['agent_assessment']
+        lines += ['## Agent assessment (untrusted)', '',
+                  f"Agent recommendation: **{safe(a['recommendation'])}**. The recommendation above comes from deterministic evidence checks.", '',
+                  'Citations identify retrieved records; they do not independently validate the model’s interpretation.', '']
+        for finding in a['findings']:
+            lines.append(f"- {safe(finding['summary'])} {citation(finding['evidence_id'])}")
+        if a['recommendation'] != (packet['recommendation'] or 'needs_review'):
+            lines += ['', '**Agent and deterministic assessment disagree: analyst review required.**', '']
     lines += ['## Entities and ownership', '']
     for e in evidence.values():
         entity = e['result'].get('entity')
@@ -73,5 +82,5 @@ def markdown(store, packet):
               '## Integrity and authority', '',
               f"Run: `{packet['run_id']}`. Packet SHA-256: `{packet['packet_hash']}`.", '',
               'Hashes establish artifact integrity, not the truth of a security conclusion. '
-              'Demo rules are deliberately limited; no live model, connector, or containment action ran.', '']
+              'Demo rules are deliberately limited. Execution mode is stated above; no live security connector or containment action ran.', '']
     return '\n'.join(lines)
