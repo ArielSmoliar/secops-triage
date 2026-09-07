@@ -1,0 +1,278 @@
+{
+  "audit": {
+    "approvals": 0,
+    "checks": [
+      {
+        "check": "manifest_integrity",
+        "current_digest": false,
+        "passed": true,
+        "result": {
+          "passed": true
+        },
+        "sha256": "5e340779209ee89b390951b26046236485e3327f13c2ccced5fa215ea2420cd1"
+      },
+      {
+        "check": "fixture_health",
+        "current_digest": false,
+        "passed": true,
+        "result": {
+          "command_id": "fixture-inspect-v1",
+          "duration_seconds": 0.6055119579978054,
+          "exit_status": 0,
+          "passed": true
+        },
+        "sha256": "95ab6b83955d10c8c236588383412bc60a1627b8ec4683bf422d0665f94fd7dd"
+      },
+      {
+        "check": "baseline_tests",
+        "current_digest": false,
+        "passed": true,
+        "result": {
+          "command_id": "fixture-baseline-v1",
+          "duration_seconds": 1.1978027079967433,
+          "errors": 0,
+          "exit_status": 0,
+          "failures": 0,
+          "passed": true,
+          "test_count": 2
+        },
+        "sha256": "db645f07bc399cdc2a6f0444b26cadd3c7a050485a1d409a50420f02dc82d611"
+      },
+      {
+        "check": "tenant_boundary",
+        "current_digest": false,
+        "passed": false,
+        "result": {
+          "command_id": "fixture-boundary-v1",
+          "consistent": true,
+          "duration_seconds": 3.1123014579934534,
+          "exit_status": 1,
+          "passed": false,
+          "trials": [
+            {
+              "candidate": {
+                "leaked_fields": [
+                  "id",
+                  "tenant",
+                  "title"
+                ],
+                "status": 200
+              },
+              "original": {
+                "leaked_fields": [],
+                "status": 403
+              }
+            },
+            {
+              "candidate": {
+                "leaked_fields": [
+                  "id",
+                  "tenant",
+                  "title"
+                ],
+                "status": 200
+              },
+              "original": {
+                "leaked_fields": [],
+                "status": 403
+              }
+            },
+            {
+              "candidate": {
+                "leaked_fields": [
+                  "id",
+                  "tenant",
+                  "title"
+                ],
+                "status": 200
+              },
+              "original": {
+                "leaked_fields": [],
+                "status": 403
+              }
+            }
+          ]
+        },
+        "sha256": "99f290d1828c67a200192c750f7cc0d32511d8db0f6ef46e70da404691925b75"
+      },
+      {
+        "check": "baseline_tests",
+        "current_digest": true,
+        "passed": false,
+        "result": {
+          "command_id": "fixture-baseline-v1",
+          "duration_seconds": 1.6330412919996888,
+          "errors": 0,
+          "exit_status": 1,
+          "failures": 1,
+          "passed": false,
+          "test_count": 3
+        },
+        "sha256": "24601553e7c0ecc666e35dc4df8fa8c883a03f522fc3150d2ec3ed39eebef654"
+      }
+    ],
+    "current_state": "blocked",
+    "evidence_hashes_verified": 5,
+    "invocations_complete": true,
+    "packet": {
+      "agent_assessment_hash": "6412a359ba6475eb0c97266d026c68e3a81742f4d3dd54bd58870680c01bcab0",
+      "candidate_digest": "1b7c1609584299c521a81d3da1251ceba9422b094bd5698320cf996e6fa14665",
+      "created": 1788796004.891663,
+      "evidence_ids": [
+        "f1c8e14a5ddd457d9d67f72c39e0ba76"
+      ],
+      "packet_id": "a80aec6b1dcb4070bc878466ff190154",
+      "policy_version": "1",
+      "ready": false,
+      "recommendation": "blocked",
+      "repair_ids": [
+        "8d612026329d4a468a6a13dbb239b9e8"
+      ],
+      "required_check_ids": [
+        "manifest_integrity",
+        "fixture_health",
+        "baseline_tests",
+        "tenant_boundary"
+      ],
+      "run_id": "bd53e4dc525e4f46884ee61039ac7409",
+      "unresolved_exceptions": [
+        "manifest_integrity",
+        "fixture_health",
+        "baseline_tests",
+        "tenant_boundary",
+        "failed_or_contradictory_evidence"
+      ]
+    },
+    "promotions": 0,
+    "repairs": 1,
+    "run_id": "bd53e4dc525e4f46884ee61039ac7409",
+    "tokens": {
+      "input_tokens": 8041,
+      "output_tokens": 492
+    },
+    "tool_sequence": [
+      "inspect_candidate",
+      "run_baseline_tests",
+      "compare_tenant_boundary",
+      "apply_safe_patch",
+      "run_baseline_tests"
+    ]
+  },
+  "authorized_budget_microusd": 3000000,
+  "authorized_model_calls": 7,
+  "combined_reserved_microusd": 2956156,
+  "duration_seconds": 29.154,
+  "grant_status": "closed",
+  "outcome": {
+    "commit": "5cef71a706919896c4c662a1471190989aae0228",
+    "evidence_directory": "/Users/arielsmoliar/Developer/migration-proof/data/openai-replacement-authorized-20260907",
+    "model_calls": 6,
+    "provider_requests": 6,
+    "reason": "completed",
+    "reported_estimate_microusd": 4005,
+    "reserved_microusd": 2533848,
+    "run_id": "bd53e4dc525e4f46884ee61039ac7409",
+    "session_id": "32bd62d850c448fa926f6536f3411e87",
+    "state": "blocked",
+    "status": "completed",
+    "summary": {
+      "approved": false,
+      "assessment": {
+        "candidate_digest": "1b7c1609584299c521a81d3da1251ceba9422b094bd5698320cf996e6fa14665",
+        "explanation": "The allowlisted regression test was added and executed.",
+        "model_id": "gpt-4.1-mini-2025-04-14",
+        "provider_mode": "openai_api",
+        "reason_codes": [
+          "regression_test_added"
+        ],
+        "recommendation": "blocked",
+        "run_id": "bd53e4dc525e4f46884ee61039ac7409",
+        "sdk_version": "1.54.0",
+        "untrusted": true
+      },
+      "assessment_hash": "6412a359ba6475eb0c97266d026c68e3a81742f4d3dd54bd58870680c01bcab0",
+      "candidate_digest": "1b7c1609584299c521a81d3da1251ceba9422b094bd5698320cf996e6fa14665",
+      "packet_id": "a80aec6b1dcb4070bc878466ff190154",
+      "promoted": false,
+      "ready": false
+    },
+    "tool_calls": 5,
+    "usage_complete": true
+  },
+  "prior_uncertain_reservation_microusd": 422308,
+  "provider_mode": "live_openai_api",
+  "requests": [
+    {
+      "estimated_microusd": 293,
+      "finished": 1788795980.997231,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "18ac41eb330e4191bd0e1c64def5d30b",
+      "input_tokens": 588,
+      "ordinal": 1,
+      "output_tokens": 36,
+      "reserved_microusd": 422308,
+      "started": 1788795975.986384,
+      "status": "recorded"
+    },
+    {
+      "estimated_microusd": 446,
+      "finished": 1788795984.401788,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "7174d177e2104baeb81f8638f429ed4e",
+      "input_tokens": 834,
+      "ordinal": 2,
+      "output_tokens": 70,
+      "reserved_microusd": 422308,
+      "started": 1788795981.6300921,
+      "status": "recorded"
+    },
+    {
+      "estimated_microusd": 625,
+      "finished": 1788795990.091838,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "bdf57a26571843a5baaa5233a9d47c01",
+      "input_tokens": 1097,
+      "ordinal": 3,
+      "output_tokens": 116,
+      "reserved_microusd": 422308,
+      "started": 1788795985.6189382,
+      "status": "recorded"
+    },
+    {
+      "estimated_microusd": 898,
+      "finished": 1788795998.223222,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "93fa26d8da554883b3262d00684ae41a",
+      "input_tokens": 1509,
+      "ordinal": 4,
+      "output_tokens": 184,
+      "reserved_microusd": 422308,
+      "started": 1788795993.30576,
+      "status": "recorded"
+    },
+    {
+      "estimated_microusd": 861,
+      "finished": 1788796000.95888,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "b131260de0ae46538bf869182e4db3a6",
+      "input_tokens": 1872,
+      "ordinal": 5,
+      "output_tokens": 70,
+      "reserved_microusd": 422308,
+      "started": 1788795998.2511082,
+      "status": "recorded"
+    },
+    {
+      "estimated_microusd": 882,
+      "finished": 1788796004.8771782,
+      "grant_id": "0d47868825f443a78bd3e75b80a941b8",
+      "id": "ea9855b8a14d4fa78ba667f4ab810800",
+      "input_tokens": 2141,
+      "ordinal": 6,
+      "output_tokens": 16,
+      "reserved_microusd": 422308,
+      "started": 1788796002.608742,
+      "status": "recorded"
+    }
+  ]
+}

@@ -30,3 +30,5 @@ A TLS-only diagnostic after the fix loaded 121 CA certificates and completed TLS
 ## Next action
 
 The failed attempt is preserved and cannot be replayed. A replacement requires a new run, a new explicit owner grant, and owner authorization. A proposed replacement uses at most seven requests with a $3.00 ceiling: its maximum reservations are $2.956156, and together with the prior uncertain $0.422308 reservation total $3.378464, within the original $3.50 envelope. No replacement has been authorized or executed by this document.
+
+The owner subsequently authorized the replacement on 2026-09-07. It completed; see `docs/OPENAI-LIVE-RESULT.md`. This first attempt and its uncertain reservation remain unchanged.

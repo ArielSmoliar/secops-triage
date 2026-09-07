@@ -41,3 +41,5 @@ These tests establish adapter and deterministic control behavior. They do not es
 No UI, AWS provisioning, AgentCore, or submission work is included. The implementation retains the local trusted-backend, POSIX-lock, single-host constraints documented in Phase 2 and Phase 3.
 
 The first explicitly authorized live attempt subsequently stopped before any tool call; usage remains unknown. The certificate diagnosis, fix, and remaining authorization gate are recorded in `docs/OPENAI-FIRST-ATTEMPT.md`.
+
+A separately authorized replacement completed with real OpenAI responses on 2026-09-07. See `docs/OPENAI-LIVE-RESULT.md` for observed behavior, usage, and remaining evaluation limits.
