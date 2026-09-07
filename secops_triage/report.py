@@ -9,6 +9,37 @@ def safe(value):
     return value
 
 
+
+def handoff_items(packet, evidence):
+    """Host-authored review prompts grounded in scoped assessment citations."""
+    items = []
+    for alert in packet['alerts']:
+        if alert['contradiction']:
+            items.append((f"{alert['alert_id']}: authorization and suspicious evidence conflict. "
+                          "Validate the authorization scope and the threat finding before resolving the incident.", None))
+        seen = set()
+        for observation in alert['observations']:
+            eid = observation['evidence_id']
+            event = next((r for r in evidence[eid]['result']['records']
+                          if r['id'] == observation['event_id']), None)
+            if event is None or event['kind'] != 'indicator' or observation['role'] != 'suspicious':
+                continue
+            if event['id'] in seen:
+                continue
+            seen.add(event['id'])
+            attrs = event['attributes']
+            items.append((f"{alert['alert_id']}: source labels target {attrs['target_id']} malicious "
+                          f"using indicator label {attrs['indicator']}. This normalized record has no dedicated "
+                          "indicator-value, provider, confidence or verdict-explanation fields. "
+                          "Obtain the original intelligence report and validate the exact match, freshness "
+                          "and explanation. These details have not been verified by this investigation.", eid))
+        for gap in alert['gaps']:
+            items.append((f"{alert['alert_id']}: {gap['check']} remains missing or incomplete "
+                          f"({gap['reason']}). Retrieve the missing evidence before treating that check as clear.",
+                          gap['evidence_id']))
+    return items
+
+
 def markdown(store, packet):
     reasons = {'suspicious_evidence': 'Suspicious activity needs further investigation',
                'documented_expected_activity': 'Activity matches a documented authorization',
@@ -27,6 +58,22 @@ def markdown(store, packet):
     def citation(id):
         item = next(x for x in packet['evidence'] if x['id'] == id)
         return f"[evidence {id[:8]}](<{store.blob_path(packet['run_id'], item['hash'])}>)"
+    handoff = handoff_items(packet, evidence)
+    lines += ['## Analyst handoff', '',
+              'The status above describes the bounded investigation checks. Complete collection does not '
+              'mean the incident is resolved or compromise is confirmed. Analyst disposition is a separate recorded action.', '']
+    for alert in packet['alerts']:
+        lines.append(f"- {safe(alert['title'])}: {reasons[alert['reason']]}. ")
+        for observation in alert['observations']:
+            if observation['role'] != 'context':
+                lines.append(f"  {safe(observation['text'])} {citation(observation['evidence_id'])}")
+    if handoff:
+        lines += ['', '**Unresolved questions for the receiving analyst:**', '']
+        for text, eid in handoff:
+            lines.append(f"- {safe(text)}" + (f" {citation(eid)}" if eid else ''))
+    else:
+        lines += ['', 'Review the evidence and documented scope before recording a local decision.']
+    lines += ['']
     if 'agent_assessment' in packet:
         a = packet['agent_assessment']
         lines += ['## Agent assessment (untrusted)', '',
@@ -79,6 +126,10 @@ def markdown(store, packet):
                 lines.append(f"  {safe(observation['text'])} {citation(observation['evidence_id'])}")
         for gap in a['gaps']:
             lines.append(f"  Still needed: {safe(gap['check'])} ({safe(gap['reason'])}).")
+    if handoff:
+        lines += ['', 'Unresolved at handoff:']
+        for text, eid in handoff:
+            lines.append(f"- {safe(text)}" + (f" {citation(eid)}" if eid else ''))
     lines += ['',
               '## Integrity and authority', '',
               f"Run: `{packet['run_id']}`. Packet SHA-256: `{packet['packet_hash']}`.", '',

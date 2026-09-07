@@ -1,0 +1,51 @@
+{
+  "tests_passed": 67,
+  "seconds": 3.726,
+  "command": ".venv/bin/python -m unittest discover -s tests -p 'test_secops*.py' -v",
+  "log": "/private/tmp/secops-handoff-tests.txt",
+  "scope": "All SecOps tests; migration code unchanged.",
+  "paid_calls": 0,
+  "analyst_sessions_completed": 0,
+  "external_intelligence_lookups": 0,
+  "source_sha256": {
+    "secops_triage/report.py": "01b47c16b7a86f0f8fe291d3acda90c97d127d58fb6a4ef335aab1667e3e8d05",
+    "tests/test_secops_handoff.py": "2abbca7057c31050ddddc053a8fac1aa57dde375d174c8cc344fb15350f4e75f"
+  },
+  "kit": {
+    "execution": "deterministic replay; no model calls",
+    "synthetic": true,
+    "analyst_sessions_completed": 0,
+    "cases": [
+      {
+        "case": "case-01",
+        "snapshot_sha256": "99a9263d06be337859ce4f1d20cb43573ee664cb49f634c151af0109b66b6554",
+        "run_id": "603cf6005a9d3a4e7f6af87db6ec4c9a",
+        "packet_hash": "8955ca5c593203b0e93b4b5b35c9aa94c21d402940315bb64223cd7fbcbd3d24",
+        "reads": 9,
+        "recommendation": "close",
+        "investigation_status": "complete",
+        "reviews": []
+      },
+      {
+        "case": "case-02",
+        "snapshot_sha256": "464865f6a06865a7cae7f1d7a016a738437e2147fb473a47267950406c8b893a",
+        "run_id": "eb104c987fc549f848d6d5cebf51612d",
+        "packet_hash": "18c38067e9faec0dee13edbb8644dbea8059d881c37a3c2599355454cd3dfdc7",
+        "reads": 9,
+        "recommendation": "escalate",
+        "investigation_status": "complete",
+        "reviews": []
+      },
+      {
+        "case": "case-03",
+        "snapshot_sha256": "1b59a27b6fd961d176880f6ef89af4771d19e1fc58136cded816a805fc2ef1f3",
+        "run_id": "6691c56eadce8edb9520fa6874750012",
+        "packet_hash": "6ca0d0dfa00383b865a391ab5184a9f94b49716c162bdf1b92053ac41366d1f0",
+        "reads": 9,
+        "recommendation": null,
+        "investigation_status": "needs_review",
+        "reviews": []
+      }
+    ]
+  }
+}

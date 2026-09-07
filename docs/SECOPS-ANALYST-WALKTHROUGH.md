@@ -10,7 +10,7 @@ From the repository, run:
 .venv/bin/python -m secops_triage.drill --output data/secops-analyst-drill
 ```
 
-Use a new directory on each run. No API key, model grant, network access or SIEM write is involved. Each case has a manual source folder, assisted report, immutable evidence store, packet and snapshot. A private owner capability is saved with mode 0600; do not share it. The manifest records snapshot and packet hashes. The observations CSV starts empty; generated files are not analyst results. The reviewed local kit is data/secops-analyst-drill-reviewed. Evidence links are absolute local paths: conduct this first session on this computer; copying just the report elsewhere will break links.
+Use a new directory on each run. No API key, model grant, network access or SIEM write is involved. Each case has a manual source folder, assisted report, immutable evidence store, packet and snapshot. A private owner capability is saved with mode 0600; do not share it. The manifest records snapshot and packet hashes. The observations CSV starts empty; generated files are not analyst results. The current local kit is data/secops-analyst-handoff. The earlier reviewed kit remains preserved at data/secops-analyst-drill-reviewed. Evidence links are absolute local paths: conduct this first session on this computer; copying just the report elsewhere will break links.
 
 ## Shared instructions and demo policy
 
@@ -56,3 +56,11 @@ Report individual observed times and quality scores before aggregates. Any appar
 Automated checks verify the three policy outcomes, conflict/gap visibility, nine reads per case, equal manual/assisted source results, private capability files, zero recorded reviews and refusal to overwrite an existing kit. A separate reviewer challenged scenario scope and the measurement design. These are engineering and design checks; no independent analyst session has happened.
 
 The next gate is an observed walkthrough with Ariel or a Tier 1 analyst: can they reach a defensible decision, follow the decisive citations and identify remaining uncertainty without reconstructing the entire investigation? Save the observations before expanding the UI or making productivity claims. M2's broader nine-case live evaluation and repeated hero runs remain incomplete and separately budgeted.
+
+## Handoff presentation update
+
+The current report leads with the scoped recommendation and cites both authorization and suspicious observations. It lists unresolved intelligence questions: the normalized indicator contract has no dedicated indicator-value, provider, confidence or verdict-explanation fields. The receiving analyst is asked to obtain the original intelligence report and validate the exact match, freshness and explanation. No such external lookup has run; this is an explicit follow-up, not newly collected evidence.
+
+Source gaps such as unavailable intelligence link to the query evidence. Open questions also appear in the draft case note. Complete collection is explicitly distinguished from incident resolution or confirmed compromise. Report rendering does not change the packet, recommendation or review records. The current kit remains deterministic synthetic replay; no analyst feedback or disposition was inferred from the owner's instruction to continue.
+
+Verification: 67 SecOps tests passed in 3.726 seconds, including four new handoff tests for conflicting evidence, missing intelligence, authorized activity and escaped source labels. See outputs/secops-handoff-validation.json.
