@@ -1,5 +1,6 @@
 """Auditable demo rules, not live AI or a production security verdict engine."""
 from .contracts import REQUIRED, instant
+from .intelligence import match_issues
 
 ENGINE_LABEL = 'deterministic replay playbooks (no live model)'
 
@@ -60,10 +61,32 @@ def assess(bundle, evidence):
         for trigger_id in alert.trigger_ids:
             if trigger_id not in triggers:
                 gaps.append({'check': trigger_id, 'reason': 'trigger_not_retrieved', 'evidence_id': None})
-        retrieved_ids = {r['id'] for r, _ in records}
-        malicious = [(r, eid) for r, eid in records if r['kind'] == 'indicator'
-                     and r['attributes']['verdict'] == 'malicious'
-                     and r['attributes']['target_id'] in retrieved_ids]
+        record_by_id = {r['id']: r for r, _ in records}
+        malicious = []
+        matched_intelligence = []
+        for r, eid in records:
+            if r['kind'] != 'indicator':
+                continue
+            target = record_by_id.get(r['attributes']['target_id'])
+            issues = match_issues(r, target, bundle.observed_at) if target else ['intelligence_target_not_retrieved']
+            if issues:
+                gaps.append({'check': 'intelligence:' + r['id'], 'reason': ','.join(issues), 'evidence_id': eid})
+                observations.append({'text': 'Intelligence requires validation: ' + ', '.join(issues) + '.',
+                                     'evidence_id': eid, 'event_id': r['id'], 'role': 'intelligence_gap'})
+            else:
+                matched_intelligence.append((r, eid))
+                if r['attributes']['verdict'] == 'malicious':
+                    malicious.append((r, eid))
+        verdicts = {}
+        for r, eid in matched_intelligence:
+            a = r['attributes']
+            key = (a['target_id'], a['observable_type'], a['observable_value'])
+            verdicts.setdefault(key, []).append((r, eid))
+        for matches in verdicts.values():
+            if {'benign', 'malicious'} <= {r['attributes']['verdict'] for r, _ in matches}:
+                for r, eid in matches:
+                    gaps.append({'check': 'intelligence:' + r['id'],
+                                 'reason': 'conflicting_intelligence_verdicts', 'evidence_id': eid})
         # A successful identity access plus external account changes is a separate
         # corroborated escalation path, even with no reputation hit.
         if alert.family == 'sign_in' and any(r['attributes']['result'] == 'success' for r, _ in triggers.values()):
@@ -96,7 +119,7 @@ def assess(bundle, evidence):
                                  f"under {r['attributes']['reference']}.",
                                  'evidence_id': eid, 'event_id': r['id'], 'role': 'benign_context'})
         for r, eid in malicious:
-            observations.append({'text': ('Source intelligence marks retrieved incident activity malicious.' if r['kind'] == 'indicator'
+            observations.append({'text': ('Source intelligence labels a matching activity observable malicious; source validity covers the snapshot time.' if r['kind'] == 'indicator'
                                          else 'External account change follows successful access.'),
                                  'evidence_id': eid, 'event_id': r['id'], 'role': 'suspicious'})
         contradiction = bool(malicious and authorizations)
@@ -108,7 +131,9 @@ def assess(bundle, evidence):
             recommendation, reason = 'close', 'documented_expected_activity'
         else:
             recommendation, reason = None, 'legitimacy_not_established'
-        next_checks = [f"Retrieve complete {g['check']} evidence for {bundle.start} through {bundle.end}." for g in gaps]
+        next_checks = [(f"Validate the observable match, validity and provider rationale for {g['check']}."
+                        if g['check'].startswith('intelligence:') else
+                        f"Retrieve complete {g['check']} evidence for {bundle.start} through {bundle.end}.") for g in gaps]
         if recommendation is None and not gaps:
             next_checks.append('Confirm the activity with the responsible owner through an approved channel.')
         if invalid_ids:

@@ -6,6 +6,17 @@ SCENARIOS = ('authorized', 'authorized_alternative', 'malicious', 'malicious_alt
              'unknown', 'unknown_alternative', 'unavailable', 'stale', 'contradictory', 'injection')
 
 
+def intelligence_attributes(target, verdict='malicious', family='phishing'):
+    kind, value = {'sign_in': ('ip', '198.51.100.24'),
+                   'phishing': ('url', 'https://vendor.example/document'),
+                   'endpoint': ('sha256', 'a' * 64)}[family]
+    return {'target_id': target, 'verdict': verdict, 'indicator': 'Synthetic intelligence match',
+            'observable_type': kind, 'observable_value': value, 'provider': 'Synthetic intelligence provider',
+            'match_basis': 'exact_observable', 'confidence': 'high',
+            'assessed_at': '2026-09-07T10:03:00Z', 'expires_at': '2026-09-07T12:00:00Z',
+            'rationale': 'Synthetic fixture assertion for the exact observable; not independently verified threat intelligence.'}
+
+
 def scenario(family, name='authorized', tenant='demo-org'):
     if family not in ('sign_in', 'phishing', 'endpoint') or name not in SCENARIOS:
         raise ValueError('unknown synthetic scenario')
@@ -28,11 +39,11 @@ def scenario(family, name='authorized', tenant='demo-org'):
         add(trigger, 'sign_in', {'result': 'success', 'ip': '198.51.100.24', 'device': 'device-1', 'mfa': True})
         title = 'Unfamiliar sign-in properties'
     elif family == 'phishing':
-        add(trigger, 'message', {'sender': 'support@vendor.example', 'subject': 'Your requested document', 'authentication': 'pass'})
+        add(trigger, 'message', {'sender': 'support@vendor.example', 'subject': 'Your requested document', 'authentication': 'pass', 'observables': [{'type': 'url', 'value': 'https://vendor.example/document'}]})
         add('phishing-delivery', 'delivery', {'message_id': trigger, 'location': 'inbox'}, '2026-09-07T10:01:00Z')
         title = 'Email reported by user as phishing'
     else:
-        add(trigger, 'process', {'name': 'powershell.exe', 'command_line': 'powershell.exe -File inventory.ps1', 'parent': 'management-service'})
+        add(trigger, 'process', {'name': 'powershell.exe', 'command_line': 'powershell.exe -File inventory.ps1', 'parent': 'management-service', 'observables': [{'type': 'sha256', 'value': 'a' * 64}]})
         add('endpoint-connection', 'connection', {'process_id': trigger, 'destination': 'inventory.example'}, '2026-09-07T10:01:00Z')
         title = 'Unusual process execution'
     b['alerts'] = [{'id': f'alert-{family}', 'family': family, 'title': title,
@@ -51,11 +62,11 @@ def scenario(family, name='authorized', tenant='demo-org'):
         if family == 'sign_in' and name == 'malicious_alternative':
             add('signin-change', 'account_change', {'change': 'mailbox_forwarding', 'external': True}, '2026-09-07T10:04:00Z')
         else:
-            add(f'{family}-indicator', 'indicator', {'target_id': trigger, 'verdict': 'malicious', 'indicator': 'Synthetic intelligence match'}, '2026-09-07T10:03:00Z')
+            add(f'{family}-indicator', 'indicator', intelligence_attributes(trigger, 'malicious', family), '2026-09-07T10:03:00Z')
         if family == 'phishing' and name == 'malicious_alternative':
             add('phishing-click', 'click', {'message_id': trigger, 'action': 'allowed'}, '2026-09-07T10:04:00Z')
     if name == 'unknown_alternative':
-        add(f'{family}-reputation', 'indicator', {'target_id': trigger, 'verdict': 'unknown', 'indicator': 'No classification available'}, '2026-09-07T10:03:00Z')
+        add(f'{family}-reputation', 'indicator', intelligence_attributes(trigger, 'unknown', family), '2026-09-07T10:03:00Z')
     if name == 'unavailable':
         source = next(s for s in b['sources'] if s['template'] == 'intelligence')
         source.update(outcome='unavailable', complete=False)

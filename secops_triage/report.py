@@ -28,15 +28,21 @@ def handoff_items(packet, evidence):
                 continue
             seen.add(event['id'])
             attrs = event['attributes']
-            items.append((f"{alert['alert_id']}: source labels target {attrs['target_id']} malicious "
-                          f"using indicator label {attrs['indicator']}. This normalized record has no dedicated "
-                          "indicator-value, provider, confidence or verdict-explanation fields. "
-                          "Obtain the original intelligence report and validate the exact match, freshness "
-                          "and explanation. These details have not been verified by this investigation.", eid))
+            items.append((f"{alert['alert_id']}: {attrs['provider']} labels {attrs['observable_type']} "
+                          f"{attrs['observable_value']} malicious for target {attrs['target_id']}. "
+                          f"Basis: {attrs['match_basis']}; provider confidence: {attrs['confidence']}; "
+                          f"assessed: {attrs['assessed_at']}; expires: {attrs['expires_at']}. "
+                          f"Source rationale: {attrs['rationale']} "
+                          "The observable matches and source validity covers this snapshot; provider accuracy "
+                          "and compromise have not been independently established.", eid))
         for gap in alert['gaps']:
-            items.append((f"{alert['alert_id']}: {gap['check']} remains missing or incomplete "
-                          f"({gap['reason']}). Retrieve the missing evidence before treating that check as clear.",
-                          gap['evidence_id']))
+            if gap['check'].startswith('intelligence:'):
+                text = (f"{alert['alert_id']}: collected intelligence remains unresolved ({gap['reason']}). "
+                        "Validate the observable match, provider validity and rationale; collection success does not resolve this evidence issue.")
+            else:
+                text = (f"{alert['alert_id']}: {gap['check']} remains missing or incomplete "
+                        f"({gap['reason']}). Retrieve the missing evidence before treating that check as clear.")
+            items.append((text, gap['evidence_id']))
     return items
 
 

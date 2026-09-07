@@ -13,7 +13,7 @@ from unittest.mock import patch
 
 from secops_triage.contracts import (IncidentBundle, Rejected, InspectIncident, LookupEntity,
                                     QueryActivity, FindRelatedCases, TOOL_NAMES, canonical)
-from secops_triage.fixtures import scenario, mixed_incident, SCENARIOS
+from secops_triage.fixtures import scenario, mixed_incident, SCENARIOS, intelligence_attributes
 from secops_triage.store import Store
 from secops_triage.report import markdown
 
@@ -93,11 +93,11 @@ class SecOpsTests(unittest.TestCase):
 
     def test_malicious_related_network_evidence_prevents_expected_process_close(self):
         b = scenario('endpoint', 'authorized')
+        next(e for e in b['events'] if e['kind'] == 'connection')['attributes']['destination'] = 'https://inventory.example/agent'
         b['events'].append({'id': 'network-indicator', 'tenant_id': b['tenant_id'],
                             'source_id': 'source-intelligence', 'entity_ids': ['device-1'],
                             'occurred_at': '2026-09-07T10:03:00Z', 'kind': 'indicator',
-                            'attributes': {'target_id': 'endpoint-connection', 'verdict': 'malicious',
-                                           'indicator': 'Known malicious destination'},
+                            'attributes': dict(intelligence_attributes('endpoint-connection'), observable_type='url', observable_value='https://inventory.example/agent'),
                             'raw_text': 'Source finding associated with the observed connection.'})
         p = self.store.investigate(self.ingest(b), self.token)
         self.assertEqual(p['recommendation'], 'escalate')

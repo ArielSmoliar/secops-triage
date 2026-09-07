@@ -54,7 +54,7 @@ def now():
 def engine_digest():
     root = Path(__file__).parent
     local = {name: sha((root / name).read_bytes()) for name in
-             ('contracts.py', 'replay.py', 'investigation.py', 'store.py', 'agent.py', 'agent_spend.py', 'agent_runner.py', 'live.py')}
+             ('contracts.py', 'replay.py', 'investigation.py', 'intelligence.py', 'store.py', 'agent.py', 'agent_spend.py', 'agent_runner.py', 'live.py')}
     for name in ('migration_proof/agent/openai_model.py', 'migration_proof/agent/openai_preflight.py', 'uv.lock'):
         local[name] = sha((root.parent / name).read_bytes())
     return sha(canonical(local))

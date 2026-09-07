@@ -31,8 +31,8 @@ class HandoffTests(unittest.TestCase):
         self.assertIn('authorization and suspicious evidence conflict', handoff)
         self.assertIn('SIM-204', handoff)
         self.assertIn('phishing-trigger', handoff)
-        self.assertIn('provider, confidence or verdict-explanation', handoff)
-        self.assertIn('Obtain the original intelligence report', handoff)
+        self.assertIn('provider confidence:', handoff)
+        self.assertIn('have not been independently established', handoff)
         self.assertGreaterEqual(handoff.count('[evidence '), 3)
         self.assertIn('Unresolved at handoff:', report.split('## Draft case note')[1])
 

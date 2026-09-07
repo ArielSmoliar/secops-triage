@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 import hashlib
 import json
 import re
+import ipaddress
+from urllib.parse import urlsplit
 
 
 class Rejected(ValueError):
@@ -31,12 +33,15 @@ REQUIRED = {
 ATTRS = {
     'sign_in': {'result': str, 'ip': str, 'device': str, 'mfa': bool},
     'account_change': {'change': str, 'external': bool},
-    'message': {'sender': str, 'subject': str, 'authentication': str},
+    'message': {'sender': str, 'subject': str, 'authentication': str, 'observables': list},
     'delivery': {'message_id': str, 'location': str},
     'click': {'message_id': str, 'action': str},
-    'process': {'name': str, 'command_line': str, 'parent': str},
+    'process': {'name': str, 'command_line': str, 'parent': str, 'observables': list},
     'connection': {'process_id': str, 'destination': str},
-    'indicator': {'target_id': str, 'verdict': str, 'indicator': str},
+    'indicator': {'target_id': str, 'verdict': str, 'indicator': str,
+                  'observable_type': str, 'observable_value': str, 'provider': str,
+                  'match_basis': str, 'confidence': str, 'assessed_at': str,
+                  'expires_at': str, 'rationale': str},
     'authorization': {'target_id': str, 'actor': str, 'reference': str,
                       'status': str, 'authority_role': str, 'authority_verified': bool,
                       'approved_at': str, 'valid_from': str, 'valid_until': str,
@@ -64,6 +69,37 @@ def ident(value):
 def bounded(value, limit=2000):
     if not isinstance(value, str) or not value.strip() or len(value.encode('utf-8')) > limit:
         raise Rejected('invalid bounded text')
+
+
+def observable(kind, value):
+    """Validate syntax only; never resolve hosts or fetch an observable."""
+    bounded(value)
+    if kind == 'sha256':
+        if not re.fullmatch(r'[0-9a-f]{64}', value):
+            raise Rejected('invalid SHA-256 observable')
+    elif kind == 'ip':
+        try:
+            ipaddress.ip_address(value)
+        except ValueError as error:
+            raise Rejected('invalid IP observable') from error
+    elif kind == 'domain':
+        if not re.fullmatch(r'(?=.{1,253}$)[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?', value) or any(
+                not label or len(label) > 63 or label.startswith('-') or label.endswith('-') for label in value.split('.')):
+            raise Rejected('invalid domain observable')
+    elif kind == 'url':
+        try:
+            url = urlsplit(value)
+            if url.scheme not in ('http', 'https') or not url.hostname or url.username is not None or url.password is not None or any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in value):
+                raise ValueError('invalid URL')
+            url.port
+            try:
+                ipaddress.ip_address(url.hostname)
+            except ValueError:
+                observable('domain', url.hostname.lower())
+        except ValueError as error:
+            raise Rejected('invalid URL observable') from error
+    else:
+        raise Rejected('unsupported observable type')
 
 
 def instant(value):
@@ -165,6 +201,24 @@ class Event:
                 raise Rejected('invalid event attribute type')
             if typ is str:
                 bounded(self.attributes[key])
+        if self.kind in ('message', 'process'):
+            values = self.attributes['observables']
+            if len(values) > 32:
+                raise Rejected('too many activity observables')
+            for value in values:
+                exact(value, ('type', 'value'))
+                observable(value['type'], value['value'])
+            if len({canonical(v) for v in values}) != len(values):
+                raise Rejected('duplicate activity observable')
+        if self.kind == 'indicator':
+            a = self.attributes
+            observable(a['observable_type'], a['observable_value'])
+            if a['match_basis'] not in ('exact_observable', 'domain_reputation') or a['confidence'] not in ('high', 'medium', 'low', 'unknown'):
+                raise Rejected('invalid intelligence assessment metadata')
+            if a['match_basis'] == 'domain_reputation' and a['observable_type'] != 'domain':
+                raise Rejected('domain reputation requires a domain observable')
+            if not instant(a['assessed_at']) <= instant(self.occurred_at) or instant(a['expires_at']) <= instant(a['assessed_at']):
+                raise Rejected('invalid intelligence assessment window')
         if self.kind == 'authorization':
             a = self.attributes
             if a['status'] not in ('approved', 'pending', 'revoked'):

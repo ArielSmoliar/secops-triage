@@ -66,3 +66,5 @@ Source gaps such as unavailable intelligence link to the query evidence. Open qu
 Verification: 67 SecOps tests passed in 3.726 seconds, including four new handoff tests for conflicting evidence, missing intelligence, authorized activity and escaped source labels. See outputs/secops-handoff-validation.json.
 
 Structured authorization update: new fixtures now carry machine-readable approval status, authority assertions, time and event/entity scope. See docs/SECOPS-AUTHORIZATION-SCOPE.md. Earlier kits are historical; do not treat their prose authorization as input accepted by the new contract. No analyst observations have been added.
+
+Intelligence update: new normalized records now include observables and provenance, superseding the earlier missing-field limitation for newly generated kits. See docs/SECOPS-INTELLIGENCE-EVIDENCE.md. Historical reports retain the evidence available at their execution time. No external provider was queried.

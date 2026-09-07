@@ -1,0 +1,55 @@
+{
+  "full_suite": {
+    "passed": 228,
+    "seconds": 63.859,
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "log": "/private/tmp/secops-intelligence-full-tests.txt"
+  },
+  "source_sha256": {
+    "secops_triage/contracts.py": "54f7af06baa210cf9a87b44d0ee48dd064d2e868a469ef1178117d9a4b471d15",
+    "secops_triage/fixtures.py": "8991a4471ec0b3ceac48cd3b57025a2431d8455d86bf2f7f972b0dc9a41bcb9d",
+    "secops_triage/investigation.py": "b7de3d316c51b4d609159e49f36be06e2b4d0eb290586731e6f384f09be256f6",
+    "secops_triage/intelligence.py": "03a7720943f804792808cc808aa48524fd4383698d379289476614b228efeb84",
+    "secops_triage/report.py": "8c734f0fef6f586af73058cc375dd762cec697c846032ee253a6944254651719",
+    "secops_triage/store.py": "0af13de7ae11486e0cc781379138af6f7e6993d09c4623e223559adff26915d0",
+    "tests/test_secops_intelligence.py": "554b8d5effa2cf99683e01a39f83020457ec57ef574b98789e229e5a0247cbd5",
+    "tests/test_secops_handoff.py": "65e26bb78c8a1f60da0d9cfb8bc09a6b8de24d3d5fea9e967809d793f509ac85",
+    "tests/test_secops_triage.py": "97ecb2e42853f76f110044eb4edefd000eb43339f69b97361a6504d0ac9f025f"
+  },
+  "independent_review": {
+    "type": "Fresh-context AI reviewer, not an external human SOC assessment",
+    "findings": [
+      "Domain-only exact-match bypass for endpoint targets",
+      "Malformed URL hosts/control characters accepted",
+      "Malformed connection target could raise during matching"
+    ],
+    "disposition": "All three fixed with regression tests; final review found no remaining blockers in reviewed scope.",
+    "focused_tests_passed": 12
+  },
+  "synthetic_replays": [
+    {
+      "report": "/Users/arielsmoliar/Developer/migration-proof/data/secops-intelligence-checked/exact-url/investigation.md",
+      "run_id": "268182318f1145d9add22128cc6ae7f1",
+      "recommendation": "escalate",
+      "investigation_status": "complete",
+      "execution": "deterministic replay playbooks (no live model)",
+      "siem_status": "unchanged",
+      "packet_hash": "c02fc4d68f8170d9cb689bcb996b96f7989a10db2d0f4c40b43fff4409bed115",
+      "case": "exact-url"
+    },
+    {
+      "report": "/Users/arielsmoliar/Developer/migration-proof/data/secops-intelligence-checked/domain-only/investigation.md",
+      "run_id": "497c9ca29b8ecefcdf97faafbed4aa13",
+      "recommendation": null,
+      "investigation_status": "needs_review",
+      "execution": "deterministic replay playbooks (no live model)",
+      "siem_status": "unchanged",
+      "packet_hash": "e5be9e00820b1bd549cdf5c74b7f7f17adc81392724249f150c64704dd9c5ffd",
+      "case": "domain-only"
+    }
+  ],
+  "paid_calls": 0,
+  "analyst_sessions": 0,
+  "historical_live_stores_opened": 0,
+  "runbook_validation": "PASS; eight references checked, zero missing"
+}
