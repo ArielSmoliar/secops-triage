@@ -176,6 +176,10 @@ class SecOpsAgentTests(unittest.TestCase):
         def post(body,key):
             payload=json.loads(body)
             self.assertEqual({t['function']['name'] for t in payload['tools']}, {'inspect_incident','lookup_entity','query_activity','find_related_cases'})
+            query=next(t['function']['parameters'] for t in payload['tools'] if t['function']['name']=='query_activity')
+            self.assertFalse(query['additionalProperties'])
+            self.assertEqual(query['properties']['start']['enum'],[b['start']])
+            self.assertEqual(set(query['properties']['template']['enum']), {'messages','delivery','interactions','intelligence','business_context'})
             self.assertNotIn(self.token,body.decode());self.assertNotIn('test-secret-key',body.decode())
             messages=[]
             if payload['messages'][-1]['role']=='tool':
@@ -263,3 +267,18 @@ execute_session(Store(v['root']),v['run'],v['token'],model_factory=factory)
         self.assertTrue(any(e['stage']=='tool_rejected' for e in events))
         self.assertEqual(events[-1]['stage'],'session_stopped')
         self.assertNotIn('secret-canary',json.dumps(events))
+
+    def test_utc_offset_reproduces_four_response_stop_with_specific_stage(self):
+        from secops_triage.agent import fixture_model
+        def factory(bundle):
+            m=fixture_model(bundle); original=m._next
+            def response(messages):
+                value=original(messages)
+                if value.get('name')=='query_activity':
+                    value['input']['start']=value['input']['start'].replace('Z','+00:00')
+                return value
+            m._next=response;return m
+        with self.assertRaises(Rejected):self.execute(self.ingest(),model_factory=factory)
+        session=self.rows('secops_agent_sessions')[0]
+        self.assertEqual((session['model_calls'],session['tool_calls']),(4,3))
+        self.assertTrue(any(e['stage']=='tool_rejected' and e['label']=='typed_contract' for e in self.rows('secops_agent_events')))

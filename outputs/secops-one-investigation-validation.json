@@ -1,0 +1,19 @@
+{
+  "tests_passed": 180,
+  "seconds": 61.899,
+  "command": "python -m unittest discover -s tests -v",
+  "log": "/private/tmp/secops-one-case-full-tests.txt",
+  "source_sha256": {
+    "secops_triage/agent.py": "2d0b28f42cc9e1a985476f58653e099d4c9527bb202d23cefde429fdff4c563f",
+    "secops_triage/live.py": "38d40e0208746992e31baa8aa45cc1cb9e622ac9e8dbf28560b5c69cbba13acd",
+    "secops_triage/store.py": "5d017a88383c93395d86d49c56cf4cb7b8078ae5c4ba157d00f54e938e5ccc5f",
+    "tests/test_secops_agent.py": "8366d253946da6872471bd8334320c78cb5f8121a8870ffe389c9d9f3de68096",
+    "tests/test_secops_live.py": "ae716b21cf5f1beabed9a5c69fce661f420331398e587bd547619afc20c73d89"
+  },
+  "parallel_reviews": [
+    "Failure-path reviewer reproduced UTC-format failure signature offline; original cause remains unknown.",
+    "Scenario reviewer provided semantic acceptance rubric and nine-read plan.",
+    "Harness reviewer reproduced startup grant/export bug; fix and regression tests confirmed."
+  ],
+  "paid_requests_during_verification": 0
+}
