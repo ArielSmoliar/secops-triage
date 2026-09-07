@@ -1,0 +1,9 @@
+Continue the SecOps investigation demo in /Users/arielsmoliar/Developer/migration-proof on branch main. The project retains the Migration Proof repo name but has pivoted to Tier 1 SecOps investigation of existing SIEM incidents.
+
+Read docs/SESSION-HANDOFF.md and every file listed in its startup reading order completely before editing. Verify the actual checkout, clean Git state and GitHub main. Latest implementation commit is 8a2f435; a subsequent documentation-only handoff commit is expected. The verified baseline is 268 passing tests and nine scripted SDK investigations, not nine live-model runs.
+
+Resume the next independent unit: durable host-only campaign slot accounting that binds plan/build/fixture/rubric, slot, run, grant and preserved execution results. Prevent duplicate consumption, stale-plan execution, wrong-case binding and silent retries; cover stopped attempts and crash recovery. Read the existing campaign, live, spend, runner, evaluator and store modules before designing it. Use bounded independent review, run appropriate tests on frozen source, and commit/push the verified logical unit.
+
+All historical paid grants are closed; no new paid calls are authorized. The campaign artifact is planning-only and its $59.50 configured ceiling is not approval. Actual analyst feedback and owner case acceptance remain pending. Do not invent feedback or mark milestones complete from scripted outcomes. Keep expected answers outside agent inputs and approval/promotion/spending/analyst decisions outside agent tools. Preserve historical live stores and secrets. Do not start UI, AWS/AgentCore, live connectors or publication/submission work before their saved gates are satisfied.
+
+Report what changed, test/review evidence, commit and unresolved risks. Continue authorized offline work without unnecessary confirmation.

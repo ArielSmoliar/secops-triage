@@ -193,3 +193,8 @@ Planning-only campaign command binds source/fixture/rubric hashes and enumerates
 Independent unblinded AI review (rubrics were visible) found an unsupported revocation chronology in case-09's title; corrected. All 28 matrix/campaign/case04 tests passed in that review, with no remaining blockers in scope. Final frozen full suite: 268 tests passed in 64.932 seconds. Nine fresh scripted SDK runs produced the expected draft outcomes with 75 evidence reads; all semantic evaluations remain pending. Runbook validation passed. See outputs/secops-case-matrix-validation.json. No paid calls, grants, human acceptance, analyst sessions or historical live-store access occurred.
 
 An asynchronous request for actual analyst feedback on the current case-04 report was sent; no response has been recorded. Do not treat continuation as feedback. Next: record actual feedback and owner case adjudication when supplied; prepare durable campaign slot accounting independently. Paid breadth, UI, external publication and deployment gates remain open.
+
+
+## Session saved for transfer (2026-09-07)
+
+Current-state entry point: docs/SESSION-HANDOFF.md. Ready-to-paste resume prompt: docs/NEXT-SESSION-PROMPT.md. Latest implementation is 8a2f435; this later save is documentation-only, with the 268-test frozen baseline retained. Next independent work is durable host-only campaign slot accounting; analyst feedback/case acceptance and all new paid authority remain pending. GitHub main was verified against local main before this save; the save commit is to be pushed and reverified. No runtime source or historical evidence changed.
