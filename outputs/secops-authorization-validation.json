@@ -1,0 +1,39 @@
+{
+  "full_suite": {
+    "passed": 216,
+    "seconds": 63.74,
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "log": "/private/tmp/secops-authorization-verified-tests.txt"
+  },
+  "source_sha256": {
+    "secops_triage/contracts.py": "58b7a5a2d9e30d1ca8a1bd5a48c4a281d02ae9887999d0f32e1b4bdcaea49c2b",
+    "secops_triage/investigation.py": "70478c8ce590b3fc43f3fb9be300eaa9db60c62746601afc7fe4a43469bf4564",
+    "secops_triage/replay.py": "29664fd3457d845b02a48efafcc293bc14bdcdd0c85b664648e0b381081274c1",
+    "secops_triage/fixtures.py": "165293b62984d7a6331da7b84d9f476f48bb77feeff892a9d02de8811fc7d331",
+    "secops_triage/drill.py": "212d87aa7c0b28081b75d5a9d05e214394cb36bfa26cd4c7740305e673b561f8",
+    "tests/test_secops_authorization.py": "c5027dd5b072f6addb7c90f65f26862b527cca62dd729a6c6f771d5e7426b03d"
+  },
+  "independent_review": {
+    "initial_findings": [
+      "Approval time omitted earlier related activity",
+      "Related click/connection revocations ignored",
+      "Entity filtering omitted target-related revocation"
+    ],
+    "disposition": "All reproduced gaps fixed and regression-tested; final independent review found no remaining closure blockers in reviewed changes.",
+    "focused_tests_passed": 13
+  },
+  "negative_replay": {
+    "run_id": "4c68b072076a365a25c77b94ce78d631",
+    "packet_hash": "d76702a1b64272c1250f70696b9b54bc3a13c60cc38a6ba8b1c7c4880ac2ada7",
+    "recommendation": null,
+    "investigation_status": "needs_review",
+    "execution": "deterministic replay playbooks (no live model)",
+    "reads": 9,
+    "description": "Message authorized; observed click excluded from structured scope despite permissive source prose.",
+    "report": "data/secops-authorization-scope-checked/run/investigation.md"
+  },
+  "paid_calls": 0,
+  "analyst_sessions": 0,
+  "historical_live_stores_opened": 0,
+  "runbook_validation": "PASS; eight references checked, zero missing"
+}

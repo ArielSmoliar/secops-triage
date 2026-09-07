@@ -159,3 +159,9 @@ Conditional go: the runbook now requires observed analyst usefulness, structured
 Store.save_handoff now saves immutable, packet-bound analyst reason/missing context/next action without a final close/escalate decision. status returns handoff history; new notes, incident revisions and final decisions retire older current notes atomically. The four agent tools remain unchanged. Schema v2 is an additive atomic migration; historical live stores were not opened. Engine identity changed: use a fresh import for new work. Read docs/SECOPS-UNRESOLVED-HANDOFF.md. No actual analyst observation, paid call, UI or SIEM action occurred. Source-quality, observed-usefulness and model-scoring gates remain open.
 
 Verification: 202 full-suite tests passed in 62.751 seconds; final focused handoff suite passed 11 tests, including the additional reviewer-requested rollback case. Independent review found no blockers. See outputs/secops-handoff-store-validation.json.
+
+## Structured authorization scope implemented (2026-09-07)
+
+Authorization now requires typed status, role/imported verification, approval and validity times, and explicit event/entity scope. Closure evaluates these fields for triggers and related activity; prose cannot grant scope. Invalid or conflicting authorization remains cited and cannot justify close. See docs/SECOPS-AUTHORIZATION-SCOPE.md. The importer assertions are not externally authenticated by this demo. Old three-field authorization snapshots are rejected; engine identity changed, so use fresh imports. Historical live stores/reports are preserved and were not opened. Intelligence depth, semantic scoring, observed usefulness and UI remain open; no paid calls or analyst observations occurred.
+
+Final verification: 216 tests passed in 63.740 seconds on the reviewed implementation. Thirteen focused authorization tests cover the new scope and review-discovered gaps. See outputs/secops-authorization-validation.json.

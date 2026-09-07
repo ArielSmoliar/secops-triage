@@ -39,7 +39,13 @@ def scenario(family, name='authorized', tenant='demo-org'):
                     'entity_ids': ['user-1', 'device-1'], 'trigger_ids': [trigger]}]
     if name in ('authorized', 'authorized_alternative', 'unavailable', 'stale', 'contradictory', 'injection'):
         add(f'{family}-authorization', 'authorization',
-            {'target_id': trigger, 'actor': 'Synthetic system owner', 'reference': 'CHG-201' if name != 'authorized_alternative' else 'CHG-202'},
+            {'target_id': trigger, 'actor': 'Synthetic system owner',
+             'reference': 'CHG-201' if name != 'authorized_alternative' else 'CHG-202',
+             'status': 'approved', 'authority_verified': True,
+             'authority_role': {'sign_in': 'identity_owner', 'phishing': 'security_awareness', 'endpoint': 'endpoint_owner'}[family],
+             'approved_at': '2026-09-07T09:00:00Z', 'valid_from': b['start'], 'valid_until': b['end'],
+             'authorized_event_ids': [e['id'] for e in b['events']],
+             'authorized_entity_ids': ['user-1', 'device-1']},
             '2026-09-07T10:02:00Z', 'Owner-confirmed activity tied to the exact source event.')
     if name in ('malicious', 'malicious_alternative', 'contradictory'):
         if family == 'sign_in' and name == 'malicious_alternative':

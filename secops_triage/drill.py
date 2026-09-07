@@ -34,6 +34,7 @@ def cases():
             'occurred_at': '2026-09-07T10:04:00Z', 'kind': 'click',
             'attributes': {'message_id': 'phishing-trigger', 'action': 'allowed'},
             'raw_text': 'Synthetic click telemetry; allowed describes the recorded action, not user authorization.'})
+        next(e for e in bundle['events'] if e['kind'] == 'authorization')['attributes']['authorized_event_ids'].append('phishing-click')
         IncidentBundle.from_dict(bundle)
         result[code] = bundle
     return result

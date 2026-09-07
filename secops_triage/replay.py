@@ -33,8 +33,18 @@ def execute(bundle, request):
     coverage = {'start': source.start, 'end': source.end}
     if source.outcome not in ('success', 'truncated'):
         return dict(base, outcome=source.outcome, complete=False, coverage=coverage, total_matches=0)
+    # A target-related assertion can be attributed to an additional entity on
+    # an already scoped activity. Entity-only filtering would hide revocations
+    # and intelligence while claiming complete coverage of that activity.
+    activity_kinds = set().union(*(TEMPLATES[t] for t in REQUIRED[alert.family]
+                                  if t not in ('business_context', 'intelligence')))
+    related_targets = {e.id for e in bundle.events if e.kind in activity_kinds
+                       and set(e.entity_ids).intersection(alert.entity_ids)
+                       and instant(start) <= instant(e.occurred_at) <= instant(end)}
     records = [asdict(e) for e in bundle.events if e.source_id == source.id
-               and e.kind in TEMPLATES[template] and set(e.entity_ids).intersection(alert.entity_ids)
+               and e.kind in TEMPLATES[template]
+               and (set(e.entity_ids).intersection(alert.entity_ids)
+                    or (e.kind in ('authorization', 'indicator') and e.attributes['target_id'] in related_targets))
                and instant(start) <= instant(e.occurred_at) <= instant(end)]
     records.sort(key=lambda e: (e['occurred_at'], e['id']))
     complete = (source.complete and source.outcome == 'success'

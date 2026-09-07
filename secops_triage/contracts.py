@@ -37,7 +37,10 @@ ATTRS = {
     'process': {'name': str, 'command_line': str, 'parent': str},
     'connection': {'process_id': str, 'destination': str},
     'indicator': {'target_id': str, 'verdict': str, 'indicator': str},
-    'authorization': {'target_id': str, 'actor': str, 'reference': str},
+    'authorization': {'target_id': str, 'actor': str, 'reference': str,
+                      'status': str, 'authority_role': str, 'authority_verified': bool,
+                      'approved_at': str, 'valid_from': str, 'valid_until': str,
+                      'authorized_event_ids': list, 'authorized_entity_ids': list},
     'case_reference': {'case_id': str, 'disposition': str, 'summary': str},
 }
 OUTCOMES = ('success', 'unavailable', 'unauthorized', 'timeout', 'truncated', 'malformed')
@@ -162,6 +165,17 @@ class Event:
                 raise Rejected('invalid event attribute type')
             if typ is str:
                 bounded(self.attributes[key])
+        if self.kind == 'authorization':
+            a = self.attributes
+            if a['status'] not in ('approved', 'pending', 'revoked'):
+                raise Rejected('invalid authorization status')
+            if a['authority_role'] not in ('identity_owner', 'security_awareness', 'endpoint_owner', 'unknown'):
+                raise Rejected('invalid authorization authority')
+            if instant(a['valid_from']) > instant(a['valid_until']):
+                raise Rejected('inverted authorization window')
+            instant(a['approved_at'])
+            strings(a['authorized_event_ids'], 200)
+            strings(a['authorized_entity_ids'], 100)
         bounded(self.raw_text, 8000)
         enum = {'sign_in': ('result', ('success', 'failure')),
                 'indicator': ('verdict', ('malicious', 'benign', 'unknown')),
@@ -218,6 +232,12 @@ class IncidentBundle:
                 raise Rejected('event does not match source coverage')
             if instant(e.occurred_at) > observed:
                 raise Rejected('future evidence')
+            if e.kind == 'authorization':
+                a = e.attributes
+                if not set(a['authorized_event_ids']) <= events.keys() or not set(a['authorized_entity_ids']) <= entities:
+                    raise Rejected('unknown authorization scope reference')
+                if instant(a['approved_at']) > instant(e.occurred_at):
+                    raise Rejected('authorization approval is later than its source observation')
             field = {'indicator': 'target_id', 'authorization': 'target_id',
                      'delivery': 'message_id', 'click': 'message_id', 'connection': 'process_id'}.get(e.kind)
             if field:

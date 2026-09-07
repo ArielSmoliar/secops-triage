@@ -64,3 +64,5 @@ The current report leads with the scoped recommendation and cites both authoriza
 Source gaps such as unavailable intelligence link to the query evidence. Open questions also appear in the draft case note. Complete collection is explicitly distinguished from incident resolution or confirmed compromise. Report rendering does not change the packet, recommendation or review records. The current kit remains deterministic synthetic replay; no analyst feedback or disposition was inferred from the owner's instruction to continue.
 
 Verification: 67 SecOps tests passed in 3.726 seconds, including four new handoff tests for conflicting evidence, missing intelligence, authorized activity and escaped source labels. See outputs/secops-handoff-validation.json.
+
+Structured authorization update: new fixtures now carry machine-readable approval status, authority assertions, time and event/entity scope. See docs/SECOPS-AUTHORIZATION-SCOPE.md. Earlier kits are historical; do not treat their prose authorization as input accepted by the new contract. No analyst observations have been added.
