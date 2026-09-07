@@ -1,6 +1,10 @@
-Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. One real-model phishing investigation now completes; see [live result and evidence review](docs/SECOPS-COMPLETED-INVESTIGATION.md).
+# SecOps Triage
 
-# Incident investigation demo
+Evidence-backed investigation of existing SIEM incidents.
+
+Repository: [ArielSmoliar/secops-triage](https://github.com/ArielSmoliar/secops-triage). Formerly `migration-proof`; the original Migration Proof implementation and evidence remain preserved.
+
+Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. One real-model phishing investigation now completes; see [live result and evidence review](docs/SECOPS-COMPLETED-INVESTIGATION.md).
 
 Help a Tier 1 SOC analyst investigate an **existing incident created by a SIEM or another security tool**. Gather identity, email, endpoint and historical context, then prepare an evidence-linked close-or-escalate recommendation. One incident can contain multiple related alerts.
 

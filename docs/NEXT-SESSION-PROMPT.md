@@ -1,4 +1,4 @@
-Continue the SecOps investigation demo in /Users/arielsmoliar/Developer/migration-proof on branch main. The project retains the Migration Proof repo name but has pivoted to Tier 1 SecOps investigation of existing SIEM incidents.
+Continue SecOps Triage in /Users/arielsmoliar/Developer/migration-proof on branch main. GitHub is now ArielSmoliar/secops-triage; the local checkout path remains unchanged to preserve environment and evidence links. The product investigates existing SIEM incidents for Tier 1 analysts.
 
 Read docs/SESSION-HANDOFF.md and every file listed in its startup reading order completely before editing. Verify the actual checkout, clean Git state and GitHub main. The accounting increment resumes from handoff 84cb2c6; reverify its later implementation commit and the latest frozen test record in outputs/secops-campaign-accounting-validation.json. The nine historical SDK investigations were scripted, not nine live-model runs.
 

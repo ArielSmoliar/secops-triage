@@ -21,7 +21,7 @@ def unique_object(pairs):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Investigate an existing SIEM incident using local replay data.')
+    parser = argparse.ArgumentParser(description='SecOps Triage: investigate an existing SIEM incident using local replay data.')
     sub = parser.add_subparsers(dest='command', required=True)
     for command in ('demo', 'investigate'):
         p = sub.add_parser(command)

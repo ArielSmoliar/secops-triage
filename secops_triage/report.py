@@ -52,7 +52,7 @@ def markdown(store, packet):
                'missing_evidence': 'Required evidence is missing or incomplete',
                'legitimacy_not_established': 'Expected business activity has not been established'}
     source = f"{safe(packet['source'])} / {safe(packet['incident_id'])}"
-    lines = [f"# Investigation of {source}", '', safe(packet['title']), '',
+    lines = [f"# Investigation of {source}", '', 'SecOps Triage', '', safe(packet['title']), '',
              f"**Execution:** {safe(packet['execution'])}. **Data:** {'synthetic' if packet['synthetic'] else 'imported local snapshot'}.", '',
              f"**Recommendation:** {packet['recommendation'] or 'needs analyst review'}. "
              f"**Investigation:** {packet['investigation_status']}. **SIEM status:** unchanged.", '',

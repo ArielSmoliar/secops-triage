@@ -1,17 +1,19 @@
-# SecOps demo session handoff
+# SecOps Triage session handoff
 
 Saved 2026-09-07. This is the current-state entry point; docs/HANDOFF.md retains the chronological history. This update includes durable host-only campaign accounting; see docs/SECOPS-CAMPAIGN-ACCOUNTING.md.
 
 ## Repository and verification
 
 - Work in `/Users/arielsmoliar/Developer/migration-proof`, branch `main`. The desktop may start in `/Users/arielsmoliar/Documents/ChatGPT/migration-proof`; do not assume that is the active repository. Set the working directory explicitly.
-- GitHub: https://github.com/ArielSmoliar/migration-proof.git . Campaign accounting resumes from verified local/GitHub handoff `84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c` on main. Reverify current HEAD and origin/main on startup; the accounting implementation is a later commit.
-- Latest runtime verification: **287 tests passed in 65.830 seconds**, with runtime/test source hashes unchanged during execution. Independent review passed 19 focused tests and found no remaining blockers in scope. Evidence: outputs/secops-campaign-accounting-validation.json. The 268-test matrix record remains historical evidence.
+- GitHub: https://github.com/ArielSmoliar/secops-triage.git . Campaign accounting resumes from verified local/GitHub handoff `84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c` on main. Reverify current HEAD and origin/main on startup; the accounting implementation is a later commit.
+- Latest runtime verification after naming: **287 tests passed in 65.619 seconds**, with runtime/test/metadata hashes unchanged during execution. Evidence: outputs/secops-rename-validation.json. Prior campaign accounting verification passed 287 tests plus independent review of 19 focused tests with no blockers; outputs/secops-campaign-accounting-validation.json remains its historical record.
 - Nine fresh synthetic investigations completed through the real Strands SDK with a scripted provider: 75 evidence reads, expected policy outcomes, all semantic evaluations pending. These are not live-model successes. Artifacts: data/secops-nine-cases-reviewed/manifest.json and case-01–09-scripted/investigation.md.
 - Runbook validator passed, eight path references checked, none missing. Earlier original/faulty/corrected migration probe returned 403/200/403 with the intended faulty leak detected.
 - Ignored data stores, private owner capabilities, .env and temporary logs are local-only, not on GitHub. Sanitized evidence, source, fixtures and docs are committed. Recreate synthetic runs in new private directories on another machine; never commit secrets or owner.json.
 
 ## Product and settled direction
+
+The owner selected **SecOps Triage** as the demo/product name and **secops-triage** as the repository name. The existing local checkout stays at `/Users/arielsmoliar/Developer/migration-proof` to preserve environment paths and historical evidence links. Python module names stay `secops_triage` and `migration_proof`. Root package metadata/lockfile were renamed; use fresh imports for the changed engine identity.
 
 The project pivoted from occasional migrations to daily Tier 1 SecOps investigation: an existing SIEM incident becomes an evidence-backed close/escalate recommendation or unresolved handoff. The SIEM creates and owns incidents; this demo never modifies upstream status. Scope is suspicious sign-ins, reported phishing and endpoint alerts. Phishing is the hero scenario.
 

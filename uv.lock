@@ -365,7 +365,7 @@ wheels = [
 ]
 
 [[package]]
-name = "migration-proof"
+name = "secops-triage"
 version = "0.1.0"
 source = { virtual = "." }
 

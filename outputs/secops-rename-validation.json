@@ -1,0 +1,24 @@
+{
+  "product_name": "SecOps Triage",
+  "github_repository": "ArielSmoliar/secops-triage",
+  "github_repository_id": 1358193735,
+  "visibility": "private",
+  "local_checkout": "/Users/arielsmoliar/Developer/migration-proof",
+  "full_suite": {
+    "passed": 287,
+    "seconds": 65.619,
+    "source_unchanged_during_tests": true,
+    "log": "/private/tmp/secops-rename-tests.txt"
+  },
+  "lockfile_check": "uv lock --check --offline passed; only root project name changed; dependency versions unchanged",
+  "smoke_check": "CLI help and fresh deterministic demo report show SecOps Triage. Initial smoke command was rejected for macOS temporary symlink path; rerun with resolved path passed.",
+  "changed_source_sha256": {
+    "secops_triage/__main__.py": "2a0294838ed7a940dfc41ee99a80343c543ceb68e363579b3bde0f2d9d82caab",
+    "secops_triage/report.py": "6738f610bd20c5ffd664f33a94b6602ac7c025318bb9137bce53578251f9d614",
+    "pyproject.toml": "f17280f243739334464c89c867cb98efbd885dfa6ee98251c0fcaeeffd175ad3",
+    "uv.lock": "de63c742a8be47e65cb3c5b763ca751b2202c094625761554d1788fb00555a0c"
+  },
+  "paid_calls": 0,
+  "historical_evidence_modified": false,
+  "gates": "Analyst feedback, case acceptance, new paid authority, UI/cloud and publication remain pending."
+}
