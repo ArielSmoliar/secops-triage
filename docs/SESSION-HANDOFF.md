@@ -78,3 +78,7 @@ Use the pinned .venv and uv.lock; do not silently update dependencies. Real SDK 
 - Append HANDOFF.md from a freshly read variable and assert its existing contents remain a prefix. A previous variable-reuse mistake overwrote history and was fixed in commit448a149; inspect staged diffstat, especially handoff deletions.
 - Freeze all runtime/test source before the final suite. An earlier mixed-source run had a CLI failure; its frozen rerun passed and the superseded result is retained. Do not edit source while verification is running.
 - Current verification proves deterministic behavior and scripted integration, not semantic review quality, live reliability or analyst usefulness. Keep those claims separate.
+
+## Workflow alignment update
+
+The owner requested alignment with the researched Splunk/Datadog workflows. docs/SECOPS-WORKFLOW-ALIGNMENT.md maps the five-step flow to implemented capabilities and gaps, and supplies the correct case-04 facilitator sequence. PRODUCT.md and the flow review link it. This is documentation-only alignment; no video playback review, analyst session, UI completion or case acceptance is claimed.

@@ -49,6 +49,8 @@ Persistent header: incident identity, snapshot time, data/execution labels and r
 
 ## Proposed acceptance tasks
 
+Current hero guidance: follow docs/SECOPS-WORKFLOW-ALIGNMENT.md for evaluation case-04. Its training and follow-up messages are distinct; the conflict exercise below is a separate scenario. Actual analyst feedback is waived by the owner; these tasks remain design checks, not recorded user observations.
+
 - Conflict: find both same-message authorization and threat evidence, explain the strongest benign alternative, and prepare an escalation without claiming compromise.
 - Authorized: verify machine-readable exact scope and coverage before recording a bounded local close reason. This requires the planned authorization-contract improvements.
 - Missing intelligence: distinguish unavailable from empty results and save an unresolved handoff without forcing a disposition.

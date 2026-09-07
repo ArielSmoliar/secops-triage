@@ -45,3 +45,8 @@ The current surface is CLI and Markdown over synthetic replay. Keep live-model h
 ## Deferred landing page
 
 The owner requested a landing page for the SecOps Triage capability and explicitly deferred it. Backlog scope: the incident-to-analyst-handoff promise, current hero artwork, a concise phishing walkthrough, verified evidence and limitations, and links to the repository and demo materials. Prioritize demo readiness first; do not begin landing-page implementation yet. Keep marketing content separate from the analyst workspace, and preserve the existing publication/hosting gates.
+
+
+## Demo workflow reference
+
+Use the source-based Splunk/Datadog alignment in docs/SECOPS-WORKFLOW-ALIGNMENT.md: existing incident → context collection → exact evidence → recommendation and open questions → explicit local decision or unresolved handoff. Follow its case-04 facilitator sequence for the hero. Analyst feedback is waived by the owner; the comparison is not human validation.

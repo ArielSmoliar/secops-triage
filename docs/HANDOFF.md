@@ -237,3 +237,7 @@ The owner requested a landing page for the SecOps Triage capability but explicit
 ## Owner update — 2026-09-07: analyst feedback skipped
 
 The owner explicitly said “it's ok, skip feedback.” The actual analyst walkthrough/feedback requirement is waived for this demo; do not request it again or block demo preparation solely on it. This supersedes older feedback prerequisites below and in the saved runbook. No analyst session occurred, so record this as waived, not completed or evidence of usefulness. Human case acceptance remains pending; this instruction does not accept the hero rubric, authorize paid calls, or waive other saved gates.
+
+## 2026-09-07: vendor workflow alignment
+
+Added docs/SECOPS-WORKFLOW-ALIGNMENT.md with primary references, implementation mapping and the two-message case-04 facilitator sequence. Updated product/flow/session guidance. The existing incident-to-evidence-to-handoff sequence aligns at the task level; CLI/Markdown presentation gaps remain explicit. Feedback remains waived; no runtime, authority or historical evidence changed.
