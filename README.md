@@ -1,8 +1,42 @@
-# Migration Proof
+# Incident investigation demo
+
+Help a Tier 1 SOC analyst investigate an **existing incident created by a SIEM or another security tool**. Gather identity, email, endpoint and historical context, then prepare an evidence-linked close-or-escalate recommendation. One incident can contain multiple related alerts.
+
+The first working slice is a local replay with three playbooks: suspicious sign-ins, reported phishing and endpoint alerts. It executes real bounded queries against synthetic source records and persists the results. Its assessment is explicitly **deterministic demo logic, not live AI**. The upstream system remains the incident system of record.
+
+## Run the incident demo
+
+Python 3.11+ on macOS/Linux; this slice needs no dependencies or credentials. Choose a new output directory for each CLI run:
+
+```sh
+python3 -m secops_triage demo --output data/incident-demo-1
+```
+
+Open `data/incident-demo-1/investigation.md` to inspect the entities, event timeline, per-alert findings, missing context, source evidence links and draft case note. `packet.json` contains the structured result. The private `owner.json` is for local host access only; do not share it.
+
+To investigate a normalized local incident snapshot:
+
+```sh
+python3 -m secops_triage investigate incident.json --output data/imported-incident-1
+```
+
+This imports an existing incident; it does not create an incident in a SIEM. No live connector, paid model, upstream case write or containment action runs. See [contracts, limits and analyst review](docs/SECOPS-REPLAY.md).
+
+## Verify the SecOps slice
+
+```sh
+python3 -m unittest discover -s tests -p test_secops_triage.py -v
+```
+
+The tests include 30 synthetic cases across all three families, a combined incident, source failures, stale coverage, evidence tampering, run isolation, replay, concurrency and process-crash recovery. These establish demo behavior, not production detection accuracy or measured time savings.
+
+The original migration implementation and its tests remain intact below. It is a preserved technical baseline, not the active product workflow.
+
+## Preserved Migration Proof baseline
 
 Evidence-backed acceptance for software migrations. The deterministic fixture demonstrates a green ordinary test suite alongside a cross-tenant authorization regression.
 
-Phase 2 implements the local deterministic acceptance backend. Phase 3 now adds a real Strands loop with an explicitly scripted offline provider. No live model calls, web UI, AWS resources, or Devpost submission are enabled.
+Phase 2 implements the local deterministic acceptance backend. Phase 3 now adds a real Strands loop with an explicitly scripted offline provider. Historical bounded migration live-test results are documented in `docs/OPENAI-LIVE-RESULT.md`. The SecOps replay does not invoke a model.
 
 ## Verify
 
