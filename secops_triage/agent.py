@@ -23,7 +23,9 @@ Your output is an untrusted model assessment; deterministic evidence checks and 
 '''
 SCHEMA = '''CREATE TABLE IF NOT EXISTS secops_agent_sessions(
  id TEXT PRIMARY KEY, run_id TEXT NOT NULL, mode TEXT NOT NULL, state TEXT NOT NULL,
- model_calls INTEGER NOT NULL, tool_calls INTEGER NOT NULL, result_hash TEXT);'''
+ model_calls INTEGER NOT NULL, tool_calls INTEGER NOT NULL, result_hash TEXT);
+CREATE TABLE IF NOT EXISTS secops_agent_events(
+ id INTEGER PRIMARY KEY, session_id TEXT NOT NULL, stage TEXT NOT NULL, label TEXT NOT NULL);'''
 
 
 def validate_assessment(value, evidence):
@@ -91,11 +93,17 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
     from strands.hooks import BeforeModelCallEvent, AfterModelCallEvent, BeforeToolCallEvent, BeforeToolsEvent, AfterToolsEvent
     stopped = []
     evidence = []
+    def audit(stage, label=''):
+        # Only fixed stage/reason labels or registry names; never model text/arguments.
+        db.execute('INSERT INTO secops_agent_events(session_id,stage,label) VALUES(?,?,?)', (session,stage,label))
+        db.commit()
     def fail(reason):
         if not stopped:
             stopped.append(reason)
+        audit('stopped', stopped[0])
         raise Rejected(stopped[0])
     def before_model(event):
+        audit('before_model')
         if stopped:
             fail(stopped[0])
         row = db.execute('SELECT model_calls FROM secops_agent_sessions WHERE id=?', (session,)).fetchone()
@@ -103,11 +111,13 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
             fail('model/context limit')
         db.execute('UPDATE secops_agent_sessions SET model_calls=model_calls+1 WHERE id=?', (session,)); db.commit()
     def after_model(event):
+        audit('after_model', 'provider_failed' if event.exception else 'received')
         if event.exception:
             stopped.append('provider failed')
         elif event.stop_response and len(canonical(event.stop_response.message)) > 16384:
             fail('model response limit')
     def before_batch(event):
+        audit('before_tools')
         blocks = event.message['content']
         if len(blocks) != 1 or 'toolUse' not in blocks[0]:
             stopped.append('one tool per turn required'); event.cancel = 'Rejected'
@@ -116,6 +126,7 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
             name, args = event.tool_use.get('name'), event.tool_use.get('input')
             if stopped or name not in REQUEST_TYPES or event.selected_tool is None:
                 raise Rejected('unregistered tool')
+            audit('tool_selected', name)
             cls = REQUEST_TYPES[name]
             if type(args) is not dict or set(args) != {f.name for f in fields(cls)}:
                 raise Rejected('invalid arguments')
@@ -125,6 +136,7 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
                 raise Rejected('tool budget')
             db.execute('UPDATE secops_agent_sessions SET tool_calls=tool_calls+1 WHERE id=?', (session,)); db.commit()
         except Exception:
+            audit('tool_rejected', 'contract_or_budget')
             stopped.append('tool rejected'); event.cancel_tool = 'Scoped request rejected'
     def after_tools(event):
         if any(b.get('toolResult', {}).get('status') == 'error' for b in event.message['content']):
@@ -171,11 +183,14 @@ async def loop(bundle, call, model, db, session, mode, max_calls):
     blocks = result.message['content']
     if len(blocks) != 1 or set(blocks[0]) != {'text'}:
         fail('invalid final response')
+    audit('parse_final')
     value = json.loads(blocks[0]['text'])
     if type(value) is not dict or set(value) != {'recommendation', 'findings'}:
         fail('invalid final fields')
     value.update(execution=mode, session_id=session)
+    audit('validate_final')
     validate_assessment(value, evidence)
+    audit('assessment_validated')
     # Model's prose is untrusted even when its citation exists. The backend verdict is separate.
     return value
 
@@ -219,6 +234,8 @@ def execute_session(store, run_id, token, *, grant_id=None, api_key=None, model_
             db.execute("UPDATE secops_agent_sessions SET state='assessed', result_hash=? WHERE id=?", (digest, session)); db.commit()
             return value
         except Exception:
+            db.execute('INSERT INTO secops_agent_events(session_id,stage,label) VALUES(?,?,?)',
+                       (session, 'session_stopped', 'see_last_stage'))
             db.execute("UPDATE secops_agent_sessions SET state='stopped' WHERE id=?", (session,)); db.commit()
             raise Rejected('agent stopped; no assessment published') from None
         finally:

@@ -44,3 +44,7 @@ Proposed ceiling: **$4.25**. At the [published GPT-4.1 mini rates](https://devel
 `agent_spend.authorize` is an explicit spending action; invoke it only after the owner approves this concrete attempt. No grant for this live attempt has been issued and no paid SecOps request has been sent. A fake-response test and scripted SDK run do not satisfy the pending live-model milestone.
 
 Next: obtain the new spending authorization, execute once, inspect actual tool selection and cited findings, record usage, and stop. One live success would still not establish reliability across unfamiliar incidents or prompt injection. AWS and AgentCore remain separate unverified deployment work.
+
+## Subsequent live result
+
+The owner authorized the proposal and it ran once. It stopped after four model requests and three successful reads, without an investigation packet. The grant is closed and no retry is authorized. See `SECOPS-FIRST-LIVE-RESULT.md`; it supersedes the pending-authorization status above. Follow-up `secops_agent_events` logging now records fixed lifecycle stages and safe stop labels to diagnose future failures.

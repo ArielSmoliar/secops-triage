@@ -253,3 +253,13 @@ execute_session(Store(v['root']),v['run'],v['token'],model_factory=factory)
         blob.chmod(0o600);blob.write_text('{}')
         with self.assertRaises(Rejected):self.store.packet(run,self.token)
         with self.assertRaises(Rejected):self.store.review(run,self.token,packet['packet_hash'],'analyst','close','test','tamper')
+
+    def test_failure_stage_journal_excludes_untrusted_values(self):
+        from secops_triage.agent import fixture_model
+        run=self.ingest()
+        with self.assertRaises(Rejected):
+            self.execute(run,model_factory=lambda b:fixture_model(b,{'name':'inspect_incident','input':{'secret-canary':'secret-canary'}}))
+        events=self.rows('secops_agent_events')
+        self.assertTrue(any(e['stage']=='tool_rejected' for e in events))
+        self.assertEqual(events[-1]['stage'],'session_stopped')
+        self.assertNotIn('secret-canary',json.dumps(events))
