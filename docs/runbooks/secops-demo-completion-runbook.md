@@ -155,7 +155,7 @@ The completed M1 procedure below is retained for traceability. Do not restart it
 
 ### Phase 3 — M3: build the analyst workspace
 
-6. **Action (reversible):** First implement a durable unresolved-handoff record distinct from final close/escalate review; store.review currently supports only those two final dispositions. Then build one incident investigation screen: existing source incident selector; real collection status; entities and timeline; recommendation and gaps; clickable evidence; draft case note; accept/override with a reason. Use local review semantics already implemented in `secops_triage/store.py`.
+6. **Action (reversible):** Use Store.save_handoff for durable unresolved work, separate from Store.review for final close/escalate decisions; see docs/SECOPS-UNRESOLVED-HANDOFF.md. Build one incident investigation screen: existing source incident selector; real collection status; entities and timeline; recommendation and gaps; clickable evidence; draft case note; accept/override with a reason. Use local review semantics already implemented in `secops_triage/store.py`.
    - **Expected result:** One primary action starts investigation; the analyst reviews a prepared packet rather than issuing individual collection prompts. A pending or failed run never appears complete.
    - **Verify:** Browser tests cover one successful run, missing telemetry, model failure, duplicate start, reload/restart, evidence navigation, adjacent model/policy disagreement, unresolved-handoff save/reload, override and stale packet review. An analyst can finish without terminal commands. Label every recorded/scripted mode explicitly.
    - **If verification fails:** Correct the interaction or binding; do not patch display data manually to finish the demo.

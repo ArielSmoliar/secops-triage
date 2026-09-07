@@ -37,6 +37,11 @@ CREATE TABLE IF NOT EXISTS reviews(
  packet_hash TEXT NOT NULL, actor TEXT NOT NULL, disposition TEXT NOT NULL, reason TEXT NOT NULL,
  current INTEGER NOT NULL, at TEXT NOT NULL);
 '''
+HANDOFF_SCHEMA = '''
+CREATE TABLE IF NOT EXISTS handoffs(
+ id TEXT PRIMARY KEY, request_id TEXT UNIQUE NOT NULL, run_id TEXT NOT NULL REFERENCES runs(id),
+ packet_hash TEXT NOT NULL, content_hash TEXT NOT NULL, current INTEGER NOT NULL, at TEXT NOT NULL);
+'''
 LEGAL = {'created': {'collecting'}, 'collecting': {'packet_ready', 'needs_review', 'failed'},
          'needs_review': {'collecting', 'reviewed'}, 'packet_ready': {'reviewed'},
          'failed': {'collecting'}, 'reviewed': set()}
@@ -64,11 +69,11 @@ class Store:
         self._safe(self.root / 'triage.sqlite3')
         with self._locked() as db:
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (0, 1):
+            if version not in (0, 1, 2):
                 raise Rejected('unsupported SecOps database version')
-            db.executescript(SCHEMA)
-            db.execute('PRAGMA user_version=1')
-            db.commit()
+            # Additive migration and version stamp commit together, including on restart.
+            db.executescript('BEGIN IMMEDIATE;\n' + SCHEMA + HANDOFF_SCHEMA +
+                             'PRAGMA user_version=2;\nCOMMIT;')
             for row in db.execute("SELECT * FROM runs WHERE state='collecting'").fetchall():
                 db.execute("UPDATE invocations SET state='interrupted' WHERE run_id=? AND state='running'", (row['id'],))
                 self._transition(db, row['id'], 'needs_review', 'recovered interrupted collection; rerun required')
@@ -194,6 +199,8 @@ class Store:
             db.execute('INSERT INTO heads VALUES(?,?,?,?) ON CONFLICT(tenant,source,incident) DO UPDATE SET run_id=excluded.run_id',
                        (bundle.tenant_id, bundle.source, bundle.incident_id, run_id))
             db.execute('UPDATE reviews SET current=0 WHERE run_id IN (SELECT id FROM runs WHERE tenant=? AND source=? AND incident=?)',
+                       (bundle.tenant_id, bundle.source, bundle.incident_id))
+            db.execute('UPDATE handoffs SET current=0 WHERE run_id IN (SELECT id FROM runs WHERE tenant=? AND source=? AND incident=?)',
                        (bundle.tenant_id, bundle.source, bundle.incident_id))
             db.commit()
             return run_id
@@ -369,7 +376,7 @@ class Store:
             head = db.execute('SELECT run_id FROM heads WHERE tenant=? AND source=? AND incident=?',
                               (row['tenant'], row['source'], row['incident'])).fetchone()[0]
             return {'run_id': run_id, 'state': row['state'], 'is_latest': head == run_id,
-                    'reviews': reviews, 'upstream_status': 'unchanged'}
+                    'reviews': reviews, 'handoffs': self._handoffs(db, row), 'upstream_status': 'unchanged'}
 
     def review(self, run_id, token, packet_hash, actor, disposition, reason, request_id):
         """Host-only analyst decision record; never writes to the upstream SIEM."""
@@ -395,6 +402,53 @@ class Store:
             review_id = secrets.token_hex(16)
             db.execute('INSERT INTO reviews VALUES(?,?,?,?,?,?,?,?,?)',
                        (review_id, request_id, run_id, packet_hash, actor, disposition, reason, 1, now()))
+            db.execute('UPDATE handoffs SET current=0 WHERE run_id=?', (run_id,))
             self._transition(db, run_id, 'reviewed', 'analyst decision recorded locally')
             db.commit()
             return review_id
+
+
+    def _handoffs(self, db, row):
+        result = []
+        for saved in db.execute('SELECT * FROM handoffs WHERE run_id=? ORDER BY rowid', (row['id'],)):
+            value = self._get(row['id'], saved['content_hash'])
+            expected = {'id': saved['id'], 'run_id': row['id'], 'packet_hash': saved['packet_hash'],
+                        'request_id': saved['request_id'], 'at': saved['at']}
+            if any(value.get(k) != v for k, v in expected.items()):
+                raise Rejected('handoff identity mismatch')
+            result.append(dict(value, content_hash=saved['content_hash'], current=bool(saved['current'])))
+        return result
+
+    def save_handoff(self, run_id, token, packet_hash, actor, reason, missing_context,
+                     next_action, request_id):
+        """Host-only unresolved work record. Does not review or mutate the packet/SIEM."""
+        bounded(actor, 200)
+        for text in (reason, missing_context, next_action):
+            bounded(text)
+        ident(request_id)
+        with self._locked() as db:
+            row = self._owner(db, run_id, token)
+            self._current(db, row)
+            self._load(row)
+            packet = self._packet(db, row)
+            if packet_hash != packet['packet_hash']:
+                raise Rejected('handoff targets a stale packet')
+            previous = self._handoffs(db, row)
+            old = db.execute('SELECT * FROM handoffs WHERE request_id=?', (request_id,)).fetchone()
+            if old:
+                saved = next((x for x in previous if x['id'] == old['id']), None)
+                fields = ('packet_hash', 'actor', 'reason', 'missing_context', 'next_action')
+                if saved is None or tuple(saved[k] for k in fields) != (packet_hash, actor, reason, missing_context, next_action):
+                    raise Rejected('handoff idempotency conflict')
+                return saved['id']
+            if row['state'] not in ('packet_ready', 'needs_review'):
+                raise Rejected('handoff requires an unreviewed packet')
+            value = {'id': secrets.token_hex(16), 'request_id': request_id, 'run_id': run_id,
+                     'packet_hash': packet_hash, 'actor': actor, 'reason': reason,
+                     'missing_context': missing_context, 'next_action': next_action, 'at': now()}
+            digest = self._put(run_id, value)
+            db.execute('UPDATE handoffs SET current=0 WHERE run_id=?', (run_id,))
+            db.execute('INSERT INTO handoffs VALUES(?,?,?,?,?,?,?)',
+                       (value['id'], request_id, run_id, packet_hash, digest, 1, value['at']))
+            db.commit()
+            return value['id']

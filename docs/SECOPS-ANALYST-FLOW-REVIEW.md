@@ -10,7 +10,7 @@ The existing report is a useful export and evidence archive. It is too repetitiv
 
 ## Priority issues
 
-1. **High: unresolved evidence has no saved handoff action.** The exercise accepts needs_review, but store.review only permits close or escalate. Add a separate durable handoff/draft record with actor, packet revision, reason, missing context and next action. Saving a handoff must not transition to reviewed or impersonate a final decision. This is proposed backend work, not an available control.
+1. **High: unresolved evidence has no saved handoff action.** The exercise accepts needs_review, but store.review only permits close or escalate. Add a separate durable handoff/draft record with actor, packet revision, reason, missing context and next action. Saving a handoff must not transition to reviewed or impersonate a final decision. The backend is now implemented as Store.save_handoff; see docs/SECOPS-UNRESOLVED-HANDOFF.md. The browser control remains proposed.
 2. **High: assessment disagreement is separated from the headline recommendation.** report.py leads with the deterministic result and only later shows model disagreement. Put disagreement next to the suggested decision with both interpretations visible. A correct policy outcome must not disguise a model failure.
 3. **Medium: repeated evidence increases reconstruction work.** The handoff, per-alert analysis and case note repeat the same observations. Use three adjacent groups: Supports escalation, Supports authorized activity, Still unknown. Keep the long report as an export.
 4. **Medium: status mixes completion and resolution.** Use distinct labels for collection, evidence sufficiency and analyst disposition. Keep source incident, snapshot time, execution/data mode and revision visible. A newer revision blocks saving an old decision and points to the latest evidence.
@@ -29,7 +29,7 @@ flowchart LR
     D --> H[New revision: review latest evidence]
 ```
 
-The handoff branch is new work. None of these proposed UI controls currently exists. No branch changes the source SIEM.
+The handoff branch now has host persistence; its UI remains new work. None of these proposed UI controls currently exists. No branch changes the source SIEM.
 
 Persistent header: incident identity, snapshot time, data/execution labels and revision. Main area: the current task and three evidence groups. Adjacent decision area: unresolved questions, editable note and explicit disposition. Source detail opens inline or in an adjacent panel, preserving the selected claim and draft. A narrow layout stacks these areas in the same reading order.
 
@@ -40,7 +40,7 @@ Persistent header: incident identity, snapshot time, data/execution labels and r
 | Packet ready | Suggested decision, disagreements and source coverage | Review decision |
 | Close selected | Reason, note and local-only effect | Record local close decision |
 | Escalate selected | Reason, unresolved questions and next action | Record local escalation decision |
-| Insufficient evidence | Missing source, consequence and next check | Save needs-review handoff, only after persistence exists |
+| Insufficient evidence | Missing source, consequence and next check | Save needs-review handoff; host persistence exists, UI pending |
 | Failed/interrupted | Observed failure stage and retained evidence | View run details |
 | Superseded packet | Change in revision and preserved draft/context | Open latest revision |
 | Decision saved | Actor, timestamp, reason and exact packet | Copy case note |

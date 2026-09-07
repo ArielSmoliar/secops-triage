@@ -1,0 +1,25 @@
+{
+  "full_suite": {
+    "passed": 202,
+    "seconds": 62.751,
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "log": "/private/tmp/secops-handoff-store-tests.txt"
+  },
+  "final_focused_suite": {
+    "passed": 11,
+    "seconds": 0.277,
+    "command": ".venv/bin/python -m unittest discover -s tests -p test_secops_handoff_store.py -v",
+    "log": "/private/tmp/secops-handoff-store-focused.txt"
+  },
+  "verification_note": "After the full suite started, one additional reviewer-suggested rollback test was added and passed in the final focused suite. Runtime source did not change. Do not describe this as a 203-test full-suite run.",
+  "source_sha256": {
+    "secops_triage/store.py": "4af5057eaa3697dc850e8afed8596e5727275596e2695c230a42f1fef97a095e",
+    "tests/test_secops_handoff_store.py": "c7de63e10ce1445c57866c188e6e686b7c10ecb606b9eab1ebad00a70d3c9265"
+  },
+  "independent_review": "No blockers. Reviewer ran the original ten handoff tests and requested additional failure-after-retirement coverage; the new SQL insert-failure test passes.",
+  "schema_version": 2,
+  "paid_calls": 0,
+  "analyst_sessions": 0,
+  "historical_live_stores_opened": 0,
+  "runbook_validation": "PASS; eight paths checked, zero missing"
+}
