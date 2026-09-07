@@ -12,7 +12,7 @@ Independent fresh-context AI review adjudicated the source chronology and suppor
 
 Fresh report inspection also exposed an old cross-message conflict label: any authorization and suspicious finding in one alert were described as conflicting. The assessor now requires overlap between suspicious activity and an applicable authorization scope. The two-message case has no such conflict; a same-message regression preserves the genuine conflict path.
 
-Source input comes from `evaluation_cases.get_case('case-04')`; `get_expectations` returns a separate host-only rubric with a fixture digest, required facts, unknowns and prohibited overclaims. Rubric data never enters the snapshot, tool results or model prompt. The readable synthetic IDs and source rationale still make this a teaching case, not a held-out benchmark. No other evaluation cases are claimed ready.
+Source input comes from `evaluation_cases.get_case('case-04')`; `get_expectations` returns a separate host-only rubric with a fixture digest, required facts, unknowns and prohibited overclaims. Rubric data never enters the snapshot, tool results or model prompt. The readable synthetic IDs and source rationale still make this a teaching case, not a held-out benchmark. Eight additional draft cases are now available in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md; none is claimed human-accepted or live-validated.
 
 ## Evaluate model, policy and final packet separately
 
@@ -29,7 +29,7 @@ Citation validity is checked by the existing packet validator. Semantic support 
 
 Blank reviews remain `pending_review`; unsupported/unverifiable claims, omissions or outcome mismatch fail. A run without model assessment is `not_evaluated`. A complete review can pass this local evaluation, but `campaign_acceptance` remains false: this draft case, scripted outputs and AI judgments do not satisfy live-run, human domain-review or observed-usefulness gates. The offline negative tests use explicitly labeled adversarial outputs; they demonstrate score behavior, not automatic hallucination detection.
 
-Stopped executions have no final packet to score and are rejected by this scorer. Their existing safe live-result/session/spending records remain the evidence of failure. A future campaign ledger must include those attempts; this increment does not create such a ledger or count only completed runs as all attempts.
+Stopped executions have no final packet to score and are rejected by this scorer. Their existing safe live-result/session/spending records remain the evidence of failure. The planning-only campaign ledger in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md enumerates proposed slots. Durable runtime binding and failed-attempt accounting remain to be implemented; completed runs must never be counted as all attempts.
 
 ## Reproduce without paid calls
 

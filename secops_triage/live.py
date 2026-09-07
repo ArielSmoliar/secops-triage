@@ -32,7 +32,7 @@ def prepare(output, case_id=None):
     run = store.ingest(bundle, token, secrets.token_hex(16))
     write_private(output / 'owner.json', {'run_id': run, 'token': token})
     write_private(output / 'incident.json', bundle)
-    proposal = {'run_id': run, 'engine_hash': engine_digest(), 'scenario': 'one synthetic reported-phishing incident',
+    proposal = {'run_id': run, 'engine_hash': engine_digest(), 'scenario': 'one synthetic ' + bundle['alerts'][0]['family'] + ' incident',
                 'case_id': case_id, 'snapshot_sha256': sha(canonical(bundle)),
                 'model': 'gpt-4.1-mini-2025-04-14', 'requests_max': 10, 'tool_calls_max': 9,
                 'wall_seconds_max': 120, 'budget_microusd': 4250000, 'authorization': 'not issued'}
@@ -126,10 +126,11 @@ def execute(output, key_file, actor, authorize_usd):
 
 
 def main():
+    from .evaluation_cases import CASE_IDS
     parser = argparse.ArgumentParser(description='Host-only single synthetic investigation attempt. Never an agent tool.')
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--output', required=True, type=Path)
-    p.add_argument('--case', choices=['case-04'], help='Named draft evaluation case; default is historical single-message fixture')
+    p.add_argument('--case', choices=CASE_IDS, help='Named draft evaluation case; default is historical single-message fixture')
     p = sub.add_parser('execute'); p.add_argument('--output', required=True, type=Path)
     p.add_argument('--key-file', required=True, type=Path); p.add_argument('--actor', required=True)
     p.add_argument('--authorize-usd', required=True, choices=['4.25'])

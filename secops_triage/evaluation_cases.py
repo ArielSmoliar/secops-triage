@@ -2,13 +2,15 @@
 from .contracts import IncidentBundle, TEMPLATES, canonical, sha
 from .fixtures import scenario, intelligence_attributes
 
-CASE_IDS = ('case-04',)
+from . import case_matrix
+
+CASE_IDS = tuple(sorted((*case_matrix.CASE_IDS, 'case-04')))
 
 
 def get_case(case_id):
     """Return a fresh source snapshot; no expected answers are agent-visible."""
-    if case_id not in CASE_IDS:
-        raise ValueError('unknown evaluation case')
+    if case_id != 'case-04':
+        return case_matrix.get_case(case_id)
     bundle = scenario('phishing', 'unknown')
     bundle.update(incident_id='INC-2044', title='Reported document email and similar follow-up')
     bundle['events'] = []
@@ -69,6 +71,8 @@ def case_digest(case_id):
 
 def get_expectations(case_id):
     """Inspectable draft rubric, kept out of get_case and all tool results."""
+    if case_id != 'case-04':
+        return case_matrix.get_expectations(case_id)
     digest = case_digest(case_id)
     def fact(key, text, event_ids, templates):
         return {'id': key, 'text': text, 'event_ids': event_ids, 'templates': templates}

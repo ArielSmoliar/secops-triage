@@ -1,0 +1,170 @@
+{
+  "full_suite": {
+    "passed": 268,
+    "seconds": 64.932,
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "log": "/private/tmp/secops-matrix-frozen-tests.txt",
+    "source_unchanged_during_tests": true
+  },
+  "source_sha256": {
+    "secops_triage/case_matrix.py": "e9da71a0741e8834fd0cda3f7780780b1dba29174f6b145e33cedeaee141bd57",
+    "secops_triage/campaign.py": "eb1ce9fe323a2a8dc10973fe2ba787504e631b9beb1e76dc45997d4d1c9f7bb5",
+    "secops_triage/evaluation_cases.py": "4bcf2fdca1178726f5f5a8f8fe869738fdcd9797c135789286f409459861ed2f",
+    "secops_triage/live.py": "0499e9e6018c42593b07bc7cdfae50dbf64979a0903440ba95f4dd98d6422577",
+    "tests/test_secops_case_matrix.py": "39aa59b7cc84457f3945b39e30475187c9733a5f48fda8c8dd1b42763b7696df",
+    "tests/test_secops_campaign.py": "bdde86c16fd53aeee94332aa502cfa5e3c86ecbb3f2b7b6edd8dd80b0037d896"
+  },
+  "independent_review": {
+    "type": "Unblinded fresh-context AI review; colocated rubrics were visible",
+    "tests_passed": 28,
+    "finding": "Case09 title implied revocation preceded execution without a revocation timestamp",
+    "fix": "Changed title to execution with revoked approval; no unsupported chronology",
+    "disposition": "No remaining blockers in reviewed scope; human acceptance remains pending"
+  },
+  "scripted_runs": [
+    {
+      "case_id": "case-01",
+      "family": "sign_in",
+      "run_id": "55c7d1ba6fb1519b8b6ba2dc22163372",
+      "packet_hash": "8c8728c4fef1e829d22f66b9418397aee50169dfbaaf6aff5908f5b00eea6955",
+      "snapshot_hash": "fd51b93157c5505de1d9b23f3426137dee0bfd0f9dd51dce1f3e376a3573c896",
+      "recommendation": "close",
+      "investigation_status": "complete",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-01-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-02",
+      "family": "sign_in",
+      "run_id": "ae883a5423ec8fcd661ffecb873e75ce",
+      "packet_hash": "4f2c748d6a54eb7ee25b821d82cacce316925a8bb7647c2500b91950f2b2f5e1",
+      "snapshot_hash": "a9358b17166426fabb63022990a85506d32f6b49aa383e45630bf77e3fb58038",
+      "recommendation": "escalate",
+      "investigation_status": "complete",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-02-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-03",
+      "family": "sign_in",
+      "run_id": "5e825fede49add176eb7ee96e3cce4a1",
+      "packet_hash": "8da85ad84e8443c25adf68ac09c33f4da915b3d4a675516b4d70d76376f5007d",
+      "snapshot_hash": "afea8d22c55fb585e6b2d5858a03b2acc399286d924218c59fce3b78da7ab520",
+      "recommendation": null,
+      "investigation_status": "needs_review",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-03-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-04",
+      "family": "phishing",
+      "run_id": "7b1e3e1bf333ee2115453228b7f0c062",
+      "packet_hash": "267ef6daa0da96de765babd4c96ef162312e1a01259536d279a6cb77178c4a98",
+      "snapshot_hash": "7ba8064ffb58b0cae7d09119ab282231ca82cac714a702b44324ffa9e3074560",
+      "recommendation": "escalate",
+      "investigation_status": "needs_review",
+      "reads": 9,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-04-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-05",
+      "family": "phishing",
+      "run_id": "61514b210107622d83087f1e7eda01e5",
+      "packet_hash": "e8fc2a5c8cdeb2cf95170ec70760740aed2e7cee8b845e344d0d38da494b5743",
+      "snapshot_hash": "431df549d7b3796ab15db036797acaec5d0af4397c8a6a2f49c1a70781280bcc",
+      "recommendation": "close",
+      "investigation_status": "complete",
+      "reads": 9,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-05-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-06",
+      "family": "phishing",
+      "run_id": "324f9382bf713a9d2ed06ffa5bb3874e",
+      "packet_hash": "9dd6aa804bf609573bfb7ec62fe30da8012bcbe65c38189b5f936f98516a61b9",
+      "snapshot_hash": "9049295c2c4057117655e97b7818073bdfa133b2a297fbee52dcc1deb2cc8efb",
+      "recommendation": null,
+      "investigation_status": "needs_review",
+      "reads": 9,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-06-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-07",
+      "family": "endpoint",
+      "run_id": "b22733d4b15f55db64b9c5421b26b3f5",
+      "packet_hash": "412089e6b4c3c6057582e09b49b448d28c24c1943c71486a86ef95453dc6d751",
+      "snapshot_hash": "3aa51ed5cc8a80677bca8634f2dead69e9ba36a7c2c0edcdbddacd795a1fb42b",
+      "recommendation": "close",
+      "investigation_status": "complete",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-07-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-08",
+      "family": "endpoint",
+      "run_id": "1d109e92cf9107b43187ecb785059cf3",
+      "packet_hash": "7d18c0eb497b44e2f3fd6f1d3074f943dd3da4953c9632c2b6af79fa2ec312fc",
+      "snapshot_hash": "eb4b9c4ab645aa36ff23660b115826198a0fd7e65040016d06c677def376b631",
+      "recommendation": "escalate",
+      "investigation_status": "complete",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-08-scripted/investigation.md"
+    },
+    {
+      "case_id": "case-09",
+      "family": "endpoint",
+      "run_id": "525f62f97992411683b6de228b5034d7",
+      "packet_hash": "7b63b79e2c6f196e8bbf1240cf1150be5b1d251d10fcbed181231295726d4958",
+      "snapshot_hash": "084a9573b426a3ad9000bb9e2cc07033947af4d83f60a237e2dd748c19d0ffb2",
+      "recommendation": null,
+      "investigation_status": "needs_review",
+      "reads": 8,
+      "execution": "Strands SDK with scripted provider (no live model)",
+      "evaluation_outcome": "pending_review",
+      "report": "data/secops-nine-cases-reviewed/case-09-scripted/investigation.md"
+    }
+  ],
+  "total_evidence_reads": 75,
+  "campaign": {
+    "artifact": "outputs/secops-campaign-plan.json",
+    "plan_hash": "493b194dbd6f5d28c5444531c9bfc1dcb6385af050ccc2aede81752365a84e4c",
+    "totals": {
+      "M2": {
+        "ceiling_microusd": 46750000,
+        "proposed_live_runs": 11,
+        "requests_max": 110
+      },
+      "M4": {
+        "ceiling_microusd": 12750000,
+        "proposed_live_runs": 3,
+        "requests_max": 30
+      }
+    },
+    "ready_to_execute": false,
+    "source_commit": "14c19afa0c13f0931dcb2a55a408f1bdea769e64",
+    "worktree_dirty": true,
+    "limitations": "Candidate planning snapshot, not runtime slot enforcement, refreshed pricing or approved spending; regenerate at execution build."
+  },
+  "runbook_validation": "PASS; eight references checked, zero missing",
+  "paid_calls": 0,
+  "grants_issued": 0,
+  "human_case_acceptances": 0,
+  "analyst_sessions": 0,
+  "historical_live_stores_opened": 0
+}
