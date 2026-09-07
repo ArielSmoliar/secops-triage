@@ -1,3 +1,7 @@
+## Owner update — 2026-09-07: analyst feedback skipped
+
+The owner explicitly said “it's ok, skip feedback.” The actual analyst walkthrough/feedback requirement is waived for this demo; do not request it again or block demo preparation solely on it. This supersedes older feedback prerequisites below and in the saved runbook. No analyst session occurred, so record this as waived, not completed or evidence of usefulness. Human case acceptance remains pending; this instruction does not accept the hero rubric, authorize paid calls, or waive other saved gates.
+
 Continue SecOps Triage in /Users/arielsmoliar/Developer/migration-proof on branch main. GitHub is now public at ArielSmoliar/secops-triage, explicitly authorized by the owner for judges; the local checkout path remains unchanged to preserve environment and evidence links. The product investigates existing SIEM incidents for Tier 1 analysts.
 
 Read docs/SESSION-HANDOFF.md and every file listed in its startup reading order completely before editing. Verify the actual checkout, clean Git state and GitHub main. The accounting increment resumes from handoff 84cb2c6; reverify its later implementation commit and the latest frozen test record in outputs/secops-campaign-accounting-validation.json. The nine historical SDK investigations were scripted, not nine live-model runs.

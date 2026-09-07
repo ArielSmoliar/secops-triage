@@ -232,3 +232,8 @@ Only repository visibility was released. License adoption, analyst acceptance, n
 ## Landing page deferred (2026-09-07)
 
 The owner requested a landing page for the SecOps Triage capability but explicitly said it can come later. Saved in PRODUCT.md and the current-session handoff as deferred work behind demo readiness. Proposed content: capability, hero walkthrough, verified evidence and limitations, and repo/demo links. No page implementation, hosting, runtime change or new external authorization occurred.
+
+
+## Owner update — 2026-09-07: analyst feedback skipped
+
+The owner explicitly said “it's ok, skip feedback.” The actual analyst walkthrough/feedback requirement is waived for this demo; do not request it again or block demo preparation solely on it. This supersedes older feedback prerequisites below and in the saved runbook. No analyst session occurred, so record this as waived, not completed or evidence of usefulness. Human case acceptance remains pending; this instruction does not accept the hero rubric, authorize paid calls, or waive other saved gates.

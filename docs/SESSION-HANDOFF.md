@@ -1,5 +1,9 @@
 # SecOps Triage session handoff
 
+## Owner update — 2026-09-07: analyst feedback skipped
+
+The owner explicitly said “it's ok, skip feedback.” The actual analyst walkthrough/feedback requirement is waived for this demo; do not request it again or block demo preparation solely on it. This supersedes older feedback prerequisites below and in the saved runbook. No analyst session occurred, so record this as waived, not completed or evidence of usefulness. Human case acceptance remains pending; this instruction does not accept the hero rubric, authorize paid calls, or waive other saved gates.
+
 Saved 2026-09-07. This is the current-state entry point; docs/HANDOFF.md retains the chronological history. This update includes durable host-only campaign accounting; see docs/SECOPS-CAMPAIGN-ACCOUNTING.md.
 
 ## Repository and verification
