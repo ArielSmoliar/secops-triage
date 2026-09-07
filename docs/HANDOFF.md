@@ -147,3 +147,9 @@ Verification: 188 tests passed in 61.697 seconds. See outputs/secops-analyst-dri
 ## Decision-first analyst handoff (2026-09-07)
 
 The report now leads with cited decision evidence and unresolved questions, including missing normalized intelligence detail and unavailable-source citations. The draft case note retains those questions. Rendering does not alter packet conclusions or record an analyst decision. A fresh deterministic kit is at data/secops-analyst-handoff; earlier kits and live evidence remain preserved. 67 SecOps tests passed, including four new handoff cases; see outputs/secops-handoff-validation.json. No paid calls, external intelligence enrichment or analyst study occurred.
+
+## Independent plan and Impeccable flow review (2026-09-07)
+
+The owner requested stronger external review and confirmed a calm, compact analyst workbench with plain language, keyboard access and non-color-only status. PRODUCT.md records the confirmed context. Two fresh-context AI reviewers challenged plan/evidence quality; a third independently applied Impeccable product-flow guidance. Read outputs/secops-independent-plan-review.md and docs/SECOPS-ANALYST-FLOW-REVIEW.md. These are independent AI second opinions, not human SOC validation or a browser audit.
+
+Conditional go: the runbook now requires observed analyst usefulness, structured authorization/intelligence quality, fixture-selectable preparation and separate raw-model/claim/final-packet scoring before paid breadth evaluation. M3 must implement a durable unresolved handoff because store.review only records close/escalate. Keep assessment disagreement beside the suggested decision and preserve revisions/drafts. This increment changes plans/context only; these runtime findings are not yet fixed. No analyst observations, model calls, UI implementation, external intelligence lookup or deployment occurred.

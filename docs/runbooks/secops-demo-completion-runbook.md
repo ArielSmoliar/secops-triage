@@ -7,12 +7,16 @@
 - **Operator:** Codex for implementation and verification; Ariel for analyst walkthrough and external publication decisions.
 - **Last verified:** 2026-09-07.
 - **Environment:** Local macOS/Python, synthetic replay evidence, pinned Strands SDK and bounded OpenAI transport. No deployed environment verified.
-- **Expected duration:** Planning estimate: 25–40 focused hours over September 8–13, conditional on diagnosing the live failure. September 14 is a buffer, not a promised completion date.
+- **Expected duration:** Planning estimate: 25–40 focused hours over September 8–13, subject to the open analyst-usefulness and source-quality gates. September 14 is a buffer, not a promised completion date.
 - **Change/incident ID:** SECOPS-DEMO-COMPLETION; prior failed run 4ba7fadcc26965807baba68624ac767d.
 
 ### Verified target identity
 
 Repository and inspected worktree: /Users/arielsmoliar/Developer/migration-proof. Remote: https://github.com/ArielSmoliar/migration-proof.git. Branch: main. Baseline HEAD: 5e73748ac50f626de4953bea0c96edf9b3311b0e. Tree: 23e8ef5404a6c337155642cbe2cae2f150d56fa9. Requested main and baseline commit matched; checkout was clean before documentation creation. The matching worktree is the same path. Origin main was independently checked with git ls-remote on 2026-09-07 during this review and matched HEAD. GitHub reports PRIVATE visibility and no detected license. This is a source stamp, not deployment evidence. Reverify the selected execution commit after any change; never treat this historical stamp as proof that later code is verified.
+
+### Current review stamp
+
+Independent AI plan/evidence reviews and an Impeccable product-flow consultation were requested on 2026-09-07. Inspected main: 570512542edff981536ea760b7cc272a934a02c5; tree: 959c74e6a9fe750aae23b4b014e6cc6a9b37ccd6. Requested main matched in the repository/worktree named above. Checkout was clean at task start; the later inspection contains only this task's new PRODUCT.md. Remote freshness was not required or fetched for this document review. The older stamp remains historical. See outputs/secops-independent-plan-review.md and docs/SECOPS-ANALYST-FLOW-REVIEW.md. These reviews do not constitute independent human SOC validation.
 
 ### Milestone dashboard
 
@@ -20,8 +24,9 @@ Repository and inspected worktree: /Users/arielsmoliar/Developer/migration-proof
 |---|---|---|---|---|
 | M0 — Foundation | Deterministic backend and actual Strands integration | 174 tests passed; scripted replay works; first live failure preserved | Complete at baseline | Done |
 | M1 — Complete a live investigation | Complete: see docs/SECOPS-COMPLETED-INVESTIGATION.md | All four tools, valid cited packet, escalation, settled usage and unchanged SIEM verified | Completed after explicitly approved live attempt | Done Sep 7 |
-| M2 — Cover the three daily workflows | Nine distinct cases: close, escalate and incomplete for each family | Nine scored live runs; all material citations supported; no unsafe close; expected incomplete cases stay incomplete; hero case passes three consecutive runs | M1; separately budgeted evaluation campaign | Sep 9–10; 6–10 hours |
-| M3 — Build the analyst workspace | Existing-incident selector, investigation progress, evidence, gaps, case note and local decision | Analyst completes the workflow without terminal use; evidence links and overrides work; duplicate actions are safe | M1 contract stable; M2 cases supply acceptance tests | Sep 10–11; 8–12 hours |
+| M1.5 — Observe analyst usefulness | One recorded formative session with a decision and case note | Decisive citations found, competing explanation addressed, missing context and corrections recorded; no critical unsafe inference | M1; open, no session yet | Before paid M2 and full M3 build |
+| M2 — Cover the three daily workflows | Nine distinct cases: close, escalate and incomplete for each family | Nine scored live runs; all material citations supported; no unsafe close; expected incomplete cases stay incomplete; hero case passes three consecutive runs | M1.5; source-quality, harness and scoring gates; separately budgeted campaign | Sep 9–10; 6–10 hours |
+| M3 — Build the analyst workspace | Existing-incident selector, investigation progress, evidence, gaps, case note and local decision | Analyst completes the workflow without terminal use; evidence links and overrides work; duplicate actions are safe | M1.5 observed friction; M2 cases supply acceptance tests | Sep 10–11; 8–12 hours |
 | M4 — Rehearse the complete demo | End-to-end run through the UI with a clear failure path | Three consecutive hero rehearsals; one close and one incomplete walkthrough; no hidden manual data repair | M2 + M3 | Sep 12; 4–6 hours |
 | M5 — Package the demo | Reproducible checkout, architecture diagram, setup guide and video | Fresh-checkout run succeeds; video is at most five minutes; every product claim is supported | M4 | Sep 13; 4–6 hours |
 
@@ -67,8 +72,8 @@ Demonstrate a Tier 1 analyst receiving an incident already created by a SIEM, ob
 
 ## Risk and stop conditions
 
-- **Risk:** The first live attempt failed after four requests, before any activity query. Its exact response failure is unknown. Added diagnostics improve the next observation; they are not evidence that the failure is repaired.
-- **Risk:** The existing paid scope permits one alert and ten requests/nine tools. The three-alert scripted example needs 19 tools and 20 turns. Do not use it as a paid acceptance scenario under the current grant. Keep separate incidents for the core demo; any combined live scenario needs a reviewed budget/contract change first.
+- **Historical risk:** Two live attempts stopped before the third succeeded. The first exact response failure remains unknown; M1 success establishes one working execution, not a reliability rate for the current build.
+- **Risk:** The historical single-run bounds were one alert and ten requests/nine tools; every historical grant is closed. The three-alert scripted example needs 19 tools and 20 turns. Those historical bounds do not authorize a combined paid acceptance scenario. Keep separate incidents for the core demo; any combined live scenario needs a reviewed budget/contract change first.
 - **Risk:** There is little headroom for model-selected follow-up calls. If the live test reaches a limit, record a failed/incomplete outcome and review query efficiency or a separately approved bound; never silently increase limits.
 - **Risk:** The store uses a POSIX lock and local files and serializes investigations. A serverless or multi-worker deployment cannot be assumed to preserve its guarantees.
 - **Stop immediately if:** a response can expand tool authority, evidence crosses incident/tenant scope, a secret appears in output, a stale review becomes current, spending exceeds its grant, or source-system mutation occurs.
@@ -86,7 +91,35 @@ Demonstrate a Tier 1 analyst receiving an incident already created by a SIEM, ob
 
 ## Procedure
 
-### Phase 1 — M1: diagnose and complete one live investigation
+### Active prerequisite: analyst usefulness and evaluation readiness
+
+A. **Action (reversible):** Conduct the existing phishing walkthrough and record the participant's actual decision, case note, decisive citations, missing context, corrections and next action. Keep the observations blank until the participant responds; do not treat instructions to continue as domain approval.
+   - **Expected result:** Direct evidence of which context the analyst still reconstructs and which parts of the handoff help.
+   - **Verify:** The participant can find supporting and conflicting source records and give a bounded next action. Record critical errors even if the overall disposition matches. One owner session is formative, not independent SOC validation or proof of time savings.
+   - **If verification fails:** Resolve the observed flow/source gap and repeat a scoped session before paid breadth evaluation or a full UI build.
+   - **Approval required:** None for preparation; participation and observations must be real.
+
+B. **Action (reversible):** Improve the source contract and freeze independently reviewed case expectations. Include inspectable intelligence match value/type, provenance, freshness and rationale, and machine-readable authorization validity/scope. Test stale, wrong-target and revoked/out-of-scope authorization cases. Preserve unavailable evidence explicitly.
+   - **Expected result:** The case requires inspecting message, time and match relationships rather than copying a supplied malicious label. A two-message phishing case is the proposed stress case; the reviewer must adjudicate its outcome after inspecting all evidence.
+   - **Verify:** Wrong-message, expired/revoked authorization and unsupported-compromise checks fail safely; exact matches remain distinguishable. Broader multi-provider ingestion is not required for this increment.
+   - **If verification fails:** Keep the case as a disclosed teaching fixture; do not count it as deeper investigative validation.
+   - **Approval required:** None for local implementation and offline verification. Original-source details added to synthetic fixtures remain clearly synthetic.
+
+C. **Action (reversible):** Add fixture-selectable preparation and an evaluation record before the M2 campaign. Score raw model recommendation, each material claim, claim-to-citation support, omissions, deterministic outcome, reconciliation disagreement and final packet separately. Keep expected answers outside agent-visible input.
+   - **Expected result:** A correct deterministic escalation cannot conceal an incorrect model assessment. A valid citation alone cannot pass an unsupported claim.
+   - **Verify:** Negative evaluation examples include invented credential theft from a click, unavailable telemetry described as clean, stale intelligence, unrelated entities, truncation and injected source instructions. Separate offline tests from live-case results.
+   - **If verification fails:** Keep paid evaluation pending; repair the evaluator or contract first.
+   - **Approval required:** None for offline preparation. No grant is created here.
+
+D. **Action (read-only planning):** Enumerate every paid run by fixture digest, purpose, execution build, bounds and assigned campaign slot. M2 is nine cases plus two additional hero runs; M4's three finished-UI hero runs are separate executions. State whether alternate M4 walkthroughs are fresh inference or saved playback. Do not double-count an M2 run as a finished-UI rehearsal.
+   - **Expected result:** One concrete campaign ledger distinguishes acceptance, diagnosis and rehearsal. Historical grants remain closed.
+   - **Verify:** Every proposed live execution has explicit unconsumed authority; every failure remains in results. No slot or retry exists outside the approved ledger.
+   - **If verification fails:** Revise the proposal before requesting or using a spending grant.
+   - **Approval required:** Owner approval of the eventual exact spending proposal, not of this planning document.
+
+The completed M1 procedure below is retained for traceability. Do not restart it merely because it appears earlier in this document.
+
+### Phase 1 — M1: completed historical procedure
 
 1. **Action (read-only):** Reverify the target and inspect the failed run record and the new safe stage logging. The current fourth response cannot be reconstructed from retained evidence.
    - **Expected result:** A documented distinction between observed facts and hypotheses; no claim that the existing failure is fixed.
@@ -122,9 +155,9 @@ Demonstrate a Tier 1 analyst receiving an incident already created by a SIEM, ob
 
 ### Phase 3 — M3: build the analyst workspace
 
-6. **Action (reversible):** Build one incident investigation screen: existing source incident selector; real collection status; entities and timeline; recommendation and gaps; clickable evidence; draft case note; accept/override with a reason. Use local review semantics already implemented in `secops_triage/store.py`.
+6. **Action (reversible):** First implement a durable unresolved-handoff record distinct from final close/escalate review; store.review currently supports only those two final dispositions. Then build one incident investigation screen: existing source incident selector; real collection status; entities and timeline; recommendation and gaps; clickable evidence; draft case note; accept/override with a reason. Use local review semantics already implemented in `secops_triage/store.py`.
    - **Expected result:** One primary action starts investigation; the analyst reviews a prepared packet rather than issuing individual collection prompts. A pending or failed run never appears complete.
-   - **Verify:** Browser tests cover one successful run, missing telemetry, model failure, duplicate start, reload/restart, evidence navigation, override and stale packet review. An analyst can finish without terminal commands. Label every recorded/scripted mode explicitly.
+   - **Verify:** Browser tests cover one successful run, missing telemetry, model failure, duplicate start, reload/restart, evidence navigation, adjacent model/policy disagreement, unresolved-handoff save/reload, override and stale packet review. An analyst can finish without terminal commands. Label every recorded/scripted mode explicitly.
    - **If verification fails:** Correct the interaction or binding; do not patch display data manually to finish the demo.
    - **Approval required:** No extra permission for local reversible UI work once this milestone is selected for execution; external publication remains separate.
 
@@ -165,7 +198,7 @@ demo_parent="$(mktemp -d /private/tmp/secops-demo.XXXXXX)"
 .venv/bin/python -m secops_triage demo --strands --output "$demo_parent/replay"
 ```
 
-Expected baseline: 174 tests; probe returns original 403, deliberately faulty 200 with the expected leak, corrected 403. The final command is a real SDK loop with a scripted provider and must be described that way. If locked dependencies are not cached, stop and resolve installation; do not silently change package versions.
+Historical M0 baseline: 174 tests. Current test counts must be captured from the selected execution build; probe returns original 403, deliberately faulty 200 with the expected leak, corrected 403. The final command is a real SDK loop with a scripted provider and must be described that way. If locked dependencies are not cached, stop and resolve installation; do not silently change package versions.
 
 ## Rollback
 
@@ -180,7 +213,8 @@ Expected baseline: 174 tests; probe returns original 403, deliberately faulty 20
 ## Completion criteria
 
 - M1 has a completed real-model investigation, not only successful connectivity or scripted output.
-- M2 covers all three alert families and all three outcome classes with reviewed evidence, including three consecutive hero passes.
+- M1.5 records an actual formative analyst session and resolves critical handoff failures.
+- M2 records raw-model and final-packet outcomes separately and scores material claim support. M2 covers all three alert families and all three outcome classes with reviewed evidence, including three consecutive hero passes.
 - M3 lets the analyst investigate, inspect evidence and record a local decision without terminal use.
 - M4 passes the finished-UI rehearsals and shows failure/missing-context honestly.
 - M5 reproduces from the frozen checkout and supplies a truthful five-minute-or-shorter video and architecture/setup package.
@@ -201,5 +235,5 @@ Expected baseline: 174 tests; probe returns original 403, deliberately faulty 20
 - **Approvals:** This task requests milestones and review. Prior live attempt was explicitly approved, consumed and closed. No new campaign, publication or deployment approved.
 - **Outcome:** Proposed critical path and objective exit gates; structural validation and drift review are recorded separately in the runbook review artifact.
 - **Deviations:** No deployment commands are supplied because the platform is unselected. No live execution command is invented; a reproducible operator harness is an M1 deliverable. Source tests are cited from the prior verified result, not claimed rerun for this documentation task.
-- **Follow-up:** Start M1 with offline diagnostics/operator harness; prepare a concrete paid diagnostic proposal only after those checks pass. Domain case review can proceed without provider calls.
+- **Follow-up:** Complete M1.5 observed usefulness, source-quality and offline scoring/harness gates before a paid M2 campaign. Use the reviewed analyst-flow specification to address observed friction.
 - **Next verification:** At each milestone start and whenever source, model, fixture, budget, dependency or release target changes; recheck hackathon requirements before publication.
