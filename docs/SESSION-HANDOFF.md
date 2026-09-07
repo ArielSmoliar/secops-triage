@@ -1,12 +1,12 @@
 # SecOps demo session handoff
 
-Saved 2026-09-07. This is the current-state entry point; docs/HANDOFF.md retains the chronological history. This save changes documentation only.
+Saved 2026-09-07. This is the current-state entry point; docs/HANDOFF.md retains the chronological history. This update includes durable host-only campaign accounting; see docs/SECOPS-CAMPAIGN-ACCOUNTING.md.
 
 ## Repository and verification
 
 - Work in `/Users/arielsmoliar/Developer/migration-proof`, branch `main`. The desktop may start in `/Users/arielsmoliar/Documents/ChatGPT/migration-proof`; do not assume that is the active repository. Set the working directory explicitly.
-- GitHub: https://github.com/ArielSmoliar/migration-proof.git . Latest implementation commit: `8a2f435c65e628e4b3cab326595139cb6d7c5d99`. Local main and GitHub main matched and the tree was clean before this documentation save. The later handoff commit is expected to be HEAD; reverify on startup.
-- Latest runtime verification: **268 tests passed in 64.932 seconds**, with runtime/test source unchanged during execution. Evidence: outputs/secops-case-matrix-validation.json. Tests were not rerun for this documentation-only save.
+- GitHub: https://github.com/ArielSmoliar/migration-proof.git . Campaign accounting resumes from verified local/GitHub handoff `84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c` on main. Reverify current HEAD and origin/main on startup; the accounting implementation is a later commit.
+- Latest runtime verification: **287 tests passed in 65.830 seconds**, with runtime/test source hashes unchanged during execution. Independent review passed 19 focused tests and found no remaining blockers in scope. Evidence: outputs/secops-campaign-accounting-validation.json. The 268-test matrix record remains historical evidence.
 - Nine fresh synthetic investigations completed through the real Strands SDK with a scripted provider: 75 evidence reads, expected policy outcomes, all semantic evaluations pending. These are not live-model successes. Artifacts: data/secops-nine-cases-reviewed/manifest.json and case-01–09-scripted/investigation.md.
 - Runbook validator passed, eight path references checked, none missing. Earlier original/faulty/corrected migration probe returned 403/200/403 with the intended faulty leak detected.
 - Ignored data stores, private owner capabilities, .env and temporary logs are local-only, not on GitHub. Sanitized evidence, source, fixtures and docs are committed. Recreate synthetic runs in new private directories on another machine; never commit secrets or owner.json.
@@ -29,6 +29,7 @@ The user requested independent review and Impeccable consultation. PRODUCT.md an
 - evaluation.py keeps raw model findings/recommendation, deterministic policy, final packet and disagreement separate. Citation identity is automatic; semantic support requires explicit attributed reviewer judgments and complete claim/omission annotations. Blank reviews cannot pass. A correct policy result cannot hide a wrong model close. This is not automatic entailment detection.
 - evaluation_cases.py + case_matrix.py provide nine distinct draft cases and separate host rubrics. case-04 keeps its original two-message digest. Evaluation case-01–09 are a different namespace from drill.py's older phishing teaching case-01–03.
 - live.prepare supports all nine named cases and verifies fixture/proposal identity before credentials or grants. It does not issue authority merely by preparing.
+- campaign_store.py adds durable host-only slot/run/grant/result and evaluation accounting in one private Store. It requires exact clean source bindings, explicit host gate references and existing single-run grants; none have been authorized for a real campaign. Engine identity changed; use fresh imports.
 - campaign.py is **planning-only**. It enumerates 11 M2 proposals (nine cases plus two extra hero runs), three future M4 UI hero runs, and two saved-playback alternatives. Configured cap totals: M2 $46.75, M4 $12.75, total $59.50. These are not actual spend, refreshed pricing or approved budgets. M4 execution build is explicitly unbound. outputs/secops-campaign-plan.json is a dirty-candidate planning artifact; regenerate for a selected execution build.
 
 ## Live history and authority
@@ -40,13 +41,13 @@ One historical real-model investigation completed: run `5f976e803708c0b16c4550d4
 ## Next work, in priority order
 
 1. Record actual formative analyst feedback and owner case adjudication when supplied. An asynchronous question requested a disposition, decisive evidence and missing context for data/secops-nine-cases-reviewed/case-04-scripted/investigation.md; no answer has been received. Do not mark M1.5 done or fabricate participation. Independent preparation can continue meanwhile.
-2. **Next independent implementation unit: durable campaign slot accounting.** Existing campaign.py cannot bind/consume slots or reconcile executions. Design host-only records tied to exact plan/source/fixture/rubric identity, unique slot/run/grant associations and preserved results for stopped/incomplete/completed attempts. Test duplicate starts, stale plans, wrong cases/runs, consumed grants, interruption/crash recovery and no silent retry. Reuse the current single-run supervision/spend authority; do not expand agent tools or execute a paid campaign. Distinguish planning, authorization, reservation, dispatch and result reconciliation.
+2. **Durable campaign slot accounting is implemented:** read docs/SECOPS-CAMPAIGN-ACCOUNTING.md and secops_triage/campaign_store.py. It binds exact clean plans, runs, grants, immutable results and separate claim reviews in one designated private Store; failures cannot silently retry. The planning CLI remains planning-only. No campaign authority has been recorded outside temporary offline tests. Continue actual feedback/case adjudication and concrete campaign preparation only as their gates are satisfied. Distinguish planning, authorization, reservation, dispatch and result reconciliation.
 3. After owner acceptance and actual feedback, freeze cases/build, refresh price/bounds and prepare a concrete campaign authorization proposal. Only explicit new spending authority permits live dispatch. Score every raw model claim and preserve failures. The three hero successes must be consecutive on the frozen build; M4 UI rehearsals are separate.
 4. UI follows observed analyst friction and the runbook's M1.5/M2 gates. No AWS, AgentCore, live connectors, external publication, license adoption or Devpost submission is authorized by this handoff. Recheck hackathon rules/deadline when relevant; saved dates are not current verification.
 
 ## Startup reading and checks
 
-Read this file, docs/HANDOFF.md, docs/runbooks/secops-demo-completion-runbook.md, docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md, docs/SECOPS-EVALUATION-READINESS.md and outputs/secops-case-matrix-validation.json completely before editing. For campaign work also read campaign.py, live.py, agent_spend.py, agent_runner.py, evaluation.py and store.py. Product/flow decisions are in PRODUCT.md and docs/SECOPS-ANALYST-FLOW-REVIEW.md. Historical migration background is docs/runbooks/migration-proof-build-release-demo-runbook.md and outputs/migration-acceptance-steward-design.md.
+Read this file, docs/HANDOFF.md, docs/runbooks/secops-demo-completion-runbook.md, docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md, docs/SECOPS-EVALUATION-READINESS.md and outputs/secops-case-matrix-validation.json completely before editing. For campaign work also read docs/SECOPS-CAMPAIGN-ACCOUNTING.md, campaign_store.py, campaign.py, live.py, agent_spend.py, agent_runner.py, evaluation.py and store.py. Product/flow decisions are in PRODUCT.md and docs/SECOPS-ANALYST-FLOW-REVIEW.md. Historical migration background is docs/runbooks/migration-proof-build-release-demo-runbook.md and outputs/migration-acceptance-steward-design.md.
 
 ```sh
 cd /Users/arielsmoliar/Developer/migration-proof

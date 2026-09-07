@@ -54,7 +54,7 @@ def now():
 def engine_digest():
     root = Path(__file__).parent
     local = {name: sha((root / name).read_bytes()) for name in
-             ('contracts.py', 'replay.py', 'investigation.py', 'intelligence.py', 'store.py', 'agent.py', 'agent_spend.py', 'agent_runner.py', 'live.py')}
+             ('contracts.py', 'replay.py', 'investigation.py', 'intelligence.py', 'store.py', 'agent.py', 'agent_spend.py', 'agent_runner.py', 'live.py', 'campaign_store.py')}
     for name in ('migration_proof/agent/openai_model.py', 'migration_proof/agent/openai_preflight.py', 'uv.lock'):
         local[name] = sha((root.parent / name).read_bytes())
     return sha(canonical(local))
@@ -246,6 +246,9 @@ class Store:
                 with self._locked() as db:
                     row = self._owner(db, run_id, token)
                     self._current(db, row)
+                    from .campaign_store import binding
+                    if binding(db, run_id):
+                        raise Rejected('campaign tools require supervised dispatch')
                     if row['packet_hash'] or row['state'] not in ('created', 'collecting', 'needs_review', 'failed'):
                         raise Rejected('collection is closed')
                     bundle = self._load(row)
@@ -259,11 +262,15 @@ class Store:
     def investigate(self, run_id, token):
         return self._investigate(run_id, token)
 
-    def _investigate(self, run_id, token, collector=None):
+    def _investigate(self, run_id, token, collector=None, campaign_grant=None):
         """Runs real replay queries under a fixed, explicitly deterministic plan."""
         with self._locked() as db:
             row = self._owner(db, run_id, token)
             self._current(db, row)
+            from .campaign_store import binding
+            slot = binding(db, run_id)
+            if slot and (collector is None or slot['state'] != 'dispatching' or slot['session_id'] is not None or not campaign_grant or slot['grant_id'] != campaign_grant):
+                raise Rejected('campaign execution is consumed or not dispatched')
             if row['packet_hash']:
                 return self._packet(db, row)
             bundle = self._load(row)

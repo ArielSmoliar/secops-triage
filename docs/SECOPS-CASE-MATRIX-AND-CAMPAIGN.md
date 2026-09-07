@@ -46,7 +46,7 @@ These totals multiply the configured $4.25 per-run cap. They are not actual cost
 
 M4 is intentionally unbound to an execution engine because the UI does not exist yet. Its slots require a new verified finished-UI build before execution. Alternate M4 walkthroughs explicitly refer to saved M2 runs and cannot count as fresh inference. M2 executions cannot be relabeled finished-UI rehearsals.
 
-The planner does not dispatch, authorize, mark results complete or enforce a campaign at runtime. This is a planning ledger only. Before a campaign, implement per-slot run/grant/result binding and durable accounting for every stopped and completed attempt, with no slot reuse or silent retry. The current individual grant system still governs individual executions; creating a plan does not extend it into aggregate campaign authority.
+The planner does not dispatch, authorize, mark results complete or enforce a campaign at runtime. This is a planning ledger only. Host-only per-slot run/grant/result binding is now implemented separately in docs/SECOPS-CAMPAIGN-ACCOUNTING.md, including stopped attempts, crash recovery and review-gated continuation. The planner itself remains read-only. The current individual grant system still governs individual executions; creating a plan does not extend it into aggregate campaign authority.
 
 Actual analyst observations, owner acceptance of each rubric, refreshed prices/bounds, verified execution source and explicit spending authorization remain required. A plan prepared from a dirty candidate is a review artifact; regenerate and verify it at the selected execution commit. Future UI or fixture changes require new bindings. No historical live store was opened or grant reused in this increment.
 

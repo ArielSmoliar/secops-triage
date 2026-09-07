@@ -46,6 +46,12 @@ def authorize(store, run_id, token, actor):
         if not bundle.synthetic or len(bundle.alerts) != 1 or row['state'] != 'created':
             raise Rejected('paid scope requires one fresh synthetic alert')
         db.executescript(SCHEMA)
+        from .campaign_store import binding
+        slot = binding(db, run_id)
+        if slot:
+            campaign = db.execute('SELECT authority FROM campaigns WHERE id=?', (slot['campaign_id'],)).fetchone()
+            if slot['state'] != 'reserved' or not campaign['authority']:
+                raise Rejected('campaign authority missing or slot consumed')
         if db.execute('SELECT 1 FROM secops_grants WHERE run_id=?', (run_id,)).fetchone():
             raise Rejected('run already received a grant')
         grant = secrets.token_hex(16)
@@ -57,7 +63,7 @@ def authorize(store, run_id, token, actor):
 
 class Ledger:
     """Used only while the investigation owns the exclusive store lock."""
-    def __init__(self, db, row, grant):
+    def __init__(self, db, row, grant, session_id=None):
         self.db, self.grant = db, grant
         db.executescript(SCHEMA)
         g = db.execute('SELECT * FROM secops_grants WHERE id=?', (grant,)).fetchone()
@@ -65,6 +71,8 @@ class Ledger:
                 or g['identity'] != identity(row) or g['expires'] <= datetime.now(timezone.utc).timestamp()):
             raise Rejected('missing, expired, changed or consumed SecOps grant')
         price()
+        from .campaign_store import claim
+        claim(db, row['id'], grant, session_id)
         db.execute("UPDATE secops_grants SET state='running' WHERE id=?", (grant,))
         db.commit()
 

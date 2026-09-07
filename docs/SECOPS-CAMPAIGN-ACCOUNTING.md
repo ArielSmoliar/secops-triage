@@ -1,0 +1,29 @@
+# Durable host-only campaign accounting
+
+`secops_triage.campaign_store.CampaignStore` adds a host API over one designated private `Store`. The planning CLI still only writes a draft; it neither issues grants nor dispatches. No campaign has been authorized or executed. Historical grants remain closed, actual analyst feedback and case acceptance remain pending, and M4/UI/cloud/publication gates remain unchanged.
+
+## Identity and lifecycle
+
+Register the exact `campaign.build_plan()` result on a clean selected commit using a separate private campaign owner capability. Registration rejects a dirty/stale/tampered plan and duplicate registration in the same store. The entire plan binds repository commit, runtime source hashes, lockfile, model and bounds, engine, cases and separate rubric hashes. M4 and saved-playback slots cannot execute through this API.
+
+Import each case lazily into that same store, then `reserve` its planned slot with the run owner capability. Do not import repeated hero cases in advance: a later import for the same incident supersedes the earlier run. Reservation atomically consumes the slot and run; it issues no authority. Run IDs and grant IDs cannot bind to another slot in this store. Historical separate live stores are never imported or repaired.
+
+Only after real gate evidence and explicit new owner spending approval exist, `record_authority` records the actor and references for analyst feedback, owner case acceptance, price verification, spending authorization and build verification, tied to this exact M2 plan. These are trusted host assertions, not independent authentication of participation or approval. They are not inferred from a continuation instruction. The existing single-run `agent_spend.authorize` still issues each bounded grant separately; `attach_grant` accepts only a fresh unconsumed grant for that reserved run. Recording campaign authority alone cannot spend.
+
+`execute` takes an already-bound grant and persists dispatch intent before reading the key or creating the existing supervised worker. The worker checks exact plan/build identity again when consuming the grant. Single-run request limits, reservations, expiry, hard process deadline and no transport retries remain unchanged. The four agent tools are unchanged; campaign operations, scoring, spending and analyst decisions are never agent tools. Ordinary deterministic/scripted/tool paths cannot execute reserved campaign runs.
+
+## Failures, recovery and review
+
+Dispatch and recovery share a host lifecycle lock covering worker startup as well as execution. SQLite/store locking makes reservation and consumption atomic. A crash before grant attachment retains and closes the orphan run grant. A crash before worker startup or after a request reservation consumes the slot permanently. Recovery waits for an active worker's store lock, closes remaining authority, preserves unknown usage liability and never dispatches. A late worker is fenced by terminal slot/grant state. Recovery does not refund reservations or reset slots.
+
+`recover` reconciles an immutable hashed result from the bound run, packet/session identities, ordered safe stage events, tools, evidence references, grants and request reservations. Outcomes distinguish stopped attempts, completed model packets with incomplete investigation context, and completed investigations. All remain pending semantic review and cannot establish campaign acceptance. Raw exceptions, credentials and owner capabilities are excluded. Repeated reconciliation returns the same verified artifact; disk-publication failure leaves reconciliation recoverable. Content-addressed orphan blobs after a transaction failure are harmless retained evidence.
+
+`record_evaluation` persists a separate immutable source/review/score artifact linked to the attempt result, exact packet and rubric. Continuation requires a passing bound reviewer-mediated score for each previous slot. Expected incomplete cases can continue only after that review passes. Any recorded failed score prevents continuation, even if a later score passes. A stopped attempt also halts the campaign; fixes require a revised plan and new explicit authority, never a recycled slot. Reviewer assertions do not establish automatic semantic entailment or human acceptance.
+
+Recovery and immutable result retrieval do not require the current engine to equal the historical execution build. They preserve historical identifiers and recorded artifacts without rerunning inference or repairing hashes. New executions and evaluation snapshots still require their current validated source bindings. Do not open historical live stores merely to try this API.
+
+## Limits and verification
+
+This is a local single-host, single-designated-store ledger. It does not coordinate copied databases or independently created stores, resist an owner modifying SQLite directly, or provide distributed scheduling. Protect the designated store and private capabilities; database copies do not create additional spending authority. Reference strings are host assertions. Pricing still uses the existing freshness check and requires actual refresh before an eventual approved campaign. There is no new campaign CLI, UI, cloud service or aggregate automatic grant issuer.
+
+Offline tests use temporary synthetic stores, simulated authority and fake OpenAI responses through the real SDK. They cover plan/build/case mismatch, duplicate consumption, wrong/expired/closed grants, pending gates, worker fencing, host/process interruption, unknown spend, concurrent reservation/recovery, immutable results and evaluation stops. These tests are not paid successes, real analyst sessions or live reliability evidence. Final verification is recorded in `outputs/secops-campaign-accounting-validation.json`.

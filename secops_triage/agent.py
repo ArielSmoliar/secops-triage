@@ -296,6 +296,13 @@ def execute_session(store, run_id, token, *, grant_id=None, api_key=None, model_
         if not bundle.synthetic:
             raise Rejected('only synthetic evidence is authorized for this increment')
         db.executescript(SCHEMA)
+        from .campaign_store import binding
+        slot = binding(db, run_id)
+        if slot and (not api_key or grant_id != slot['grant_id'] or slot['state'] != 'dispatching'
+                     or slot['session_id'] is not None
+                     or db.execute('SELECT 1 FROM secops_agent_sessions WHERE run_id=?', (run_id,)).fetchone()
+                     or db.execute('SELECT 1 FROM invocations WHERE run_id=?', (run_id,)).fetchone()):
+            raise Rejected('campaign requires one fresh bound paid worker')
         session = secrets.token_hex(16)
         mode = LIVE if grant_id else OFFLINE
         db.execute('INSERT INTO secops_agent_sessions VALUES(?,?,?,?,?,?,?)', (session, run_id, mode, 'running', 0, 0, None)); db.commit()
@@ -306,7 +313,7 @@ def execute_session(store, run_id, token, *, grant_id=None, api_key=None, model_
                     raise Rejected('live provider override forbidden')
                 from .agent_spend import Ledger, CALLS
                 from migration_proof.agent.openai_model import OpenAIModel
-                ledger = Ledger(db, row, grant_id)
+                ledger = Ledger(db, row, grant_id, session)
                 model = OpenAIModel(ledger, grant_id, api_key, allowed_tools=set(REQUEST_TYPES))
                 max_calls = CALLS
             else:
@@ -326,4 +333,4 @@ def execute_session(store, run_id, token, *, grant_id=None, api_key=None, model_
         finally:
             if ledger:
                 ledger.close()
-    return store._investigate(run_id, token, collect)
+    return store._investigate(run_id, token, collect, campaign_grant=grant_id)

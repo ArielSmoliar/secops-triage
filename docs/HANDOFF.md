@@ -198,3 +198,14 @@ An asynchronous request for actual analyst feedback on the current case-04 repor
 ## Session saved for transfer (2026-09-07)
 
 Current-state entry point: docs/SESSION-HANDOFF.md. Ready-to-paste resume prompt: docs/NEXT-SESSION-PROMPT.md. Latest implementation is 8a2f435; this later save is documentation-only, with the 268-test frozen baseline retained. Next independent work is durable host-only campaign slot accounting; analyst feedback/case acceptance and all new paid authority remain pending. GitHub main was verified against local main before this save; the save commit is to be pushed and reverified. No runtime source or historical evidence changed.
+
+
+## Durable host-only campaign accounting (2026-09-07)
+
+Resumed clean main and verified GitHub at handoff 84cb2c6; baseline 268 tests passed in 64.768 seconds. Added CampaignStore in secops_triage/campaign_store.py: exact clean plan/source/fixture/rubric identity, explicit host gate references, unique reserved slot/run/grant associations, durable dispatch intent, worker-consumption fencing, immutable stopped/incomplete/completed results and separate bound evaluation records. Review must pass before continuation; any recorded failure remains a stop, including one recorded after the next reservation. Existing bounded single-run grants and supervisor remain in control; campaign functions are not agent tools.
+
+Crash recovery closes orphan/unused authority, preserves unknown request reservations and never resets or reruns a slot. Host lifecycle and store locks cover concurrent reservation, worker startup and recovery. Recorded results remain readable after source changes without repairing old hashes. This is one designated local Store, not distributed or copied-database coordination. Import repeated hero cases lazily to avoid incident-head supersession. Read docs/SECOPS-CAMPAIGN-ACCOUNTING.md.
+
+Independent AI design/implementation review identified and resolved startup-lock, worker-bypass and evaluation-continuation gaps; final independent focused suite passed 19 tests, no remaining blockers in reviewed scope. Frozen full suite: 287 tests passed in 65.830 seconds, all runtime/test/lockfile hashes unchanged. Probe retained 403/200/403 and the intentional faulty leak. Evidence: outputs/secops-campaign-accounting-validation.json. SDK execution tests use fake OpenAI transport in temporary synthetic stores, not live calls or real analyst judgments.
+
+No paid calls, real campaign authority, analyst feedback, human case acceptance, UI/cloud/publication work or historical live-store access occurred. All historical grants remain closed. Engine changed; use fresh imports. Actual M1.5 feedback and case adjudication remain pending; prepare a concrete frozen-build campaign proposal with refreshed pricing only when those gates are satisfied, and obtain explicit new paid authority before dispatch.

@@ -1,0 +1,128 @@
+{
+  "baseline": {
+    "commit": "84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c",
+    "tests_passed": 268,
+    "seconds": 64.768,
+    "github_main_verified": true
+  },
+  "full_suite": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "passed": 287,
+    "seconds": 65.83,
+    "source_unchanged_during_tests": true,
+    "log": "/private/tmp/secops-slot-frozen-tests.txt"
+  },
+  "independent_review": {
+    "type": "Independent AI design and implementation review; not human analyst validation",
+    "focused_tests_passed": 19,
+    "seconds": 1.506,
+    "disposition": "No remaining blockers in bounded reviewed scope",
+    "fixes": [
+      "Lifecycle lock across parent/worker startup and recovery",
+      "Exact bound grant and fresh worker checks",
+      "Immutable evaluation-gated continuation",
+      "Prior review recheck at dispatch and worker consumption"
+    ]
+  },
+  "source_sha256": {
+    "secops_triage/store.py": "5bdb7101181d238a410423806b51c59c7d5e7d76e9836d23b6ef53dcec4732b0",
+    "secops_triage/case_matrix.py": "e9da71a0741e8834fd0cda3f7780780b1dba29174f6b145e33cedeaee141bd57",
+    "secops_triage/agent_spend.py": "69b9fa87695b0ab0c3b4519c11c3c47c9298bf53968231ceec687aa3bf807552",
+    "secops_triage/evaluation.py": "bbd65340f2d0c5177e0403f78ba9eb455539362ae6748b0d58a7de048fab96af",
+    "secops_triage/agent_runner.py": "c90c0a50f729ec2e135fd24a3217de2ae330b6b4866a3716f4d1131455d2540d",
+    "secops_triage/__init__.py": "9cb590d0c889170c7d1acc95e061ac6c435021543373064af1cdc8a42598dc10",
+    "secops_triage/intelligence.py": "03a7720943f804792808cc808aa48524fd4383698d379289476614b228efeb84",
+    "secops_triage/campaign.py": "eb1ce9fe323a2a8dc10973fe2ba787504e631b9beb1e76dc45997d4d1c9f7bb5",
+    "secops_triage/replay.py": "29664fd3457d845b02a48efafcc293bc14bdcdd0c85b664648e0b381081274c1",
+    "secops_triage/agent.py": "c0f1a648372beb069509af718b6407ffac9edbf5e75f9d1f5366c5948c8eeeb7",
+    "secops_triage/contracts.py": "54f7af06baa210cf9a87b44d0ee48dd064d2e868a469ef1178117d9a4b471d15",
+    "secops_triage/live.py": "0499e9e6018c42593b07bc7cdfae50dbf64979a0903440ba95f4dd98d6422577",
+    "secops_triage/drill.py": "212d87aa7c0b28081b75d5a9d05e214394cb36bfa26cd4c7740305e673b561f8",
+    "secops_triage/investigation.py": "1b5b9d84fdba6d57c17960913ad4f4d632d2ecaf261d8ac9c9a308652a2e8226",
+    "secops_triage/evaluation_cases.py": "4bcf2fdca1178726f5f5a8f8fe869738fdcd9797c135789286f409459861ed2f",
+    "secops_triage/campaign_store.py": "f3954131f3623a3b4c29e72cc65f5f632e31d908412d0d4771f102f17ecd9b3a",
+    "secops_triage/__main__.py": "ec60980f195b77ea1682ac493efdfe743ac68d8eade78b1364885ee0037e4b5e",
+    "secops_triage/report.py": "8c734f0fef6f586af73058cc375dd762cec697c846032ee253a6944254651719",
+    "secops_triage/fixtures.py": "8991a4471ec0b3ceac48cd3b57025a2431d8455d86bf2f7f972b0dc9a41bcb9d",
+    "migration_proof/__init__.py": "2a92f33a27acb1171691d6b1552c9267650a42543583387ac20e92ba3b24ef15",
+    "migration_proof/probe.py": "b814c0ae5e25c7d219368dd36efe29507ba6e358a21675eec503f0c8028fd7a6",
+    "migration_proof/core/worker.py": "420a96bf41e4750b7feddc9272d50194623c8d77e018e40bcda04f5c63973c19",
+    "migration_proof/core/store.py": "f5afcd37a65ffb289ee728054f99fb232b716ce75b26a37e6c2e5c5a974eb7cc",
+    "migration_proof/core/__init__.py": "7154e55605f446ce706526d1085a457f48eb48564c3354ff45410973b30538a1",
+    "migration_proof/core/contracts.py": "630f926f7baf9d75353566fa447b320b189d8e0851d49df715608f10eda30e24",
+    "migration_proof/core/artifacts.py": "29383902366eca46427e16bc8a2d76cfd3f0bf1b478d6a13425ad55c1ad1684b",
+    "migration_proof/agent/worker.py": "dc7c08f63ef31f248279d9b0828142de26700c45e343f471b00ccaf489fd8972",
+    "migration_proof/agent/runner.py": "ad3cf877f84f92316fdc4bf68edadbd123599afa4206c803106b55302c8e1a9e",
+    "migration_proof/agent/journal.py": "5a9a57d90e5a3b4caf467923e221cf3fc4b0d785051586424a88b5c08df79e23",
+    "migration_proof/agent/__init__.py": "c881276016f2ff137685da69a6aa7d98f26fa3adfa7e91f2d6bf2c2448a3083b",
+    "migration_proof/agent/runtime.py": "edad89639a4c75810b3d23aef957299350e0a0421bdcccfe4b9624840e6d88de",
+    "migration_proof/agent/openai_model.py": "8daac0225664e0b10e7ea75f37c273efd49ae31a8da8818b9b9282eb2fabd237",
+    "migration_proof/agent/spend.py": "c0e13c7fda9650c368b51787fcc93e46d463b56e793a61359c8a151ab9b81cc0",
+    "migration_proof/agent/offline_model.py": "2c4e2632cf9fc672f04bd59e1eacf3d79aef52c0e8f1fbe017f489bd73187101",
+    "migration_proof/agent/contracts.py": "d1c27661d541327acd5191cad4c88b1c542543f44854ea20bf4784f537cdf1c5",
+    "migration_proof/agent/openai_preflight.py": "58cf7a72edddc50c272451e438da6d979472f69b686cbfc55b6eada686207176",
+    "migration_proof/fixtures/__init__.py": "46cab63b28ea6490ec739a5787e2cc05f92e37f2464f7558e8f7dcccf6505a0a",
+    "migration_proof/fixtures/tenant_api.py": "f4bb59a42897503e6eb1d59c2223514c0fd72a1ae49804faff32dcad1b6789c8",
+    "tests/test_secops_handoff.py": "65e26bb78c8a1f60da0d9cfb8bc09a6b8de24d3d5fea9e967809d793f509ac85",
+    "tests/test_secops_campaign.py": "bdde86c16fd53aeee94332aa502cfa5e3c86ecbb3f2b7b6edd8dd80b0037d896",
+    "tests/test_secops_handoff_store.py": "c7de63e10ce1445c57866c188e6e686b7c10ecb606b9eab1ebad00a70d3c9265",
+    "tests/test_openai_preflight.py": "950d6c450cd98fe444b541551f9ec6090dfc347f740db5c1956a227df320acb1",
+    "tests/test_deterministic_core.py": "0faf6840b12bf4e6a4231977436657136a94e17e47da0724f438b13c61e48bfc",
+    "tests/test_secops_evaluation_cases.py": "974f1f874af56969f3c996d6a7b8c33e7babe5ebca44a38b9e71ab81ef326929",
+    "tests/test_secops_authorization.py": "c5027dd5b072f6addb7c90f65f26862b527cca62dd729a6c6f771d5e7426b03d",
+    "tests/test_secops_live.py": "ae716b21cf5f1beabed9a5c69fce661f420331398e587bd547619afc20c73d89",
+    "tests/test_corrected_evaluation.py": "af6a975d69f5cdf0435c702cdc6c5d3d4fc38816b97f3de11cff27510dbb333d",
+    "tests/test_secops_case_matrix.py": "39aa59b7cc84457f3945b39e30475187c9733a5f48fda8c8dd1b42763b7696df",
+    "tests/test_secops_triage.py": "97ecb2e42853f76f110044eb4edefd000eb43339f69b97361a6504d0ac9f025f",
+    "tests/test_secops_campaign_store.py": "621dbc227c48250c377186fcc79ca16efb72966d07d985e07d61f2983989424f",
+    "tests/test_secops_intelligence.py": "554b8d5effa2cf99683e01a39f83020457ec57ef574b98789e229e5a0247cbd5",
+    "tests/test_tenant_boundary.py": "987d2af7fc291d9cb7e703150d69617dcd92589bd37acc4170d449827e2114eb",
+    "tests/test_agent_orchestration.py": "cb7c49f3b1f01a5c97b709aaf7a09a9bc9fb67d26ae42f8441cdd0292765b295",
+    "tests/test_secops_evaluation.py": "2716c301f921406c2dc01c6741cb9d33d7c0567894bfa082a886d37dcddab9c9",
+    "tests/test_openai_transport.py": "a357f5c9b92d0528a2d7feca0a4c7d4376bb48d0f538b43079c8bfd5e1a99c13",
+    "tests/test_secops_agent.py": "ceef45734aa40a229055ff296cb2287302baca5862f9a1b9ff8dcd19cf00301e",
+    "tests/test_fixture_baseline.py": "1cf68ad0f71f17a59e01dd6338db2dd16bf9a2ea0961b68ac64ca0f3013f58ea",
+    "tests/test_secops_drill.py": "6da4770ec8f2fd14a692bd2b37fd8062e30f12d48b958de5109805bb19843044",
+    "uv.lock": "1eea895043fba03adc36d3c0cbc0482b953829015a4d2d13ada9f3ab17016ef2"
+  },
+  "probe": [
+    {
+      "revision": "original",
+      "expected_status": 403,
+      "actual_status": 403,
+      "leaked_document_fields": [],
+      "passed": true
+    },
+    {
+      "revision": "faulty",
+      "expected_status": 403,
+      "actual_status": 200,
+      "leaked_document_fields": [
+        "id",
+        "tenant",
+        "title"
+      ],
+      "passed": false
+    },
+    {
+      "revision": "corrected",
+      "expected_status": 403,
+      "actual_status": 403,
+      "leaked_document_fields": [],
+      "passed": true
+    }
+  ],
+  "paid_calls": 0,
+  "real_campaigns_registered": 0,
+  "real_campaign_authorities_recorded": 0,
+  "historical_live_stores_opened": 0,
+  "analyst_sessions": 0,
+  "human_case_acceptances": 0,
+  "test_mode": "Temporary synthetic stores and explicit test assertions; real SDK with fake OpenAI transport. Test grants are not paid authority or live successes.",
+  "limitations": [
+    "Single designated local Store; no distributed or copied-database coordination",
+    "Gate references and claim support are trusted host/reviewer assertions",
+    "M4 execution remains unbound; UI/cloud/publication gates unchanged",
+    "Current planner artifact remains historical dirty draft; regenerate at selected clean build"
+  ]
+}
