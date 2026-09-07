@@ -227,3 +227,8 @@ README and PRODUCT.md now lead with “From SIEM incident to analyst-ready hando
 The generated cover at docs/assets/secops-triage-hero-v2.png is conceptual editorial artwork, not a shipped UI or technical architecture diagram. Its prompt/provenance is in docs/assets/HERO.md. Official-source positioning rationale is in docs/SECOPS-POSITIONING-REVIEW.md. Publication/image/walkthrough evidence is in outputs/secops-publication-validation.json. Runtime/test/lockfile source remained unchanged; the latest full 287-test result remains applicable and was not rerun for this documentation/artwork change.
 
 Only repository visibility was released. License adoption, analyst acceptance, new paid investigation authority, UI/cloud/live connectors, further publication and Devpost submission remain gated. Historical evidence was not rewritten or reopened.
+
+
+## Landing page deferred (2026-09-07)
+
+The owner requested a landing page for the SecOps Triage capability but explicitly said it can come later. Saved in PRODUCT.md and the current-session handoff as deferred work behind demo readiness. Proposed content: capability, hero walkthrough, verified evidence and limitations, and repo/demo links. No page implementation, hosting, runtime change or new external authorization occurred.

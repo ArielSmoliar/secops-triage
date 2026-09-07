@@ -40,3 +40,8 @@ The owner confirmed keyboard access and status labels that do not depend on colo
 Lead with the analyst's decision and handoff: existing incident, relevant evidence, open questions, supported next action. AI summaries, evidence grounding and human oversight are established SecOps capabilities; they are not claimed as unique inventions. Our demo makes a bounded investigation inspectable through exact source/authorization relationships, separate model-versus-policy evaluation and preserved stopped attempts. These are demonstrable design choices, not a measured advantage over enterprise platforms.
 
 The current surface is CLI and Markdown over synthetic replay. Keep live-model history, scripted examples, future UI and external connectors clearly labeled. Prefer task language such as incident context, evidence, open questions and analyst handoff over broad autonomous-SOC promises. Public copy and imagery must not imply a Splunk integration or endorsement. See docs/SECOPS-POSITIONING-REVIEW.md for the source-based comparison.
+
+
+## Deferred landing page
+
+The owner requested a landing page for the SecOps Triage capability and explicitly deferred it. Backlog scope: the incident-to-analyst-handoff promise, current hero artwork, a concise phishing walkthrough, verified evidence and limitations, and links to the repository and demo materials. Prioritize demo readiness first; do not begin landing-page implementation yet. Keep marketing content separate from the analyst workspace, and preserve the existing publication/hosting gates.

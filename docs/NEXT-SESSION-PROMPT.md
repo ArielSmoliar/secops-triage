@@ -6,4 +6,6 @@ Durable host-only campaign slot accounting is now implemented; read docs/SECOPS-
 
 All historical paid grants are closed; no new paid calls are authorized. The campaign artifact is planning-only and its $59.50 configured ceiling is not approval. Actual analyst feedback and owner case acceptance remain pending. Do not invent feedback or mark milestones complete from scripted outcomes. Keep expected answers outside agent inputs and approval/promotion/spending/analyst decisions outside agent tools. Preserve historical live stores and secrets. Do not start UI, AWS/AgentCore, live connectors or further publication/submission work before their saved gates are satisfied. Repository visibility is already public; license adoption remains pending.
 
+A SecOps Triage landing page is saved in the backlog at the owner’s request, explicitly deferred until later. Prioritize demo readiness and do not start the page yet.
+
 Report what changed, test/review evidence, commit and unresolved risks. Continue authorized offline work without unnecessary confirmation.

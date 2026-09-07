@@ -49,6 +49,8 @@ One historical real-model investigation completed: run `5f976e803708c0b16c4550d4
 3. After owner acceptance and actual feedback, freeze cases/build, refresh price/bounds and prepare a concrete campaign authorization proposal. Only explicit new spending authority permits live dispatch. Score every raw model claim and preserve failures. The three hero successes must be consecutive on the frozen build; M4 UI rehearsals are separate.
 4. UI follows observed analyst friction and the runbook's M1.5/M2 gates. Repository publication is authorized and complete. No AWS, AgentCore, live connectors, further external publication, license adoption or Devpost submission is authorized by this handoff. Recheck hackathon rules/deadline when relevant; saved dates are not current verification.
 
+5. **Deferred landing page:** the owner wants a page for the new SecOps Triage capability, but said it can come later. Keep it behind demo readiness; planned content is the capability, hero walkthrough, evidence/limitations and repo/demo links. Do not start building or hosting it now. See PRODUCT.md.
+
 ## Startup reading and checks
 
 Read this file, docs/HANDOFF.md, docs/runbooks/secops-demo-completion-runbook.md, docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md, docs/SECOPS-EVALUATION-READINESS.md and outputs/secops-case-matrix-validation.json completely before editing. For campaign work also read docs/SECOPS-CAMPAIGN-ACCOUNTING.md, campaign_store.py, campaign.py, live.py, agent_spend.py, agent_runner.py, evaluation.py and store.py. Product/flow decisions are in PRODUCT.md and docs/SECOPS-ANALYST-FLOW-REVIEW.md. Historical migration background is docs/runbooks/migration-proof-build-release-demo-runbook.md and outputs/migration-acceptance-steward-design.md.
