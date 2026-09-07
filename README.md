@@ -1,14 +1,45 @@
 # SecOps Triage
 
-Evidence-backed investigation of existing SIEM incidents.
+![SecOps Triage — incident context, cited evidence and open questions assembled for human review](docs/assets/secops-triage-hero-v2.png)
 
-Repository: [ArielSmoliar/secops-triage](https://github.com/ArielSmoliar/secops-triage). Formerly `migration-proof`; the original Migration Proof implementation and evidence remain preserved.
+**From SIEM incident to analyst-ready handoff.**
 
-Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. One real-model phishing investigation now completes; see [live result and evidence review](docs/SECOPS-COMPLETED-INVESTIGATION.md).
+A Tier 1 analyst needs to decide what an incident warrants: a supported close recommendation, escalation, or a handoff with unresolved questions. SecOps Triage gathers incident context and source evidence, assembles a cited investigation, and leaves the decision with the analyst.
 
-Help a Tier 1 SOC analyst investigate an **existing incident created by a SIEM or another security tool**. Gather identity, email, endpoint and historical context, then prepare an evidence-linked close-or-escalate recommendation. One incident can contain multiple related alerts.
+Built with the **Strands Agents SDK**. The working demo uses synthetic replay records for suspicious sign-ins, reported phishing and endpoint alerts. Its focus is a reviewable investigation of an incident that already exists in a SIEM.
 
-The first working slice is a local replay with three playbooks: suspicious sign-ins, reported phishing and endpoint alerts. It executes real bounded queries against synthetic source records and persists the results. Its assessment is explicitly **deterministic demo logic, not live AI**. The upstream system remains the incident system of record.
+## The analyst workflow
+
+1. **Start with the incident.** Inspect the source incident, affected identities and devices, relevant activity and prior cases.
+2. **Examine the evidence.** Keep source citations, authorization scope, intelligence matches and missing context visible. Similar messages do not inherit each other's approval; a click does not establish credential theft.
+3. **Review the handoff.** Read the recommendation, findings, open questions and draft case note. Host-only APIs can record a local close/escalate decision or an unresolved handoff. The upstream SIEM remains unchanged.
+
+The current interface is a CLI and Markdown report. A browser workspace, live source connectors and upstream response actions are not implemented. The cover image is a conceptual illustration.
+
+## What judges can verify today
+
+| Evidence | What it establishes |
+|---|---|
+| [287 passing tests](outputs/secops-rename-validation.json) | Deterministic safety and scripted/fake-provider integration on the verified build. |
+| [One historical live-model investigation](docs/SECOPS-COMPLETED-INVESTIGATION.md) | Real Strands/OpenAI execution over synthetic replay: nine evidence reads and an escalation recommendation. Two earlier stopped attempts remain preserved. |
+| [Nine draft cases](docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md) | Close, escalate and unresolved scenarios across three alert families. Owner case acceptance and semantic reviews remain pending. |
+| [Durable campaign accounting](docs/SECOPS-CAMPAIGN-ACCOUNTING.md) | Bound plans, runs, grants and results; failures and uncertain spend cannot silently retry. No real campaign is authorized. |
+
+A scripted run verifies orchestration, not model judgment. The historical live result is not a reliability claim for the current build. Analyst time savings and production accuracy have not been measured.
+
+## Walk through the phishing case
+
+The hero case contains two similar messages: the first is explicitly authorized; the follow-up has a different URL, a recorded click and matching malicious intelligence. The reviewer must distinguish that evidence from an expired domain assessment and avoid inferring credential submission.
+
+Use Python 3.11+ on macOS/Linux and [uv](https://docs.astral.sh/uv/). Run from the repository root, choosing new output directories each time:
+
+```sh
+uv sync --frozen --extra agent
+uv run --frozen --extra agent python -m secops_triage.live prepare --case case-04 --output data/hero-source
+uv run --frozen --extra agent python -m secops_triage investigate data/hero-source/incident.json --strands --output data/hero-scripted
+```
+
+Open `data/hero-scripted/investigation.md`. Preparation issues no grant; `--strands` here uses a **scripted provider with no paid model calls**. Expected demo policy: escalation with unresolved evidence context. The scripted finding is deliberately minimal and does not pass a complete semantic review. See the [evaluation guide](docs/SECOPS-EVALUATION-READINESS.md).
 
 ## Run the incident demo
 
@@ -41,6 +72,9 @@ python3 -m unittest discover -s tests -p test_secops_triage.py -v
 The tests include 30 synthetic cases across all three families, a combined incident, source failures, stale coverage, evidence tampering, run isolation, replay, concurrency and process-crash recovery. These establish demo behavior, not production detection accuracy or measured time savings.
 
 The original migration implementation and its tests remain intact below. It is a preserved technical baseline, not the active product workflow.
+
+<details>
+<summary>Preserved Migration Proof baseline (historical)</summary>
 
 ## Preserved Migration Proof baseline
 
@@ -95,3 +129,5 @@ Only an explicit human decision should call the separate backend methods `approv
 For a faulty candidate, a failed comparison blocks acceptance. `apply_safe_patch(PatchInput(...))` accepts the parsed new-file diff defined by `SAFE_PATCH` in `core/artifacts.py`. It adds the one audited regression test to an immutable derived snapshot. The test fails on the faulty application. An owner can then call `replace_candidate(..., "corrected", actor)` to carry the generated test forward; all gates must run again before approval.
 
 See [Phase 2 architecture and review](docs/PHASE2.md), [handoff](docs/HANDOFF.md), and [build runbook](docs/runbooks/migration-proof-build-release-demo-runbook.md). Owner review remains required before any model integration.
+
+</details>

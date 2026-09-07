@@ -13,8 +13,8 @@
     "display_name": ""
   },
   "project": {
-    "name": "Migration Proof",
-    "summary": "Evidence-backed acceptance for software migrations.",
+    "name": "SecOps Triage",
+    "summary": "From SIEM incident to analyst-ready handoff.",
     "ai_usage": "",
     "codex_usage": ""
   },

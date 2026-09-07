@@ -10,6 +10,8 @@ Tier 1 SOC analysts investigating an existing incident created by a SIEM or anot
 
 ## Product Purpose
 
+**From SIEM incident to analyst-ready handoff.**
+
 Turn an existing incident into a reviewable, evidence-backed close-or-escalate recommendation. Explicitly retain inconclusive cases and missing context. The analyst owns the final disposition; the local demo never changes the SIEM. Success is less reconstruction and documentation effort with preserved decision quality. Time savings and real-world reliability are not yet measured.
 
 ## Brand Personality
@@ -31,3 +33,10 @@ Avoid a chatbot-first workflow that makes the analyst orchestrate each lookup, d
 ## Accessibility & Inclusion
 
 The owner confirmed keyboard access and status labels that do not depend on color. Use plain language. Focus management, screen-reader announcements, contrast and responsive layout must be specified and tested when the interface exists. No conformance level or completed accessibility audit is claimed.
+
+
+## Positioning and proof
+
+Lead with the analyst's decision and handoff: existing incident, relevant evidence, open questions, supported next action. AI summaries, evidence grounding and human oversight are established SecOps capabilities; they are not claimed as unique inventions. Our demo makes a bounded investigation inspectable through exact source/authorization relationships, separate model-versus-policy evaluation and preserved stopped attempts. These are demonstrable design choices, not a measured advantage over enterprise platforms.
+
+The current surface is CLI and Markdown over synthetic replay. Keep live-model history, scripted examples, future UI and external connectors clearly labeled. Prefer task language such as incident context, evidence, open questions and analyst handoff over broad autonomous-SOC promises. Public copy and imagery must not imply a Splunk integration or endorsement. See docs/SECOPS-POSITIONING-REVIEW.md for the source-based comparison.

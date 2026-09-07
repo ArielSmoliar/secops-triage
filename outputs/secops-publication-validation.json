@@ -1,0 +1,42 @@
+{
+  "repository": "https://github.com/ArielSmoliar/secops-triage",
+  "repository_id": 1358193735,
+  "visibility_verified": "public",
+  "authorization": "Owner explicitly requested public visibility for judges and a repository hero image; then requested Splunk-informed content adjustments.",
+  "prepublication_scan": {
+    "scope": "All locally reachable Git refs and unique historical blobs; ignored working files not read",
+    "commits": 29,
+    "blobs_scanned": 237,
+    "binary_blobs": 0,
+    "sensitive_paths": [],
+    "credential_pattern_hits": [],
+    "limits": "Pattern-based review, not a guarantee; binary document text checked separately.",
+    "source_commit": "0fc7afd63033f0b8224605ddc9b177b615805044",
+    "pdf_text_characters_checked": 20435,
+    "pdf_credential_pattern_hits": 0
+  },
+  "hero": {
+    "asset": "docs/assets/secops-triage-hero-v2.png",
+    "sha256": "7697e8503cfce433f07d8d2cb9fff4c532bbb1de62d2fa0941a543ffd97112d7",
+    "dimensions": [
+      1774,
+      887
+    ],
+    "tool": "built-in image generation",
+    "type": "Conceptual editorial artwork; not an implemented UI screenshot"
+  },
+  "verification": {
+    "readme_named_case_walkthrough": "Passed with uv run --frozen --extra agent in offline mode and new private temporary outputs",
+    "evidence_reads": 9,
+    "recommendation": "escalate",
+    "investigation_status": "needs_review",
+    "execution": "Strands SDK with scripted provider (no live model)",
+    "runtime_source_changed": false,
+    "full_suite_rerun": false,
+    "latest_full_suite": 287
+  },
+  "paid_investigation_calls": 0,
+  "historical_live_stores_opened": 0,
+  "license_adopted": false,
+  "devpost_submission_performed": false
+}

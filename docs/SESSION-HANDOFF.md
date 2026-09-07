@@ -5,13 +5,15 @@ Saved 2026-09-07. This is the current-state entry point; docs/HANDOFF.md retains
 ## Repository and verification
 
 - Work in `/Users/arielsmoliar/Developer/migration-proof`, branch `main`. The desktop may start in `/Users/arielsmoliar/Documents/ChatGPT/migration-proof`; do not assume that is the active repository. Set the working directory explicitly.
-- GitHub: https://github.com/ArielSmoliar/secops-triage.git . Campaign accounting resumes from verified local/GitHub handoff `84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c` on main. Reverify current HEAD and origin/main on startup; the accounting implementation is a later commit.
+- GitHub: https://github.com/ArielSmoliar/secops-triage.git — now public, explicitly authorized by the owner for judges on 2026-09-07. Campaign accounting resumes from verified local/GitHub handoff `84cb2c68f361b1044e1c1a96f87fb9b09e40aa5c` on main. Reverify current HEAD and origin/main on startup; the accounting implementation is a later commit.
 - Latest runtime verification after naming: **287 tests passed in 65.619 seconds**, with runtime/test/metadata hashes unchanged during execution. Evidence: outputs/secops-rename-validation.json. Prior campaign accounting verification passed 287 tests plus independent review of 19 focused tests with no blockers; outputs/secops-campaign-accounting-validation.json remains its historical record.
 - Nine fresh synthetic investigations completed through the real Strands SDK with a scripted provider: 75 evidence reads, expected policy outcomes, all semantic evaluations pending. These are not live-model successes. Artifacts: data/secops-nine-cases-reviewed/manifest.json and case-01–09-scripted/investigation.md.
 - Runbook validator passed, eight path references checked, none missing. Earlier original/faulty/corrected migration probe returned 403/200/403 with the intended faulty leak detected.
 - Ignored data stores, private owner capabilities, .env and temporary logs are local-only, not on GitHub. Sanitized evidence, source, fixtures and docs are committed. Recreate synthetic runs in new private directories on another machine; never commit secrets or owner.json.
 
 ## Product and settled direction
+
+Positioning: **From SIEM incident to analyst-ready handoff.** README and the conceptual hero now emphasize incident context, cited evidence, open questions and human review, informed by official Splunk content. See docs/SECOPS-POSITIONING-REVIEW.md. This changes messaging, not runtime or product scope.
 
 The owner selected **SecOps Triage** as the demo/product name and **secops-triage** as the repository name. The existing local checkout stays at `/Users/arielsmoliar/Developer/migration-proof` to preserve environment paths and historical evidence links. Python module names stay `secops_triage` and `migration_proof`. Root package metadata/lockfile were renamed; use fresh imports for the changed engine identity.
 
@@ -45,7 +47,7 @@ One historical real-model investigation completed: run `5f976e803708c0b16c4550d4
 1. Record actual formative analyst feedback and owner case adjudication when supplied. An asynchronous question requested a disposition, decisive evidence and missing context for data/secops-nine-cases-reviewed/case-04-scripted/investigation.md; no answer has been received. Do not mark M1.5 done or fabricate participation. Independent preparation can continue meanwhile.
 2. **Durable campaign slot accounting is implemented:** read docs/SECOPS-CAMPAIGN-ACCOUNTING.md and secops_triage/campaign_store.py. It binds exact clean plans, runs, grants, immutable results and separate claim reviews in one designated private Store; failures cannot silently retry. The planning CLI remains planning-only. No campaign authority has been recorded outside temporary offline tests. Continue actual feedback/case adjudication and concrete campaign preparation only as their gates are satisfied. Distinguish planning, authorization, reservation, dispatch and result reconciliation.
 3. After owner acceptance and actual feedback, freeze cases/build, refresh price/bounds and prepare a concrete campaign authorization proposal. Only explicit new spending authority permits live dispatch. Score every raw model claim and preserve failures. The three hero successes must be consecutive on the frozen build; M4 UI rehearsals are separate.
-4. UI follows observed analyst friction and the runbook's M1.5/M2 gates. No AWS, AgentCore, live connectors, external publication, license adoption or Devpost submission is authorized by this handoff. Recheck hackathon rules/deadline when relevant; saved dates are not current verification.
+4. UI follows observed analyst friction and the runbook's M1.5/M2 gates. Repository publication is authorized and complete. No AWS, AgentCore, live connectors, further external publication, license adoption or Devpost submission is authorized by this handoff. Recheck hackathon rules/deadline when relevant; saved dates are not current verification.
 
 ## Startup reading and checks
 
