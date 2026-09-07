@@ -1,0 +1,50 @@
+{
+  "tests_passed": 188,
+  "seconds": 61.697,
+  "command": ".venv/bin/python -m unittest discover -s tests -v",
+  "log": "/private/tmp/secops-drill-full-tests.txt",
+  "paid_calls": 0,
+  "analyst_sessions_completed": 0,
+  "source_sha256": {
+    "secops_triage/drill.py": "e49526a266379f1e181b78d42dd07b0338ed235595bf370faa2bf7df4de8e03e",
+    "tests/test_secops_drill.py": "6da4770ec8f2fd14a692bd2b37fd8062e30f12d48b958de5109805bb19843044"
+  },
+  "review": "Independent read-only scenario and methodology review; manual evidence IDs added after fairness finding. Equal source results and citation mapping tested. Local-only absolute evidence links documented.",
+  "kit": {
+    "execution": "deterministic replay; no model calls",
+    "synthetic": true,
+    "analyst_sessions_completed": 0,
+    "cases": [
+      {
+        "case": "case-01",
+        "snapshot_sha256": "99a9263d06be337859ce4f1d20cb43573ee664cb49f634c151af0109b66b6554",
+        "run_id": "77ce50d0af1a8a4ff64977a27e6b134e",
+        "packet_hash": "f3ee9bb5c2800b7ca933cd8e76e8ea877e5ca80146e9fa017d9ac8e1a528d8c4",
+        "reads": 9,
+        "recommendation": "close",
+        "investigation_status": "complete",
+        "reviews": []
+      },
+      {
+        "case": "case-02",
+        "snapshot_sha256": "464865f6a06865a7cae7f1d7a016a738437e2147fb473a47267950406c8b893a",
+        "run_id": "c2dc04b2ce81f46301ebdd7204f66418",
+        "packet_hash": "81277ccb5ff204a90642332df06ff2b8dc71de428dc47503f801d29dfa589b40",
+        "reads": 9,
+        "recommendation": "escalate",
+        "investigation_status": "complete",
+        "reviews": []
+      },
+      {
+        "case": "case-03",
+        "snapshot_sha256": "1b59a27b6fd961d176880f6ef89af4771d19e1fc58136cded816a805fc2ef1f3",
+        "run_id": "1228de2de3b531624421fadeaaf9e44d",
+        "packet_hash": "1ee7cd20a066009dd17e3b5fb409c703bcd39048da915690cc470845f06c523e",
+        "reads": 9,
+        "recommendation": null,
+        "investigation_status": "needs_review",
+        "reviews": []
+      }
+    ]
+  }
+}

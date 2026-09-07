@@ -24,6 +24,10 @@ python3 -m secops_triage investigate incident.json --output data/imported-incide
 
 This imports an existing incident; it does not create an incident in a SIEM. No live connector, paid model, upstream case write or containment action runs. See [contracts, limits and analyst review](docs/SECOPS-REPLAY.md).
 
+## Try the analyst walkthrough
+
+[Walkthrough and scoring guide](docs/SECOPS-ANALYST-WALKTHROUGH.md): generate three matched phishing cases with manual source views and assembled reports using `python3 -m secops_triage.drill --output data/new-analyst-drill`. This is zero-cost deterministic replay; observations remain empty until an analyst participates.
+
 ## Verify the SecOps slice
 
 ```sh
