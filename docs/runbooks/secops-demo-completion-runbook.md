@@ -19,7 +19,7 @@ Repository and inspected worktree: /Users/arielsmoliar/Developer/migration-proof
 | Milestone | Deliverable | Exit criterion | Dependency | Planning target |
 |---|---|---|---|---|
 | M0 — Foundation | Deterministic backend and actual Strands integration | 174 tests passed; scripted replay works; first live failure preserved | Complete at baseline | Done |
-| M1 — Complete a live investigation | One real-model phishing investigation and diagnosable failures | All four tool types used; valid cited packet; expected escalation; settled usage; no external mutation | M0, new scoped paid authorization | Sep 8; 3–6 hours |
+| M1 — Complete a live investigation | Complete: see docs/SECOPS-COMPLETED-INVESTIGATION.md | All four tools, valid cited packet, escalation, settled usage and unchanged SIEM verified | Completed after explicitly approved live attempt | Done Sep 7 |
 | M2 — Cover the three daily workflows | Nine distinct cases: close, escalate and incomplete for each family | Nine scored live runs; all material citations supported; no unsafe close; expected incomplete cases stay incomplete; hero case passes three consecutive runs | M1; separately budgeted evaluation campaign | Sep 9–10; 6–10 hours |
 | M3 — Build the analyst workspace | Existing-incident selector, investigation progress, evidence, gaps, case note and local decision | Analyst completes the workflow without terminal use; evidence links and overrides work; duplicate actions are safe | M1 contract stable; M2 cases supply acceptance tests | Sep 10–11; 8–12 hours |
 | M4 — Rehearse the complete demo | End-to-end run through the UI with a clear failure path | Three consecutive hero rehearsals; one close and one incomplete walkthrough; no hidden manual data repair | M2 + M3 | Sep 12; 4–6 hours |
@@ -196,7 +196,7 @@ Expected baseline: 174 tests; probe returns original 403, deliberately faulty 20
 ## Record
 
 - **Started:** Runbook generation and review on 2026-09-07.
-- **Completed:** Documentation generation/review only; M1–M5 remain open.
+- **Completed:** Documentation generation/review followed by M1 completion; M2–M5 remain open.
 - **Operator:** Codex, using Generate Runbook 0.3.0.
 - **Approvals:** This task requests milestones and review. Prior live attempt was explicitly approved, consumed and closed. No new campaign, publication or deployment approved.
 - **Outcome:** Proposed critical path and objective exit gates; structural validation and drift review are recorded separately in the runbook review artifact.

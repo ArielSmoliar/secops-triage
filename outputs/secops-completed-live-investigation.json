@@ -1,0 +1,328 @@
+{
+  "agent_assessment": {
+    "execution": "Strands SDK with OpenAI; synthetic replay evidence",
+    "findings": [
+      {
+        "event_id": "phishing-trigger",
+        "evidence_id": "80634a18eba2ae4ec72aa350dc9c6760",
+        "summary": "User reported an email with subject 'Your requested document' from support@vendor.example as phishing."
+      },
+      {
+        "event_id": "phishing-delivery",
+        "evidence_id": "9927208cf34210e57341aef57d984df0",
+        "summary": "The phishing email was delivered to the user's inbox."
+      },
+      {
+        "event_id": "phishing-click",
+        "evidence_id": "44f37349c93de266f3e5e31b21b2d838",
+        "summary": "User clicked on the phishing email, allowing the action."
+      },
+      {
+        "event_id": "phishing-indicator",
+        "evidence_id": "47fa12393282a252ac1ff5a4c2f257eb",
+        "summary": "Intelligence sources marked the email as malicious with a synthetic intelligence match."
+      },
+      {
+        "event_id": null,
+        "evidence_id": "b6bd326b096510527994827f8c6b5181",
+        "summary": "No business context or authorization was found for this email or action."
+      },
+      {
+        "event_id": null,
+        "evidence_id": "88ea159e5cabcbb24b33cbae6459c885",
+        "summary": "The user involved is Morgan Lee, owned by IT operations."
+      },
+      {
+        "event_id": null,
+        "evidence_id": "dd308638b75d9876be60ef3c3b1e21e4",
+        "summary": "The device involved is workstation-17, owned by IT operations."
+      },
+      {
+        "event_id": "phishing-previous-case",
+        "evidence_id": "e8edf5969ad1c9340f4ffccfbf1ce702",
+        "summary": "A prior related phishing case on this user and device was closed as benign, but it does not justify closure of the current incident."
+      }
+    ],
+    "recommendation": "escalate",
+    "session_id": "e3e1dc9d9e2611fab91c302232ebffe2"
+  },
+  "elapsed_seconds": 19.2,
+  "events": [
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "inspect_incident",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "query_activity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "lookup_entity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "lookup_entity",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "before_tools"
+    },
+    {
+      "label": "find_related_cases",
+      "stage": "tool_selected"
+    },
+    {
+      "label": "",
+      "stage": "before_model"
+    },
+    {
+      "label": "received",
+      "stage": "after_model"
+    },
+    {
+      "label": "",
+      "stage": "parse_final"
+    },
+    {
+      "label": "",
+      "stage": "validate_final"
+    },
+    {
+      "label": "",
+      "stage": "assessment_validated"
+    }
+  ],
+  "grants": [
+    {
+      "id": "a2faefd25659b65ce209bae935da05bd",
+      "state": "closed"
+    }
+  ],
+  "investigation_status": "complete",
+  "outcome": "completed",
+  "packet_hash": "595d0f163032d6224ec8d7f49ba93a23a12fd064ecf1af26171113422bba7233",
+  "recommendation": "escalate",
+  "run_id": "5f976e803708c0b16c4550d4477137ee",
+  "sessions": [
+    {
+      "id": "e3e1dc9d9e2611fab91c302232ebffe2",
+      "mode": "Strands SDK with OpenAI; synthetic replay evidence",
+      "model_calls": 10,
+      "result_hash": "916387693c6ab0e9770c912ce4c7546c8060b2582ecc1e3c4052900f55077523",
+      "run_id": "5f976e803708c0b16c4550d4477137ee",
+      "state": "assessed",
+      "tool_calls": 9
+    }
+  ],
+  "source_commit": "69210cf928f8c2cadde604d4a2dc4a8b8d58495e",
+  "spend": {
+    "estimated_microusd": 13638,
+    "requests": 10,
+    "reserved_microusd": 4223080,
+    "usage_complete": true
+  },
+  "status": {
+    "is_latest": true,
+    "reviews": [],
+    "run_id": "5f976e803708c0b16c4550d4477137ee",
+    "state": "packet_ready",
+    "upstream_status": "unchanged"
+  },
+  "tools": [
+    {
+      "request": "{}",
+      "state": "completed",
+      "tool": "inspect_incident"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"messages\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"delivery\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"interactions\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"intelligence\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\",\"end\":\"2026-09-07T10:30:00Z\",\"start\":\"2026-09-07T09:00:00Z\",\"template\":\"business_context\"}",
+      "state": "completed",
+      "tool": "query_activity"
+    },
+    {
+      "request": "{\"entity_id\":\"user-1\"}",
+      "state": "completed",
+      "tool": "lookup_entity"
+    },
+    {
+      "request": "{\"entity_id\":\"device-1\"}",
+      "state": "completed",
+      "tool": "lookup_entity"
+    },
+    {
+      "request": "{\"alert_id\":\"alert-phishing\"}",
+      "state": "completed",
+      "tool": "find_related_cases"
+    }
+  ],
+  "semantic_review": {
+    "reviewer": "Separate read-only scenario review agent",
+    "verdict": "Pass for narrow synthetic phishing escalation",
+    "verified": [
+      "Nine evidence hashes and run identities",
+      "All four tool types",
+      "All five phishing queries complete for the bounded window",
+      "Legitimate result-metadata citations",
+      "No account compromise or remediation claim"
+    ],
+    "caveats": [
+      "Allowed click does not establish who allowed it.",
+      "Absence of authorization applies only to the queried source and window.",
+      "User reporting is supported by incident inspection; the first finding cites only the message.",
+      "Use responsible team rather than ownership language for the user.",
+      "Authentication passed; visible in evidence timeline but omitted from agent summary."
+    ],
+    "analyst_decision_recorded": false
+  },
+  "evaluation_scope": "One successful real-model investigation over synthetic replay data; two prior development attempts stopped and are preserved.",
+  "secops_attempt_totals": {
+    "attempts": 3,
+    "completed": 1,
+    "stopped": 2,
+    "requests": 24,
+    "estimated_microusd": 28240,
+    "reserved_microusd": 10135392,
+    "all_grants_closed": true
+  }
+}

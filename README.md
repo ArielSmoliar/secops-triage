@@ -1,4 +1,4 @@
-Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. The first authorized live SecOps attempt stopped after three reads; see [actual result and remaining gap](docs/SECOPS-FIRST-LIVE-RESULT.md).
+Current Strands integration: [SecOps Strands investigation](docs/SECOPS-STRANDS.md). Run the SDK with zero-cost scripted replay using `python -m secops_triage demo --strands --output data/new-strands-demo`. One real-model phishing investigation now completes; see [live result and evidence review](docs/SECOPS-COMPLETED-INVESTIGATION.md).
 
 # Incident investigation demo
 
