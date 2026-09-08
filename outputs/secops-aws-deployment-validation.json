@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "status": "aws_scripted_integration_verified",
+  "date": "2026-09-08",
+  "region": "us-east-2",
+  "authorization": {
+    "owner_reply": "approved",
+    "scope_document": "docs/SECOPS-AWS-PREFLIGHT-20260908.md",
+    "proposal_commit": "4761d75d4843630c98b8aba85035f263505e04b6",
+    "operational_allowance_usd": 5,
+    "not_a_hard_aws_cap": true,
+    "paid_model_calls_authorized": false,
+    "speech_calls_authorized": false,
+    "allowance_review_date": "2026-10-09"
+  },
+  "source": {
+    "commit": "b5bf97d3d73dae3668860e4d495a72321a719139",
+    "clean_before_and_after": true,
+    "host_template_sha256": "7b19070e66f0544b9b3ecfa10388316f5fd007d6c1e81c8f941f873e433fe889",
+    "network_template_sha256": "5ae7f478ce07e0c8d76920d4736e714b0a4d8c1d49a3fdf301146504b7cf9fc5",
+    "uv_lock_sha256": "de63c742a8be47e65cb3c5b763ca751b2202c094625761554d1788fb00555a0c",
+    "smoke_sha256": "9258ab171d42cad96773fa50f67ea79813198ec6516ed900f015378b1b123861",
+    "runtime_changed": false
+  },
+  "runtime": {
+    "os": "Amazon Linux 2023.12.20260831",
+    "python": "3.11.16",
+    "uv": "0.11.21",
+    "strands_agents": "1.54.0",
+    "ssm_agent": "3.3.4624.0",
+    "dependency_install": "uv sync --frozen --extra agent --python /usr/bin/python3.11",
+    "packages_installed": 47
+  },
+  "actual_controls": {
+    "instance_type": "t3.small",
+    "cpu_credits": "standard",
+    "public_ip": false,
+    "ingress_rules": 0,
+    "egress": "TCP 443",
+    "imds_v2_required": true,
+    "encrypted_gp3_gib": [
+      12,
+      20
+    ],
+    "data_volume_serial_verified_before_format": true,
+    "empty_disk_verified_before_format": true,
+    "filesystem": "ext4",
+    "mount_mode": "0700",
+    "owner_file_mode": "0600",
+    "iam": "SSM registration/channels and named operational log-stream writes only",
+    "session_log_destinations": "CloudWatch and S3 disabled in inspected account preferences"
+  },
+  "smoke": {
+    "dispatches": 1,
+    "slot": "smoke-01",
+    "case": "case-04",
+    "execution": "scripted-strands",
+    "provider": "scripted fixture; no live model",
+    "sdk_orchestration": "real Strands Agents SDK",
+    "data": "synthetic local snapshot",
+    "recommendation": "escalate",
+    "investigation_status": "needs_review",
+    "siem_status": "unchanged",
+    "semantic_review": "pending",
+    "human_acceptance": false,
+    "evidence_reads": 9,
+    "tools": {
+      "inspect_incident": 1,
+      "lookup_entity": 2,
+      "query_activity": 5,
+      "find_related_cases": 1
+    },
+    "scripted_provider_responses": 10,
+    "paid_calls": 0,
+    "packet_hash": "4b302ac217a24d80aa6684e920c99ea6bb3020f418802b5fb8f9e4e5fa61fa6d",
+    "result_sha256": "d856b6576fde203e0c9d04c245cfc0869e44844a6646e83983dc187a8ad972c1",
+    "report_evidence_links": 36,
+    "agent_assessment_cites_source_record": true
+  },
+  "cloudwatch": {
+    "host_role_write_http_status": 200,
+    "events_retrieved": 1,
+    "exact_result_bytes_match": true,
+    "result_sha256": "d856b6576fde203e0c9d04c245cfc0869e44844a6646e83983dc187a8ad972c1",
+    "retention_days": 14,
+    "raw_evidence_or_capabilities_uploaded": false,
+    "verified_utc": "2026-09-08T11:51:17.588422+00:00"
+  },
+  "persistence": {
+    "real_ec2_stop_start": true,
+    "first_stopped_verified_utc": "2026-09-08T11:51:41.717083+00:00",
+    "restart_requested_utc": "2026-09-08T11:51:41.717109+00:00",
+    "verified_utc": "2026-09-08T11:53:08.522655+00:00",
+    "baseline_sha256": "d8bb0e1c79976d9fb7db3e0ae11c9ac2425e8336696ee7e2a216ac01c0a4f30b",
+    "files_verified": 21,
+    "same_ebs_serial": true,
+    "same_uuid": true,
+    "automatically_remounted_by_fstab": true,
+    "same_files_and_hashes": true,
+    "same_single_slot": true,
+    "no_worker_running": true,
+    "source_unchanged": true,
+    "wrong_uuid_rejected_without_dispatch": true,
+    "absent_mount_rejected_without_dispatch": true,
+    "investigation_rerun": false
+  },
+  "teardown": {
+    "network_started_utc": "2026-09-08T11:14:57.735897+00:00",
+    "host_dispatch_utc": "2026-09-08T11:18:35.978060+00:00",
+    "final_stop_requested_utc": "2026-09-08T11:53:33.216558+00:00",
+    "network_delete_requested_utc": "2026-09-08T11:53:33.843350+00:00",
+    "final_verified_utc": "2026-09-08T11:55:14.147832+00:00",
+    "instance": "stopped",
+    "network_stack": "DELETE_COMPLETE",
+    "nat_gateway": "deleted",
+    "elastic_ip": "released",
+    "default_route": "absent",
+    "subnet_route_table_association": "retained; DELETE_SKIPPED independently verified",
+    "host_stack": "retained",
+    "encrypted_volumes": "both retained and attached",
+    "cleanup_began_before_90_minute_deadline": true,
+    "total_compute_below_two_hours": true,
+    "network_elapsed_below_one_hour": true,
+    "retained_network_has_no_hourly_charge": true,
+    "restart_without_new_egress_has_no_ssm_connectivity": true
+  },
+  "cost_and_retention": {
+    "prices_reference": "docs/SECOPS-AWS-PREFLIGHT-20260908.md",
+    "observed_nat_bytes_in_from_source": 1238997,
+    "observed_nat_bytes_in_from_destination": 169728805,
+    "metrics_observed_utc": "2026-09-08T11:53:56.761474+00:00",
+    "metrics_are_delayed_not_final_billing": true,
+    "retained_ebs_monthly_usd": 2.56,
+    "log_storage_usd_per_gb_month": 0.03,
+    "owner": "Ariel Smoliar",
+    "review_date": "2026-10-09",
+    "automatic_evidence_deletion": false,
+    "final_invoice_verified": false
+  },
+  "verification_deviations": [
+    "First terminal display stale; reconnect and RPM/dnf records verified completion, no reinstall.",
+    "Read-only baseline verifier expected completed; source uses assessed. Corrected verifier only; smoke executed once."
+  ],
+  "prior_frozen_validation": {
+    "file": "outputs/secops-aws-preflight-validation.json",
+    "tests": 295,
+    "seconds": 66.713,
+    "source_unchanged_since_validation": true,
+    "rerun_for_documentation_only": false
+  },
+  "limitations": [
+    "AWS-hosted scripted infrastructure demo only; analyst UI and end-to-end presentation unfinished.",
+    "No live inference, Bedrock, AgentCore or live AWS security-data connector deployed.",
+    "No new campaign authority, semantic acceptance, analyst validation or video completion.",
+    "No new speech generation; eventual OpenAI voice video remains planned."
+  ],
+  "independent_review": {
+    "kind": "independent AI completion-record review",
+    "outcome": "no blocking issue",
+    "scope": "Public documentation, sanitized JSON, prior verification record, current diff and four runtime/template hashes; consistency with supplied operator observations.",
+    "not_performed": [
+      "AWS execution observation",
+      "private evidence inspection",
+      "test rerun"
+    ],
+    "wording_correction": "Operator independently verified through AWS control-plane checks; no AWS certification implied."
+  },
+  "record_checks": {
+    "frozen_source_hashes_matched": 65,
+    "historical_prefixes_preserved": true,
+    "json_and_relative_links_checked": true,
+    "private_account_resource_identifiers_excluded": true,
+    "git_diff_check": "passed"
+  }
+}
