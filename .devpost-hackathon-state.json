@@ -22,7 +22,8 @@
   "completed_stages": [
     "start-hackathon",
     "review",
-    "resources"
+    "resources",
+    "submit-project"
   ],
   "rules_acknowledged": true,
   "learning": {
@@ -34,11 +35,7 @@
   },
   "submission": {
     "draft_file": "devpost-submission.md",
-    "status": "needs-work",
-    "pending": [
-      "Explicit approval to make YouTube video public",
-      "Final official-rules and terms acceptance and submission confirmation"
-    ]
+    "status": "submitted"
   },
-  "next_command": "submit-project"
+  "next_command": "hackathon-map"
 }

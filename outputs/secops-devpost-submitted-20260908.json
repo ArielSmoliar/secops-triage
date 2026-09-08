@@ -1,0 +1,12 @@
+{
+  "submission_id": 1175395,
+  "status": "Submitted",
+  "submitted_at": "2026-09-08T14:04:04.772-04:00",
+  "url": "https://devpost.com/software/secops-triage",
+  "video_url": "https://youtu.be/9h4XXvpbt5k",
+  "video_visibility": "Public, verified after reload",
+  "verification": "Devpost submit_project returned Submitted; get_project independently returned matching submitted_at",
+  "owner_approval": "Explicit approval of public video visibility, rules and terms acceptance, and final submission in conversation",
+  "aws_actions": false,
+  "runtime_changes": false
+}

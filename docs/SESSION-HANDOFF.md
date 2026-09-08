@@ -187,3 +187,8 @@ Devpost readback: the project page is public (`published`), while the hackathon 
 ## Devpost final preflight — 2026-09-08
 
 Application now shows 4/5 steps, still DRAFT. Track Professional Agents and owner-supplied Builder alias arielsm saved. Final v4 video uploaded at https://youtu.be/9h4XXvpbt5k and saved in the application; still unlisted. Official rules require public video; automatic approval review rejected public visibility change without explicit owner approval. New devpost-media-v2 cover and four captioned images uploaded; earlier gallery remains. Public repo/MIT verified. Final rules/terms checkbox remains unchecked. Need owner approval to make video public and accept rules/terms for actual submission. Do not infer submission from published project-page status. See outputs/secops-devpost-final-preflight-20260908.json. No AWS actions or runtime changes.
+
+
+## Devpost submission completed — 2026-09-08
+
+Owner approved public video visibility and final rules/terms acceptance and submission. YouTube video https://youtu.be/9h4XXvpbt5k is now Public, verified after reload. Devpost submission 1175395 returned Submitted at 2026-09-08T14:04:04.772-04:00, independently confirmed via get_project. Public project: https://devpost.com/software/secops-triage. Prior pending-approval entries are historical and resolved. No AWS actions or runtime changes. See outputs/secops-devpost-submitted-20260908.json. Deadline reverified as September 14, 2026, 8pm Eastern.
