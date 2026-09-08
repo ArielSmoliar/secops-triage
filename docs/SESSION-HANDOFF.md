@@ -174,3 +174,11 @@ Whole-video decoding, source hashes, screenshot hashes, audio fit and representa
 Latest local video: `data/demo-video-20260908/final-v4/secops-triage-demo-2min.mp4`. The opening now explicitly explains the first email as an approved security-training exercise and the second as a suspicious follow-up whose different link was clicked and flagged malicious by synthetic intelligence. Intro and comparison graphics state this directly. One replacement intro narration completed; the other seven segments are unchanged. Offline ASR recovered the intended text.
 
 Scene04 is shortened from 17 to 11 seconds, leaving 0.5 seconds after its audio, then the next scene's 0.3-second voice lead. Those six seconds support the longer explanatory intro; total video remains 120 seconds. Source hashes, unchanged application, audio fit, full decoding and intro/comparison/transition frames were checked. All previous cuts and evidence remain preserved. No new investigation, AWS action, upload or submission. See `outputs/secops-demo-video-clarity-20260908.json`.
+
+## Devpost draft populated — September 8
+
+Owner requested populating existing submission 1175395 / project 1421584. SecOps Triage name, pitch, story, 11 technology tags, repo link, Individual/United States, testing instructions, architecture diagram, cover and four captioned demo images were saved. The entry remains DRAFT; final terms and Submit project were not selected. User requested open source; MIT license was added with README and architecture packaging. The local mirror is `devpost-submission.md`.
+
+Professional Agents selection remains blank: automatic approval review rejected the batch because that specific track had not been explicitly approved. Approval question is pending; unaffected fields were saved independently. AWS Builder ID and public video URL are also missing. No upload of the video to YouTube/Vimeo, new paid calls, campaign changes or AWS actions occurred. Original evidence and failures remain intact. Continue at the saved draft URL in `outputs/secops-devpost-draft-20260908.json`; final submission requires owner approval.
+
+Devpost readback: the project page is public (`published`), while the hackathon entry remains Draft with no submission timestamp. Public page: https://devpost.com/software/secops-triage. Story content matches after Markdown/plain-text normalization.

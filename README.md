@@ -16,15 +16,15 @@ Built with the **Strands Agents SDK**. The working demo uses synthetic replay re
 2. **Examine the evidence.** Keep source citations, authorization scope, intelligence matches and missing context visible. Similar messages do not inherit each other's approval; a click does not establish credential theft.
 3. **Review the handoff.** Read the recommendation, findings, open questions and draft case note. Host-only APIs can record a local close/escalate decision or an unresolved handoff. The upstream SIEM remains unchanged.
 
-The current interface is a CLI and Markdown report. A browser workspace, live source connectors and upstream response actions are not implemented. The cover image is a conceptual illustration.
+The current interfaces are a local browser workspace, CLI and Markdown report. Live source connectors and upstream response actions are not implemented. The cover image is a conceptual illustration.
 
 ## What judges can verify today
 
 | Evidence | What it establishes |
 |---|---|
-| [287 passing tests](outputs/secops-rename-validation.json) | Deterministic safety and scripted/fake-provider integration on the verified build. |
+| [310 passing tests and 14 browser checks](outputs/secops-workspace-validation-20260908.json) | Frozen-source verification of the local workspace, deterministic controls and scripted integration; zero test skips. |
 | [One historical live-model investigation](docs/SECOPS-COMPLETED-INVESTIGATION.md) | Real Strands/OpenAI execution over synthetic replay: nine evidence reads and an escalation recommendation. Two earlier stopped attempts remain preserved. |
-| [Nine draft cases](docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md) | Close, escalate and unresolved scenarios across three alert families. Owner case acceptance and semantic reviews remain pending. |
+| [Nine draft cases](docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md) | Close, escalate and unresolved scenarios across three alert families. AI semantic reviews are complete and retain nine failed scripted findings; human case acceptance and live evaluation remain pending. |
 | [Durable campaign accounting](docs/SECOPS-CAMPAIGN-ACCOUNTING.md) | Bound plans, runs, grants and results; failures and uncertain spend cannot silently retry. No real campaign is authorized. |
 
 A scripted run verifies orchestration, not model judgment. The historical live result is not a reliability claim for the current build. Analyst time savings and production accuracy have not been measured.
@@ -137,3 +137,9 @@ See [Phase 2 architecture and review](docs/PHASE2.md), [handoff](docs/HANDOFF.md
 ## AWS integration status
 
 Ohio (`us-east-2`) is the selected deployment region. A private EC2/EBS/SSM/CloudWatch deployment and scripted smoke were verified September 8; EC2 is now stopped and temporary paid egress removed. See [deployment and retention evidence](docs/SECOPS-AWS-DEPLOYMENT-20260908.md). The local analyst UI has not been deployed to AWS. See the [AWS integration procedure](docs/runbooks/secops-aws-integration-runbook.md). Local verification is not cloud execution evidence.
+
+## License and submission assets
+
+Project code is available under the [MIT License](LICENSE). Third-party dependencies retain their own licenses.
+
+[Architecture diagram](docs/assets/secops-triage-architecture.png) distinguishes local scripted execution from the separately verified AWS deployment. See the [submission draft](devpost-submission.md) for the project story and remaining publication fields.

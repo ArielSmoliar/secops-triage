@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-08",
+  "action": "Populate existing Devpost draft; no finalization",
+  "project_id": 1421584,
+  "submission_id": 1175395,
+  "draft_url": "https://devpost.com/submit-to/30317-agents-for-humans-hackathon/manage/submissions/1175395-secops-triage/project-overview",
+  "saved": [
+    "name",
+    "tagline",
+    "description",
+    "built_with",
+    "repository_link",
+    "Individual",
+    "United States",
+    "testing_instructions",
+    "architecture_diagram",
+    "cover_image",
+    "four_captioned_gallery_images"
+  ],
+  "pending": [
+    "track approval",
+    "AWS Builder ID",
+    "public video URL",
+    "owner final submission approval"
+  ],
+  "track_auto_review": "A batch was rejected because Professional Agents was not explicitly approved. Unaffected fields saved separately; track remains blank pending user response.",
+  "license": "MIT selected for owner open-source request",
+  "independent_review": "Story and documentation reviewed; tagline agency, automated operator attribution and stale README semantic-review status corrected.",
+  "runtime_code_changes": false,
+  "new_model_or_speech_calls": 0,
+  "aws_actions": false,
+  "final_submission": false,
+  "architecture_sha256": "2c3bc6f89f0cf1c47d2b0fcde10d2ce5398c755790f175a60a4276dc3f21031b",
+  "project_page_state": "published",
+  "hackathon_submission_timestamp": null,
+  "story_readback": "Content matches after Markdown/plain-text normalization"
+}
