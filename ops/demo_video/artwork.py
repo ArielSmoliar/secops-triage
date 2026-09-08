@@ -28,7 +28,7 @@ def main():
    drawtext(d,(65,64),'SECURITY OPERATIONS  /  PROFESSIONAL AGENTS',21,TEAL,True)
    drawtext(d,(60,155),'SecOps\nTriage',110,INK,True)
    drawtext(d,(65,430),'Evidence for the\nnext analyst decision.',43,MUTED)
-   for n,(a,b) in enumerate([('01  Gather context','Messages, clicks and business scope'),('02  Inspect sources','Four scoped Strands tools'),('03  See the distinction','Training approval has a specific scope'),('04  Preserve the next step','An evidence-backed analyst handoff')]):
+   for n,(a,b) in enumerate([('01  First email','An approved security-training exercise'),('02  Suspicious follow-up','Different link; clicked and flagged malicious'),('03  Check the approval','Training scope names only the first email'),('04  Agent contribution','Gather evidence for the analyst to inspect')]):
     y=72+n*161;box(d,(840,y,1480,y+136),a,b)
    drawtext(d,(65,674),'Recorded prototype • Synthetic evidence',25,TEAL)
   elif id=='07-architecture':
@@ -64,7 +64,7 @@ def main():
     box(d,(780,610,1496,750),'Analyst value','Inspect the sources in one evidence packet.')
    elif sid=='04-messages':
     drawtext(d,(40,67),'FIRST MESSAGE: APPROVED TRAINING',29,TEAL,True)
-    drawtext(d,(790,67),'FOLLOW-UP: DIFFERENT SCOPE',29,'#efca85',True)
+    drawtext(d,(790,67),'FOLLOW-UP: SUSPICIOUS LINK',29,'#efca85',True)
     photo(im,'message-training-detail',(40,120,700,590))
     photo(im,'message-followup-detail',(790,120,700,590))
     drawtext(d,(40,727),'The approval names the first message. It does not cover the follow-up.',31,INK,True)

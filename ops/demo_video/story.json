@@ -8,9 +8,9 @@
     {
       "id": "01-intro",
       "seconds": 15,
-      "heading": "Two similar emails. Different evidence.",
-      "subheading": "The analyst needs the evidence that separates them.",
-      "narration": "Two similar emails arrive. One is approved training. The follow-up was clicked. SecOps Triage gathers the evidence an analyst needs to tell them apart."
+      "heading": "Approved training. A suspicious follow-up.",
+      "subheading": "The second email has a different link that needs investigation.",
+      "narration": "The first email is an approved security-training exercise. A similar follow-up has a different link that was clicked and flagged malicious by synthetic intelligence. SecOps Triage gathers the evidence to investigate that suspicious second email."
     },
     {
       "id": "02-start",
@@ -29,8 +29,8 @@
     {
       "id": "04-messages",
       "seconds": 17,
-      "heading": "Approved training does not cover this follow-up.",
-      "subheading": "Same sender and subject  /  Different link, click and authorization scope",
+      "heading": "First: approved training. Second: suspicious follow-up.",
+      "subheading": "The follow-up link was clicked and flagged malicious by synthetic intelligence",
       "narration": "The first message has explicit training approval. The follow-up has a different link and a recorded click. The approval names only the first message. It does not cover the follow-up."
     },
     {

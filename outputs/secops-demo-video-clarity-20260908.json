@@ -1,0 +1,82 @@
+{
+  "revision": "Explain suspicious second email and remove scene04 delay",
+  "video": "data/demo-video-20260908/final-v4/secops-triage-demo-2min.mp4",
+  "sha256": "8739f932905af9ce6e65e27f4717ac9bbf3b6c23885312ed6c2af48acae8d64a",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "duration": "120.000000",
+        "nb_frames": "3600"
+      },
+      {
+        "codec_name": "aac",
+        "duration": "119.965333",
+        "nb_frames": "5633"
+      }
+    ],
+    "format": {
+      "duration": "120.021354",
+      "size": "8238566"
+    }
+  },
+  "full_decode_errors": 0,
+  "frozen_sources_match": true,
+  "source_sha256": {
+    "ops/demo_video/value-timing.json": "9f929d712adc6d5e5f9f5ef2bfef3ca303438812e40742658e6470224dbdaf95",
+    "ops/demo_video/caption_overrides.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "ops/demo_video/artwork.py": "78d83f82db80e35b451e5b449b9cedb4510e1bbb831c436a392a6807a87886c2",
+    "ops/demo_video/render.py": "b3565253be1f933837a37e92d658b8171cfaf58c350f0e96b96d7bf5e8a449eb",
+    "ops/demo_video/capture.cjs": "0bfa15965f11a87d2d02e2c9310dc144ad67e744c13b0a2e2fa08dbe6d48e96f",
+    "ops/demo_video/spotlight.cjs": "5b542c056f001af9f540d829a43209f80ecc25772bd77a296ba059c56a853313",
+    "ops/demo_video/story.json": "820c0721e567d539ca5827a6520ea620af5a68774edfec29742c7905ed9afda0",
+    "ops/demo_video/narrate.py": "86024a8a36f3795e4b14d529426be1d951e2e07cb2f3294df1b511f26796a58d"
+  },
+  "new_speech_requests": 1,
+  "new_speech_scene": "01-intro",
+  "reused_speech_segments": 7,
+  "automatic_paid_retries": 0,
+  "offline_asr": [
+    {
+      "start": 0.0,
+      "end": 3.84,
+      "text": " The first email is an approved security training exercise."
+    },
+    {
+      "start": 3.84,
+      "end": 7.96,
+      "text": " A similar follow-up has a different link that was clicked and flagged malicious by synthetic"
+    },
+    {
+      "start": 7.96,
+      "end": 8.96,
+      "text": " intelligence."
+    },
+    {
+      "start": 8.96,
+      "end": 13.200000000000001,
+      "text": " SecOps triage gathers the evidence to investigate that suspicious second email."
+    }
+  ],
+  "intro_audio_seconds": 13.8,
+  "intro_slot_seconds": 16,
+  "scene04_seconds_before": 17,
+  "scene04_seconds_after": 11,
+  "scene04_audio_seconds": 10.2,
+  "scene04_tail_seconds": 0.5,
+  "narration_gap_to_scene05_seconds": 0.8,
+  "scene05_start_seconds": 57,
+  "all_audio_fits": true,
+  "caption_free": true,
+  "application_unchanged": true,
+  "original_media_and_evidence_preserved": true,
+  "independent_review": "No blockers: final video and eight media-source hashes verified; intro/comparison/transition frames inspected; 120-second timing and designed 0.8-second narration gap confirmed. Not full listening or human acceptance.",
+  "human_acceptance": false,
+  "aws_actions": false,
+  "investigation_calls": 0,
+  "public_upload_or_submission": false
+}

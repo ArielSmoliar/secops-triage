@@ -2,7 +2,7 @@
   "scenes": [
     {
       "id": "01-intro",
-      "seconds": 10
+      "seconds": 16
     },
     {
       "id": "02-start",
@@ -14,7 +14,7 @@
     },
     {
       "id": "04-messages",
-      "seconds": 17
+      "seconds": 11
     },
     {
       "id": "05-evidence",
