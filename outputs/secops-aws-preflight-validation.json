@@ -73,7 +73,7 @@
   "cloudformation_lint": "1.56.0 passed",
   "test_log": "/private/tmp/secops-preflight-final-co79js1p/tests.log",
   "prior_sandbox_failure": "/private/tmp/secops-startup-20260908-qz6t3xdb",
-  "aws_work": "signed-in read-only account/network/AMI/pricing inspection only; no stack execution",
+  "aws_work": "signed-in inspection plus unexecuted CloudFormation review metadata; no deployed compute/storage/network resources",
   "paid_model_calls": 0,
   "paid_speech_calls": 0,
   "tests_passed": 295,
@@ -87,5 +87,22 @@
       "explicit NAT/EIP cleanup from first creation including host failure",
       "retained subnet collision/restart disclosure"
     ]
-  }
+  },
+  "implementation_commit": "b5bf97d3d73dae3668860e4d495a72321a719139",
+  "cloudformation_validation": {
+    "host": "passed; CAPABILITY_IAM",
+    "network": "passed",
+    "network_change_set": "review-b5bf97d",
+    "status": "CREATE_COMPLETE",
+    "execution_status": "AVAILABLE",
+    "changes": {
+      "Add": 6,
+      "Modify": 0,
+      "Remove": 0
+    },
+    "stack_status": "REVIEW_IN_PROGRESS",
+    "executed": false,
+    "host_change_set": "pending actual subnet ID after approved network creation"
+  },
+  "goal_restored": "Owner explicitly requested restoration September 8; no deployment or paid-call authority implied"
 }
