@@ -1,0 +1,798 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-08",
+  "review_kind": "unblinded AI source and raw-claim review, independently checked by AI",
+  "execution": "nine fresh local Strands SDK runs with scripted provider; no live model",
+  "technical_cases_reviewed": 9,
+  "semantic_evaluations": {
+    "fail": 9,
+    "omitted_requirements": 32
+  },
+  "human_acceptance": false,
+  "campaign_authority_created": false,
+  "historical_evidence_modified": false,
+  "cases": [
+    {
+      "case_id": "case-01",
+      "source_hash": "c1a931e47ac225a0216cf569a09c343eb863c37eb62ba92cb498f8c1b5d1355b",
+      "fixture_sha256": "fd51b93157c5505de1d9b23f3426137dee0bfd0f9dd51dce1f3e376a3573c896",
+      "rubric_sha256": "fc17ad6437178063ed3197985a57a23cb6bfac5a925662651ad1334a35e300f3",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "sign_in-trigger; sign_in-authorization",
+      "scope_and_limits": "Successful MFA and VPN address are scoped by exact event/entity/time authorization. VPN, approval and source authenticity remain imported assertions; no universal absence-of-compromise claim.",
+      "raw_finding": {
+        "event_id": "sign_in-trigger",
+        "evidence_id": "6bec1b19112796611c302a035ef2d7f2",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "vpn_access",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "scoped_approval",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "source_trust",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "c1a931e47ac225a0216cf569a09c343eb863c37eb62ba92cb498f8c1b5d1355b"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "c1a931e47ac225a0216cf569a09c343eb863c37eb62ba92cb498f8c1b5d1355b",
+        "review_hash": "ab74d7a509799268e8067c3bc2d7044714b474bdcf07738974b8a4165485b505",
+        "outcome": "fail",
+        "raw_model_recommendation": "close",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "vpn_access",
+          "scoped_approval",
+          "source_trust"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    },
+    {
+      "case_id": "case-02",
+      "source_hash": "94c8662ffa9fbce5f8adf8af5fb6182c93d951daea511d112b1da384fc43b1ca",
+      "fixture_sha256": "a9358b17166426fabb63022990a85506d32f6b49aa383e45630bf77e3fb58038",
+      "rubric_sha256": "6068f1aeed86af87aaad8e39dbfe3c6dfb1be26bd0c8bf49597487ade0cf05d7",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "sign_in-trigger; mailbox-forwarding",
+      "scope_and_limits": "Mailbox forwarding at 10:06 shares scoped entities and follows access, but is outside VPN approval. Sequence does not establish actor causality or exfiltration.",
+      "raw_finding": {
+        "event_id": "sign_in-trigger",
+        "evidence_id": "3ce3284770e704c9206241d875fe13a6",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "access_then_change",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "limited_scope",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "actor_unknown",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "94c8662ffa9fbce5f8adf8af5fb6182c93d951daea511d112b1da384fc43b1ca"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "94c8662ffa9fbce5f8adf8af5fb6182c93d951daea511d112b1da384fc43b1ca",
+        "review_hash": "0813b88ea1dd6165a3efdf56e7ec90518167b80c2a234468775415e9dce13561",
+        "outcome": "fail",
+        "raw_model_recommendation": "escalate",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "access_then_change",
+          "limited_scope",
+          "actor_unknown"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    },
+    {
+      "case_id": "case-03",
+      "source_hash": "c1aaa650dc0b5df711bbe271c5d236b170e508f370c651b89dccfb231cd9d36a",
+      "fixture_sha256": "afea8d22c55fb585e6b2d5858a03b2acc399286d924218c59fce3b78da7ab520",
+      "rubric_sha256": "0857ea638dff5f1e221bb2f5879ef738e32ee95c2a947010a000340a7c5a49de",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "sign_in-trigger; source-account_activity",
+      "scope_and_limits": "Account audit is unavailable. Empty unavailable results are not a clean audit; do not invent an event for the gap.",
+      "raw_finding": {
+        "event_id": "sign_in-trigger",
+        "evidence_id": "34c3d9f8da3a4bd2fb6f353594f0652e",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "access_seen",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "account_gap",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "c1aaa650dc0b5df711bbe271c5d236b170e508f370c651b89dccfb231cd9d36a"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "c1aaa650dc0b5df711bbe271c5d236b170e508f370c651b89dccfb231cd9d36a",
+        "review_hash": "c7981e5c86119bbd637927bda26ccb613f4a97f9dec6997af81ee23c80b7f642",
+        "outcome": "fail",
+        "raw_model_recommendation": "needs_review",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "access_seen",
+          "account_gap"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    },
+    {
+      "case_id": "case-04",
+      "source_hash": "9b267bda376d9b5fe007f6f07bcd51c9ed60da1df3b872497bef02b5d48e5dfe",
+      "fixture_sha256": "7ba8064ffb58b0cae7d09119ab282231ca82cac714a702b44324ffa9e3074560",
+      "rubric_sha256": "393a5befcee551bf0e10283acb36af9c66ac0c9662ea6e5d3b233bfc1faec8c5",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "message-training; message-followup; followup delivery/click; exact followup intelligence",
+      "scope_and_limits": "Two distinct messages and URLs. Training approval covers only the first; delivery/click joins and current exact intelligence apply to the second. Expired domain-only assessment is not contradictory exact-URL evidence. A click does not establish credential submission; provider truth and follow-on identity activity remain unproven.",
+      "raw_finding": {
+        "event_id": "message-training",
+        "evidence_id": "cc80f83a1a6f8e9ce60a502670549e34",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "distinct_messages",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "delivered_followup",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "clicked_followup",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "authorization_limited",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "stale_domain",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "exact_followup",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "credential_theft",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "provider_accuracy",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "9b267bda376d9b5fe007f6f07bcd51c9ed60da1df3b872497bef02b5d48e5dfe"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "9b267bda376d9b5fe007f6f07bcd51c9ed60da1df3b872497bef02b5d48e5dfe",
+        "review_hash": "00a5b2f326030915f4eedf48a360e39cab151946d9922408594461ac48c45c7a",
+        "outcome": "fail",
+        "raw_model_recommendation": "escalate",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "distinct_messages",
+          "delivered_followup",
+          "clicked_followup",
+          "authorization_limited",
+          "stale_domain",
+          "exact_followup",
+          "credential_theft",
+          "provider_accuracy"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 9
+    },
+    {
+      "case_id": "case-05",
+      "source_hash": "917902d4286648609d1c92b4353a108ab463bd7f4fdf543c0e1f003bc279da95",
+      "fixture_sha256": "431df549d7b3796ab15db036797acaec5d0af4397c8a6a2f49c1a70781280bcc",
+      "rubric_sha256": "b602d16e6db70d02e66774b5edee9aa2940022bfb7e6c93de4bc42247d0bf414",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "phishing-trigger; delivery; simulation-click; scoped authorization",
+      "scope_and_limits": "Explicit delivery/click joins and authorization cover all three event IDs. Approval precedes activity even though its source record is later. Email authentication is not proof of safety; approval does not extend to future messages.",
+      "raw_finding": {
+        "event_id": "phishing-trigger",
+        "evidence_id": "eb74157657c5699df4aed53a4117797b",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "simulation_delivery",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "scoped_click",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "credential_submission",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "917902d4286648609d1c92b4353a108ab463bd7f4fdf543c0e1f003bc279da95"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "917902d4286648609d1c92b4353a108ab463bd7f4fdf543c0e1f003bc279da95",
+        "review_hash": "4295d8af01c4fbbd640904a2dc2cf03c1aea29b5504558fe121f7f0000db8700",
+        "outcome": "fail",
+        "raw_model_recommendation": "close",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "simulation_delivery",
+          "scoped_click",
+          "credential_submission"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 9
+    },
+    {
+      "case_id": "case-06",
+      "source_hash": "6f02f794ee90cc4847e6da95b3d96ccde1afcab3915d2ca80e2f939e36283c00",
+      "fixture_sha256": "9049295c2c4057117655e97b7818073bdfa133b2a297fbee52dcc1deb2cc8efb",
+      "rubric_sha256": "1355259ce3e78ae3267a5283a37bca421a9e54629299108b6edadd8d488cf982",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "phishing-trigger; document delivery; source-interactions; document-url-assessment",
+      "scope_and_limits": "Document delivery and linked click are present, interactions are truncated and the exact URL verdict is unknown. The inherited simulation-click identifier proves no simulation approval. Unknown is not benign; partial is not complete.",
+      "raw_finding": {
+        "event_id": "phishing-trigger",
+        "evidence_id": "375fb6a0f698e2b927aa13044cef50b7",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "delivered_document",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "unknown_verdict",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "interaction_gap",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "6f02f794ee90cc4847e6da95b3d96ccde1afcab3915d2ca80e2f939e36283c00"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "6f02f794ee90cc4847e6da95b3d96ccde1afcab3915d2ca80e2f939e36283c00",
+        "review_hash": "30a57e4ebcc502509116e6c840e1ebdd4783368b14bf0a1bf215b52f20aee91f",
+        "outcome": "fail",
+        "raw_model_recommendation": "needs_review",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "delivered_document",
+          "unknown_verdict",
+          "interaction_gap"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 9
+    },
+    {
+      "case_id": "case-07",
+      "source_hash": "7dbda2912f3a8f2bf480a46275340fd1cb4f7a98f1b47d034619907a6065e004",
+      "fixture_sha256": "3aa51ed5cc8a80677bca8634f2dead69e9ba36a7c2c0edcdbddacd795a1fb42b",
+      "rubric_sha256": "adbbd45bbb377e464242caa55c48ce6bd7f5a4e1bb929fa468953790c0137d0d",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "endpoint-trigger; endpoint connection; inventory upload; scoped authorization",
+      "scope_and_limits": "Inventory process and network/upload joins are explicitly authorized. Approval precedes activity although its record is later. Scope does not authorize all host activity or make PowerShell inherently benign.",
+      "raw_finding": {
+        "event_id": "endpoint-trigger",
+        "evidence_id": "231080d56bce5f14cd1ed8c6fad880a1",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "inventory_activity",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "full_scope",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "authorization_trust",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "7dbda2912f3a8f2bf480a46275340fd1cb4f7a98f1b47d034619907a6065e004"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "7dbda2912f3a8f2bf480a46275340fd1cb4f7a98f1b47d034619907a6065e004",
+        "review_hash": "92cb22e52b9e1e1c03077ccb97555e5927fd8a283c767b49d905395296c77fd6",
+        "outcome": "fail",
+        "raw_model_recommendation": "close",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "inventory_activity",
+          "full_scope",
+          "authorization_trust"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    },
+    {
+      "case_id": "case-08",
+      "source_hash": "526604b31336eaa4c5bbe7162bf9436518e8ad2de9e0c3af40b974b8107f6949",
+      "fixture_sha256": "eb4b9c4ab645aa36ff23660b115826198a0fd7e65040016d06c677def376b631",
+      "rubric_sha256": "3e3bc777978e37e2203a2fdddc1030c17ca35646944c0fafd964a3d4e7fc51a8",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "endpoint-trigger; second-process; second-connection; second-process-hash",
+      "scope_and_limits": "Second process has a distinct hash and explicit network join. Current exact hash intelligence applies to that process; inventory authorization excludes it. No impact/exfiltration conclusion or transfer of verdict between hashes.",
+      "raw_finding": {
+        "event_id": "endpoint-trigger",
+        "evidence_id": "5960a15b9e95bdae4f6309a18909fc8c",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "two_processes",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "second_network",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "exact_second_hash",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "approval_limited",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "impact_unknown",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "526604b31336eaa4c5bbe7162bf9436518e8ad2de9e0c3af40b974b8107f6949"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "526604b31336eaa4c5bbe7162bf9436518e8ad2de9e0c3af40b974b8107f6949",
+        "review_hash": "27868ae39ff99e54af0658e7d67505a7ebee28b8b02e83b1c31ebb43180aa71e",
+        "outcome": "fail",
+        "raw_model_recommendation": "escalate",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "two_processes",
+          "second_network",
+          "exact_second_hash",
+          "approval_limited",
+          "impact_unknown"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    },
+    {
+      "case_id": "case-09",
+      "source_hash": "40c8c1f933da01284b40250d1d8f0a8ed22f3696aaf629b84bde05279f8c8074",
+      "fixture_sha256": "084a9573b426a3ad9000bb9e2cc07033947af4d83f60a237e2dd748c19d0ffb2",
+      "rubric_sha256": "197b7c114b8af503922736beaccb864bfc3bdd14647e7fe9eb1cdff1d36a8e17",
+      "technical_disposition": "no blocking fixture issue found",
+      "source_reference_summary": "endpoint-trigger; revoked authorization; source-network",
+      "scope_and_limits": "Process is observed and approval is revoked without a specific revocation time. Network source is unavailable. Cannot infer revocation preceded execution or cite a stored but unretrieved connection as retrieved evidence.",
+      "raw_finding": {
+        "event_id": "endpoint-trigger",
+        "evidence_id": "93ef8031fe1cc628c55cd974e9869c11",
+        "summary": "Scripted fixture observed this source record."
+      },
+      "review": {
+        "all_material_claims_split": true,
+        "findings": [
+          {
+            "claims": [
+              {
+                "end": 45,
+                "rationale": "The cited trigger is present in returned evidence. This supports only observing this source record, not a security conclusion or source truth.",
+                "start": 0,
+                "verdict": "supported"
+              }
+            ],
+            "index": 0
+          }
+        ],
+        "requirements": [
+          {
+            "finding_indices": [],
+            "id": "process_seen",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          },
+          {
+            "finding_indices": [],
+            "id": "network_gap",
+            "rationale": "The sole generic observation does not express this required fact or uncertainty; correct policy output cannot supply missing provider analysis.",
+            "status": "omitted"
+          }
+        ],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "source_hash": "40c8c1f933da01284b40250d1d8f0a8ed22f3696aaf629b84bde05279f8c8074"
+      },
+      "score": {
+        "schema_version": 1,
+        "source_hash": "40c8c1f933da01284b40250d1d8f0a8ed22f3696aaf629b84bde05279f8c8074",
+        "review_hash": "650fb63eaf48b1a597361a001b5602d473cbd4d02337e08633bb63295d94505b",
+        "outcome": "fail",
+        "raw_model_recommendation": "needs_review",
+        "raw_model_matches_expected": true,
+        "deterministic_matches_expected": true,
+        "final_packet_matches_expected": true,
+        "reconciliation_disagreement": false,
+        "claim_support": {
+          "supported": 1,
+          "unsupported": 0,
+          "unverifiable": 0,
+          "unreviewed": 0
+        },
+        "omitted_requirements": [
+          "process_seen",
+          "network_gap"
+        ],
+        "unreviewed_requirements": [],
+        "reviewer": "Codex AI technical review, independently checked by AI reviewer; unblinded",
+        "reviewer_kind": "ai",
+        "execution": "Strands SDK with scripted provider (no live model)",
+        "case_status": "draft_teaching_case",
+        "campaign_acceptance": false,
+        "limits": "Reviewer assertions, not automated semantic entailment; draft case and offline runs do not satisfy live or analyst acceptance."
+      },
+      "evidence_reads": 8
+    }
+  ]
+}

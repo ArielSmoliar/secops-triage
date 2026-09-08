@@ -1,5 +1,7 @@
 # SecOps Triage
 
+Try the [local analyst workspace](docs/SECOPS-ANALYST-WORKSPACE.md): select a synthetic incident, watch real scripted Strands tool calls, inspect evidence and save a local handoff. No paid calls. [Technical review](docs/SECOPS-TECHNICAL-REVIEW-20260908.md) separates orchestration success from the scripted findings' semantic limitations.
+
 ![SecOps Triage — incident context, cited evidence and open questions assembled for human review](docs/assets/secops-triage-hero-v2.png)
 
 **From SIEM incident to analyst-ready handoff.**
@@ -134,4 +136,4 @@ See [Phase 2 architecture and review](docs/PHASE2.md), [handoff](docs/HANDOFF.md
 
 ## AWS integration status
 
-Ohio (`us-east-2`) is the selected deployment region. A private EC2/EBS/SSM/CloudWatch package and scripted smoke helper are prepared; AWS deployment and service verification remain pending. See the [AWS integration procedure](docs/runbooks/secops-aws-integration-runbook.md). Local verification is not cloud execution evidence.
+Ohio (`us-east-2`) is the selected deployment region. A private EC2/EBS/SSM/CloudWatch deployment and scripted smoke were verified September 8; EC2 is now stopped and temporary paid egress removed. See [deployment and retention evidence](docs/SECOPS-AWS-DEPLOYMENT-20260908.md). The local analyst UI has not been deployed to AWS. See the [AWS integration procedure](docs/runbooks/secops-aws-integration-runbook.md). Local verification is not cloud execution evidence.

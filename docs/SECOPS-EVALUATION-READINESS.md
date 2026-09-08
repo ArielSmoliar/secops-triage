@@ -29,7 +29,7 @@ Citation validity is checked by the existing packet validator. Semantic support 
 
 Blank reviews remain `pending_review`; unsupported/unverifiable claims, omissions or outcome mismatch fail. A run without model assessment is `not_evaluated`. A complete review can pass this local evaluation, but `campaign_acceptance` remains false: this draft case, scripted outputs and AI judgments do not satisfy live-run, human domain-review or observed-usefulness gates. The offline negative tests use explicitly labeled adversarial outputs; they demonstrate score behavior, not automatic hallucination detection.
 
-Stopped executions have no final packet to score and are rejected by this scorer. Their existing safe live-result/session/spending records remain the evidence of failure. The planning-only campaign ledger in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md enumerates proposed slots. Durable runtime binding and failed-attempt accounting remain to be implemented; completed runs must never be counted as all attempts.
+Stopped executions have no final packet to score and are rejected by this scorer. Their existing safe live-result/session/spending records remain the evidence of failure. The planning-only campaign ledger in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md enumerates proposed slots. Durable runtime binding and failed-attempt accounting are now implemented in campaign_store.py; completed runs must never be counted as all attempts.
 
 ## Reproduce without paid calls
 
@@ -55,6 +55,8 @@ Named live preparation now binds proposal digest and incident export to the stor
 
 ## Remaining gates
 
-Ariel's actual walkthrough and case adjudication are open. Nine distinct accepted cases, a fixed live campaign ledger, fresh spending authorization, live model claim reviews, and repeated hero success are still required for M2. UI work should address observed friction after M1.5. No claim of real-source enrichment, productivity gain or general SOC accuracy follows from these offline checks.
+Ariel's actual walkthrough and case adjudication are open. Nine distinct accepted cases, a fixed live campaign ledger, fresh spending authorization, live model claim reviews, and repeated hero success are still required for M2. The owner waived pre-demo analyst feedback; local scripted UI work proceeds before human validation. Paid campaign authority checks remain enforced. No claim of real-source enrichment, productivity gain or general SOC accuracy follows from these offline checks.
 
 Verification: 249 full-suite tests passed in 64.524 seconds on unchanged source. The independently reviewed 21 evaluation/case tests cover supported/unsupported/pending results, wrong raw-model recommendations, omissions, tampering, case isolation and conflict scope. The final nine-read scripted demo remains pending semantic review. See outputs/secops-evaluation-validation.json for source hashes, packet identity, the superseded run, probe and runbook checks.
+
+September 8: all nine fresh scripted raw findings have now received attributed AI review and independent AI verification: nine semantic failures for 32 omissions. See [technical review and gate reconciliation](SECOPS-TECHNICAL-REVIEW-20260908.md). This does not retroactively change earlier pending review artifacts.

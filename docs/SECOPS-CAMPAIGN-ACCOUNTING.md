@@ -1,6 +1,6 @@
 # Durable host-only campaign accounting
 
-`secops_triage.campaign_store.CampaignStore` adds a host API over one designated private `Store`. The planning CLI still only writes a draft; it neither issues grants nor dispatches. No campaign has been authorized or executed. Historical grants remain closed, actual analyst feedback and case acceptance remain pending, and M4/UI/cloud/publication gates remain unchanged.
+`secops_triage.campaign_store.CampaignStore` adds a host API over one designated private `Store`. The planning CLI still only writes a draft; it neither issues grants nor dispatches. No campaign has been authorized or executed. Historical grants remain closed, actual analyst feedback and case acceptance remain pending, and paid M4/publication authority remains separate. AWS integration was subsequently verified and the local scripted UI implemented; neither grants campaign authority.
 
 ## Identity and lifecycle
 
@@ -27,3 +27,5 @@ Recovery and immutable result retrieval do not require the current engine to equ
 This is a local single-host, single-designated-store ledger. It does not coordinate copied databases or independently created stores, resist an owner modifying SQLite directly, or provide distributed scheduling. Protect the designated store and private capabilities; database copies do not create additional spending authority. Reference strings are host assertions. Pricing still uses the existing freshness check and requires actual refresh before an eventual approved campaign. There is no new campaign CLI, UI, cloud service or aggregate automatic grant issuer.
 
 Offline tests use temporary synthetic stores, simulated authority and fake OpenAI responses through the real SDK. They cover plan/build/case mismatch, duplicate consumption, wrong/expired/closed grants, pending gates, worker fencing, host/process interruption, unknown spend, concurrent reservation/recovery, immutable results and evaluation stops. These tests are not paid successes, real analyst sessions or live reliability evidence. Final verification is recorded in `outputs/secops-campaign-accounting-validation.json`.
+
+September 8 demo-first reconciliation: technical review and the scripted UI proceed without pre-demo analyst feedback at owner direction. None of the five record_authority references is fabricated or bypassed. Human acceptance remains pending. See [the explicit gate mapping](SECOPS-TECHNICAL-REVIEW-20260908.md#demo-first-gate-reconciliation).

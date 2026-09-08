@@ -1,5 +1,7 @@
 # SecOps demo completion runbook
 
+**September 8 current order:** AWS service verification is complete and the host is stopped. The owner selected technical case/claim review and the local scripted analyst UI for completion today. Pre-demo analyst feedback is waived; actual human validation follows demo success. Older M1.5-before-M3 sequencing below is superseded. Paid campaign authority still requires genuine enforced gate evidence and separate spending approval. See [technical review and gate mapping](../SECOPS-TECHNICAL-REVIEW-20260908.md) and [workspace operation](../SECOPS-ANALYST-WORKSPACE.md).
+
 ## Metadata
 
 - **Status:** Draft — generated and reviewed; future milestones are not executed or newly authorized by this document.
@@ -24,9 +26,9 @@ Independent AI plan/evidence reviews and an Impeccable product-flow consultation
 |---|---|---|---|---|
 | M0 — Foundation | Deterministic backend and actual Strands integration | 174 tests passed; scripted replay works; first live failure preserved | Complete at baseline | Done |
 | M1 — Complete a live investigation | Complete: see docs/SECOPS-COMPLETED-INVESTIGATION.md | All four tools, valid cited packet, escalation, settled usage and unchanged SIEM verified | Completed after explicitly approved live attempt | Done Sep 7 |
-| M1.5 — Observe analyst usefulness | One recorded formative session with a decision and case note | Decisive citations found, competing explanation addressed, missing context and corrections recorded; no critical unsafe inference | M1; open, no session yet | Before paid M2 and full M3 build |
+| M1.5 — Observe analyst usefulness | One recorded formative session with a decision and case note | Decisive citations found, competing explanation addressed, missing context and corrections recorded; no critical unsafe inference | M1; open, no session yet | After successful demo; still enforced for paid campaign unless separately resolved |
 | M2 — Cover the three daily workflows | Nine distinct cases: close, escalate and incomplete for each family | Nine scored live runs; all material citations supported; no unsafe close; expected incomplete cases stay incomplete; hero case passes three consecutive runs | M1.5; source-quality, harness and scoring gates; separately budgeted campaign | Sep 9–10; 6–10 hours |
-| M3 — Build the analyst workspace | Existing-incident selector, investigation progress, evidence, gaps, case note and local decision | Analyst completes the workflow without terminal use; evidence links and overrides work; duplicate actions are safe | M1.5 observed friction; M2 cases supply acceptance tests | Sep 10–11; 8–12 hours |
+| M3 — Build the analyst workspace | Existing-incident selector, investigation progress, evidence, gaps, case note and local decision | Analyst completes the workflow without terminal use; evidence links and overrides work; duplicate actions are safe | Owner-selected demo-first build; technical case review and scripted checks | Sep 10–11; 8–12 hours |
 | M4 — Rehearse the complete demo | End-to-end run through the UI with a clear failure path | Three consecutive hero rehearsals; one close and one incomplete walkthrough; no hidden manual data repair | M2 + M3 | Sep 12; 4–6 hours |
 | M5 — Package the demo | Reproducible checkout, architecture diagram, setup guide and video | Fresh-checkout run succeeds; video is at most five minutes; every product claim is supported | M4 | Sep 13; 4–6 hours |
 
@@ -91,12 +93,12 @@ Demonstrate a Tier 1 analyst receiving an incident already created by a SIEM, ob
 
 ## Procedure
 
-### Active prerequisite: analyst usefulness and evaluation readiness
+### Historical prerequisite sequence: superseded for local demo; retained for paid gate context
 
 A. **Action (reversible):** Conduct the existing phishing walkthrough and record the participant's actual decision, case note, decisive citations, missing context, corrections and next action. Keep the observations blank until the participant responds; do not treat instructions to continue as domain approval.
    - **Expected result:** Direct evidence of which context the analyst still reconstructs and which parts of the handoff help.
    - **Verify:** The participant can find supporting and conflicting source records and give a bounded next action. Record critical errors even if the overall disposition matches. One owner session is formative, not independent SOC validation or proof of time savings.
-   - **If verification fails:** Resolve the observed flow/source gap and repeat a scoped session before paid breadth evaluation or a full UI build.
+   - **If verification fails:** Resolve the observed flow/source gap and repeat a scoped session before paid breadth evaluation under the unchanged campaign contract. Local scripted UI work is already authorized.
    - **Approval required:** None for preparation; participation and observations must be real.
 
 B. **Action (reversible):** Structured authorization enforcement is now implemented and reviewed in docs/SECOPS-AUTHORIZATION-SCOPE.md; external source authenticity remains an importer assumption. Typed intelligence observables/provenance and matching checks are implemented in docs/SECOPS-INTELLIGENCE-EVIDENCE.md. The draft two-message case and host-only rubric are implemented and AI-reviewed in docs/SECOPS-EVALUATION-READINESS.md; owner domain acceptance remains open. Validate these contracts against the remaining deeper scenarios and freeze reviewed case expectations. Include inspectable intelligence match value/type, provenance, freshness and rationale, and machine-readable authorization validity/scope. Test stale, wrong-target and revoked/out-of-scope authorization cases. Preserve unavailable evidence explicitly.
@@ -111,7 +113,7 @@ C. **Action (reversible):** Named-fixture preparation and a bound reviewer-media
    - **If verification fails:** Keep paid evaluation pending; repair the evaluator or contract first.
    - **Approval required:** None for offline preparation. No grant is created here.
 
-D. **Action (read-only planning):** A planning-only ledger now enumerates proposed slots in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md. Complete durable slot/run/grant/result binding before campaign dispatch; reverify every proposed run by fixture digest, purpose, execution build and bounds. M2 is nine cases plus two additional hero runs; M4's three finished-UI hero runs are separate executions. State whether alternate M4 walkthroughs are fresh inference or saved playback. Do not double-count an M2 run as a finished-UI rehearsal.
+D. **Action (read-only planning):** A planning-only ledger now enumerates proposed slots in docs/SECOPS-CASE-MATRIX-AND-CAMPAIGN.md. Durable slot/run/grant/result binding is implemented; verify it before campaign dispatch; reverify every proposed run by fixture digest, purpose, execution build and bounds. M2 is nine cases plus two additional hero runs; M4's three finished-UI hero runs are separate executions. State whether alternate M4 walkthroughs are fresh inference or saved playback. Do not double-count an M2 run as a finished-UI rehearsal.
    - **Expected result:** One concrete campaign ledger distinguishes acceptance, diagnosis and rehearsal. Historical grants remain closed.
    - **Verify:** Every proposed live execution has explicit unconsumed authority; every failure remains in results. No slot or retry exists outside the approved ledger.
    - **If verification fails:** Revise the proposal before requesting or using a spending grant.
@@ -237,3 +239,5 @@ Historical M0 baseline: 174 tests. Current test counts must be captured from the
 - **Deviations:** No deployment commands are supplied because the platform is unselected. No live execution command is invented; a reproducible operator harness is an M1 deliverable. Source tests are cited from the prior verified result, not claimed rerun for this documentation task.
 - **Follow-up:** Complete M1.5 observed usefulness, source-quality and offline scoring/harness gates before a paid M2 campaign. Use the reviewed analyst-flow specification to address observed friction.
 - **Next verification:** At each milestone start and whenever source, model, fixture, budget, dependency or release target changes; recheck hackathon requirements before publication.
+
+September 8 implementation checkpoint: technical review and compact local workspace are documented in the linked records above. Automated workflow checks are not M1.5 human validation, live M2 acceptance or paid M4 rehearsals. All historical grants remain closed.

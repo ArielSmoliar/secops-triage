@@ -50,3 +50,7 @@ The owner requested a landing page for the SecOps Triage capability and explicit
 ## Demo workflow reference
 
 Use the source-based Splunk/Datadog alignment in docs/SECOPS-WORKFLOW-ALIGNMENT.md: existing incident → context collection → exact evidence → recommendation and open questions → explicit local decision or unresolved handoff. Follow its case-04 facilitator sequence for the hero. Analyst feedback is waived by the owner; the comparison is not human validation.
+
+## September 8 workspace implementation
+
+The compact local scripted analyst workspace is implemented with Impeccable-informed hierarchy, separate message comparison, exact evidence links, real SDK trace, honest uncertainty/failure labels and durable local handoff/decision controls. See docs/SECOPS-ANALYST-WORKSPACE.md and DESIGN.md. This supersedes earlier UI-pending statements. Human validation remains deferred until demo success; no analyst usefulness, live-model reliability or productivity claim is established. Paid campaign authority is unchanged.
