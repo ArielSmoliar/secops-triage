@@ -1,0 +1,42 @@
+{
+  "source": {
+    "commit": "49ddeb82be1ebbe0fbcaf2318f9d5095f6e7d349",
+    "files": [
+      "docs/SESSION-HANDOFF.md",
+      "docs/runbooks/secops-aws-integration-runbook.md",
+      "infra/aws/private-host.json",
+      "ops/aws_smoke.py",
+      "tests/test_aws_smoke.py",
+      "secops_triage/agent_runner.py",
+      "secops_triage/store.py",
+      "secops_triage/campaign_store.py",
+      "docs/SECOPS-CAMPAIGN-ACCOUNTING.md",
+      "outputs/secops-aws-preparation-validation.json"
+    ],
+    "input_sha256": "5f91d2ca93ca01a824851f384ee280374dc478dc1241120c8703bc612eec2508"
+  },
+  "reviewer": "Claude Code 2.0.59; primary review model claude-sonnet-4-5-20250929",
+  "mode": "single read-only review of 10 allowlisted public files; tools, hooks and MCP disabled; no project settings; no AWS access",
+  "outcome": "success",
+  "model_usage_reported_by_cli": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 735,
+      "outputTokens": 167,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.00157,
+      "contextWindow": 200000
+    },
+    "claude-sonnet-4-5-20250929": {
+      "inputTokens": 868,
+      "outputTokens": 3376,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 36780,
+      "webSearchRequests": 0,
+      "costUSD": 0.19116899999999998,
+      "contextWindow": 200000
+    }
+  },
+  "limitations": "No reviewer tool use, live documentation verification or tests. Findings independently adjudicated against supplied code and current official AWS docs. CLI cost fields are reported estimates, not verified billing. This owner-requested external review is separate from closed project inference grants."
+}

@@ -96,3 +96,5 @@ Use the pinned .venv and uv.lock; do not silently update dependencies. Real SDK 
 The owner requested alignment with the researched Splunk/Datadog workflows. docs/SECOPS-WORKFLOW-ALIGNMENT.md maps the five-step flow to implemented capabilities and gaps, and supplies the correct case-04 facilitator sequence. PRODUCT.md and the flow review link it. This is documentation-only alignment; no video playback review, analyst session, UI completion or case acceptance is claimed.
 
 AWS offline verification: 295 tests passed in 65.953 seconds with source unchanged; cfn-lint 1.56.0 passed, final scripted case-04 smoke completed nine reads, independent review findings resolved. Evidence: outputs/secops-aws-preparation-validation.json. This is not AWS deployment evidence.
+
+External Claude engineering review completed at owner request; read docs/SECOPS-CLAUDE-ENG-REVIEW.md. Sonnet 4.5 reviewed ten public files without tools/AWS access. Useful preflight clarifications applied; invented SSM command, stale Logs quota and production P0 labels rejected. Source unchanged, 295-test evidence retained. Pause and AWS access/approval requirements unchanged.

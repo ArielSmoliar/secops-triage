@@ -1,0 +1,29 @@
+# Claude engineering-plan review and adjudication
+
+Reviewed 2026-09-07 at commit 49ddeb82be1ebbe0fbcaf2318f9d5095f6e7d349. Owner explicitly requested Claude. Claude Code used Sonnet 4.5 for the review (CLI also reports a small Haiku auxiliary invocation). Ten public tracked files were supplied with line numbers, including plan, template, smoke/tests and persistence/runner code. Tools, hooks and MCP were disabled. No secrets, private stores or AWS access were supplied. Full original output and metadata are in outputs/secops-claude-eng-review-raw.md and outputs/secops-claude-eng-review-metadata.json.
+
+## Verdict
+
+Claude called the design technically sound for a controlled demo and recommended conditional demo deployment. Its three alleged P0 items concern production operations, not observed critical defects in this explicitly undeployed demo. We do not adopt those severity labels or treat the response as production certification. The useful findings strengthen the existing deployment preflight; AWS access, actual target/pricing and explicit resource approval remain required. No code, IAM or storage changes are justified by this review alone.
+
+## Finding dispositions
+
+| Claude item | Assessment | Disposition |
+|---|---|---|
+| P0-1 retained EBS costs | Real ongoing cost, already explicit and intentional to preserve evidence. Neither a confirmed critical incident nor a reason to auto-delete evidence. Its quoted Ohio rate was not independently verified. | Require exact retained resource IDs, cost estimate, retention owner and review date in the approval proposal. No generic cleanup utility or guessed alarm added. |
+| P0-2 missing cost monitoring | Deployment must have current prices, approved window and operational cost monitoring. Already an unresolved pre-provisioning gate. Budgets/alarms cannot guarantee a hard cap. | Select monitoring after account access and approval; retain standard CPU credits and explicit final stop verification. No notification recipient or budget invented. |
+| P0-3 session logging | Privacy configuration needs inspection, but the review changes this into a production compliance requirement and invents a command. | Reject nonexistent ssm describe-session-manager-logs. Inspect the actual Session Manager preferences document and applicable session policy; do not enter secrets in a shell to test logging. |
+| P1-1 NVMe device mapping | Valid useful clarification; original plan already requires volume-ID matching before formatting. | Add read-only lsblk serial mapping guidance and primary reference. Never infer data device from nvme index or /dev/sdf alone. |
+| P1-2 subnet connectivity | Valid unresolved target-specific gate; session creation after provisioning is verification, not pre-deployment proof. S3 alone does not provide arbitrary package access. | Explicitly inspect routes, DNS, endpoint private DNS/security groups and package egress before creation, then verify SSM after provisioning. Do not add NAT/endpoints without cost approval. |
+| P2-1 AMI guidance | Requires target access and immutable selected AMI. The proposed moving latest-name query is insufficient as a final release identity. | Keep Amazon owner/architecture/SSM/Python/package checks and exact AMI recording. |
+| P2-2 log allowlist | Event dictionary already explicitly selects fields; no generic publisher currently exists. A named constant alone does not improve safety. | Future publisher must independently validate schema/values and reject extra fields before external transmission. Current manual reviewed publication remains gated. |
+| P2-3 token on recovery | Host recovery deliberately operates across runs under filesystem/lifecycle authority; a per-run token would not authenticate whole-store recovery. Local filesystem ownership is the documented trust boundary. | No token retrofit or code change. Keep recovery out of agent/public APIs; preserve lock coordination. |
+| P2-4 CPU credits | Standard mode intentionally avoids surplus credit charges. Review conflates historical live duration with current scripted smoke. | Keep standard; measure actual host CPU/performance. Do not enable unlimited billing to address speculative throttling. |
+
+Other qualifications: Claude's five-requests/sec/log-stream limit is obsolete: AWS explicitly removed it and now applies a per-account quota. Its claimed account bandwidth ceiling is not verified and must not be used. See [PutLogEvents](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html). Restore-based grant resurrection is a real known restriction; snapshots remain historical inspection copies, not active authorities. Claude's favorable source-injection statement overreaches: replay.py was not supplied, and the product accepts imported snapshots; frozen fixtures alone do not prove injection resistance. Its approval of locking is a code review, not proof of actual EC2 crash durability. No live AWS tests were performed.
+
+## Applied plan clarifications
+
+The AWS runbook now adds device serial mapping, concrete Session Manager preferences inspection, detailed network preflight and retention/monitoring ownership. Sources: [AWS NVMe mapping](https://docs.aws.amazon.com/ebs/latest/userguide/identify-nvme-ebs-device.html), [Session Manager preferences](https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-create-preferences-cli.html). Command syntax was checked with local AWS CLI help; commands requiring account access were not executed.
+
+Validation: documentation-only changes; git diff whitespace and runbook structural validation performed. Existing 295-test frozen implementation evidence is unchanged. Work remains paused pending owner AWS access; the saved app goal was not recreated, and no cloud resources or project inference grants were used.
