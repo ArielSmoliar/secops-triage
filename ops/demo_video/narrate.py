@@ -34,6 +34,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--story',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--scene',choices=['08-close'],help='Generate only the owner-requested closing revision')
     args=p.parse_args()
     story=json.loads(args.story.read_text())
     require(story['model']=='gpt-4o-mini-tts-2025-12-15' and story['voice']=='cedar','unexpected speech configuration')
@@ -43,8 +44,9 @@ def main():
     require(all(x['id'].replace('-','').isalnum() and len(x['narration'])<1000 for x in scenes),'bounded text and safe scene IDs required')
     require(sum(len(x['narration']) for x in scenes)<5000,'batch text limit')
     require(len(story['voice_instructions'])<1000,'instructions limit')
+    if args.scene:scenes=[x for x in scenes if x['id']==args.scene]
     args.output.mkdir(mode=0o700,parents=True,exist_ok=False)
-    save(args.output/'request-manifest.json',{'authorization':'Owner explicitly requested creating a two-minute demo video with OpenAI voice; narration only, no investigation inference or AWS authority.', 'model':story['model'],'voice':story['voice'],'max_requests':8,'automatic_retries':0,'story_sha256':hashlib.sha256(args.story.read_bytes()).hexdigest(),'rates_verified_20260908':{'text_usd_per_million_tokens':0.6,'audio_usd_per_million_tokens':12,'source':'https://developers.openai.com/api/docs/models/gpt-4o-mini-tts'},'billing':'Binary speech responses do not provide token usage; final billing is not asserted.'})
+    save(args.output/'request-manifest.json',{'authorization':'Owner explicitly requested creating a two-minute demo video with OpenAI voice; narration only, no investigation inference or AWS authority.', 'model':story['model'],'voice':story['voice'],'max_requests':len(scenes),'scene_ids':[x['id'] for x in scenes],'automatic_retries':0,'story_sha256':hashlib.sha256(args.story.read_bytes()).hexdigest(),'rates_verified_20260908':{'text_usd_per_million_tokens':0.6,'audio_usd_per_million_tokens':12,'source':'https://developers.openai.com/api/docs/models/gpt-4o-mini-tts'},'billing':'Binary speech responses do not provide token usage; final billing is not asserted.'})
     # Reuse only the safe literal parser, never source a credentials file.
     from secops_triage.live import load_key
     key=os.environ.get('OPENAI_API_KEY') or load_key(Path('.env'))

@@ -57,9 +57,9 @@
     {
       "id": "08-close",
       "seconds": 12,
-      "heading": "Evidence first. Judgment stays with the analyst.",
+      "heading": "From alert to evidence-backed analyst handoff.",
       "subheading": "SecOps Triage  /  github.com/ArielSmoliar/secops-triage",
-      "narration": "The prototype passed three hundred ten tests. Scripted findings fail our completeness rubric; live-model evaluation and human usefulness remain unproven. SecOps Triage: evidence first, judgment with the analyst."
+      "narration": "SecOps Triage connects scoped investigation, inspectable evidence, and a durable handoff. Follow the sources and keep judgment with the analyst. From alert to evidence-backed analyst handoff."
     }
   ]
 }

@@ -28,10 +28,15 @@ def srt_time(t):
  ms=round(t*1000);h,ms=divmod(ms,3600000);m,ms=divmod(ms,60000);s,ms=divmod(ms,1000)
  return f'{h:02}:{m:02}:{s:02},{ms:03}'
 def main():
- p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('--capture',type=Path,required=True);p.add_argument('--narration',type=Path,required=True);p.add_argument('--artwork',type=Path,required=True);a=p.parse_args();a.root.mkdir(parents=True,exist_ok=False)
+ p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('--capture',type=Path,required=True);p.add_argument('--narration',type=Path,required=True);p.add_argument('--artwork',type=Path,required=True);p.add_argument('--captions',action='store_true');p.add_argument('--timing',type=Path);a=p.parse_args();a.root.mkdir(parents=True,exist_ok=False)
  story=json.loads(Path('ops/demo_video/story.json').read_text());overrides=json.loads(Path('ops/demo_video/caption_overrides.json').read_text());scenes=story['scenes'];durations=[float(probe(a.narration/(s['id']+'.wav'))) for s in scenes]
  if sum(durations)>116:raise ValueError('Narration too long; preserve audio and review pacing before editing')
  padding=(120-sum(durations))/8;frames=[round((d+padding)*30) for d in durations];frames[-1]=3600-sum(frames[:-1]);srt=[];timeline=[];offset=0;index=1
+ if a.timing:
+  previous=json.loads(a.timing.read_text())['scenes']
+  if [x['id'] for x in previous]!=[x['id'] for x in scenes]:raise ValueError('timing scene mismatch')
+  frames=[round(x['seconds']*30) for x in previous]
+  if sum(frames)!=3600 or any(d+.30>n/30 for d,n in zip(durations,frames)):raise ValueError('audio exceeds preserved scene timing')
  for s,raw_duration,count in zip(scenes,durations,frames):
   sid=s['id'];duration=count/30;is_screen=sid.startswith(('02','03','04','05','06'))
   source=a.capture/(sid+'.webm') if is_screen else a.artwork/(sid+'.png')
@@ -40,7 +45,7 @@ def main():
   else:cmd+=['-loop','1','-framerate','30','-i',str(source)]
   cmd+=['-loop','1','-framerate','30','-i',str(a.artwork/(sid+'-overlay.png')),'-i',str(a.narration/(sid+'.wav'))]
   chunks=split(overrides.get(sid,s['narration']));weight=sum(len(x) for x in chunks);elapsed=0;captions=[]
-  for n,text in enumerate(chunks):
+  for n,text in enumerate(chunks if a.captions else []):
    begin=.30+elapsed;elapsed+=raw_duration*len(text)/weight;end=.30+elapsed
    file=a.root/f'{sid}-caption-{n}.png';caption(text,file);cmd+=['-loop','1','-framerate','30','-i',str(file)]
    captions.append((begin,end));srt.extend([str(index),f'{srt_time(offset+begin)} --> {srt_time(offset+end)}',text,'']);index+=1
@@ -52,10 +57,10 @@ def main():
   if r.returncode:raise RuntimeError('render failed: '+sid)
   timeline.append({'id':sid,'start':offset,'seconds':duration,'audio_seconds':raw_duration,'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'audio_sha256':hashlib.sha256((a.narration/(sid+'.wav')).read_bytes()).hexdigest(),'screen_speed':'original; first 0.3 seconds trimmed, final frame held when needed' if is_screen else 'original graphic'})
   offset+=duration;print(sid+' assembled',flush=True)
- (a.root/'secops-triage-demo.srt').write_text('\n'.join(srt))
+ if a.captions:(a.root/'secops-triage-demo.srt').write_text('\n'.join(srt))
  (a.root/'concat.txt').write_text(''.join("file '"+s['id']+".mp4'\n" for s in scenes))
  final=a.root/'secops-triage-demo-2min.mp4'
  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-n','-f','concat','-safe','0','-i',str(a.root/'concat.txt'),'-c','copy','-t','119.95','-movflags','+faststart',str(final)],check=True)
- (a.root/'timeline.json').write_text(json.dumps({'target_seconds':120,'frames':sum(frames),'narration':'OpenAI Cedar; AI-generated','scenes':timeline,'final_sha256':hashlib.sha256(final.read_bytes()).hexdigest()},indent=2))
+ (a.root/'timeline.json').write_text(json.dumps({'burned_in_captions':a.captions,'target_seconds':120,'frames':sum(frames),'narration':'OpenAI Cedar; AI-generated','scenes':timeline,'final_sha256':hashlib.sha256(final.read_bytes()).hexdigest()},indent=2))
  print('FINAL '+str(final),flush=True)
 if __name__=='__main__':main()

@@ -1,0 +1,77 @@
+{
+  "revision": "positive closing and no captions",
+  "video": "data/demo-video-20260908/final-v2/secops-triage-demo-2min.mp4",
+  "sha256": "79547e9b5829dddd24e18a1f8330fd59ec8d546c1581e4f6f15571f06ded4f1e",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "duration": "120.000000",
+        "nb_frames": "3600"
+      },
+      {
+        "codec_name": "aac",
+        "duration": "119.953333",
+        "nb_frames": "5623"
+      }
+    ],
+    "format": {
+      "duration": "120.021354",
+      "size": "10676871"
+    }
+  },
+  "full_decode_errors": 0,
+  "source_sha256": {
+    "ops/demo_video/caption_overrides.json": "eee8aa1afe6c49c7ac271850c18d187e3e50ba683cd3a903500e95e99509a052",
+    "ops/demo_video/artwork.py": "c75d59f0d766023120dd7380ea9d1316f901cea2ff5533bd656e31b0a3574815",
+    "ops/demo_video/render.py": "9a7aac3752e035a70f9d1745a84b66c98a59f27ff7cc3afcbc9437b025ef6662",
+    "ops/demo_video/capture.cjs": "0bfa15965f11a87d2d02e2c9310dc144ad67e744c13b0a2e2fa08dbe6d48e96f",
+    "ops/demo_video/story.json": "9349df6c0f9403c0bc319f18faf15edb759d11da63969eec271d1a9acf6e4595",
+    "ops/demo_video/narrate.py": "35c0258f1983a8588b25aa5f58d5748d9b74e5af938f7a9ab2fec415b24d9ded"
+  },
+  "frozen_sources_match": true,
+  "application_diff_from_verified_commit_empty": true,
+  "scene_timing_preserved": true,
+  "first_seven_audio_segments_unchanged": true,
+  "burned_in_captions": false,
+  "new_speech_requests_completed": 1,
+  "automatic_paid_retries": 0,
+  "local_pre_dispatch_failures": [
+    "narration-revision-a: missing repository import path; no intent or dispatch",
+    "narration-revision-b: incorrect src import path; no intent or dispatch"
+  ],
+  "successful_speech_batch": "narration-revision-c",
+  "new_closing_audio_seconds": 12.15,
+  "offline_asr": [
+    {
+      "start": 0.0,
+      "end": 3.3200000000000003,
+      "text": " SecOps triage connects scoped investigation,"
+    },
+    {
+      "start": 3.3200000000000003,
+      "end": 6.48,
+      "text": " inspectable evidence, and a durable handoff."
+    },
+    {
+      "start": 6.48,
+      "end": 9.64,
+      "text": " Follow the sources and keep judgment with the analyst"
+    },
+    {
+      "start": 9.64,
+      "end": 12.08,
+      "text": " from alert to evidence-backed analyst handoff."
+    }
+  ],
+  "independent_review": "No blockers: reviewer verified final video and all six media-source hashes, metadata, appended documentation and closing/evidence frames. No full-video listening or human acceptance claimed.",
+  "original_media_and_evaluation_records_retained": true,
+  "human_acceptance": false,
+  "aws_actions": false,
+  "investigation_calls": 0,
+  "uploaded_or_submitted": false
+}

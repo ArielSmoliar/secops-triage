@@ -46,7 +46,7 @@ def main():
    drawtext(d,(65,55),'EVIDENCE FIRST.',85,INK,True)
    drawtext(d,(65,159),'Judgment stays with the analyst.',48,TEAL,True)
    box(d,(65,275,725,458),'310 tests passed','14 browser checks  •  Frozen-source verification\nTechnical prototype; not production validation')
-   box(d,(770,275,1475,458),'Limits remain visible','Scripted findings fail the completeness rubric\nLive-model and human validation remain open')
+   box(d,(770,275,1475,458),'Evidence-backed handoff','Inspect sources  •  Capture the next step\nKeep judgment with the analyst')
    drawtext(d,(65,540),'SecOps Triage',53,INK,True)
    drawtext(d,(65,622),'github.com/ArielSmoliar/secops-triage',34,TEAL)
    drawtext(d,(65,699),'Built with Strands Agents SDK  /  Agents for Humans',25,MUTED)
