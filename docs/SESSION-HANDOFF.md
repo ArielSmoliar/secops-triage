@@ -182,3 +182,8 @@ Owner requested populating existing submission 1175395 / project 1421584. SecOps
 Professional Agents selection remains blank: automatic approval review rejected the batch because that specific track had not been explicitly approved. Approval question is pending; unaffected fields were saved independently. AWS Builder ID and public video URL are also missing. No upload of the video to YouTube/Vimeo, new paid calls, campaign changes or AWS actions occurred. Original evidence and failures remain intact. Continue at the saved draft URL in `outputs/secops-devpost-draft-20260908.json`; final submission requires owner approval.
 
 Devpost readback: the project page is public (`published`), while the hackathon entry remains Draft with no submission timestamp. Public page: https://devpost.com/software/secops-triage. Story content matches after Markdown/plain-text normalization.
+
+
+## Devpost final preflight — 2026-09-08
+
+Application now shows 4/5 steps, still DRAFT. Track Professional Agents and owner-supplied Builder alias arielsm saved. Final v4 video uploaded at https://youtu.be/9h4XXvpbt5k and saved in the application; still unlisted. Official rules require public video; automatic approval review rejected public visibility change without explicit owner approval. New devpost-media-v2 cover and four captioned images uploaded; earlier gallery remains. Public repo/MIT verified. Final rules/terms checkbox remains unchecked. Need owner approval to make video public and accept rules/terms for actual submission. Do not infer submission from published project-page status. See outputs/secops-devpost-final-preflight-20260908.json. No AWS actions or runtime changes.

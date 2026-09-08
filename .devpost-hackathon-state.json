@@ -18,7 +18,7 @@
     "ai_usage": "",
     "codex_usage": ""
   },
-  "current_stage": "prepare-submission",
+  "current_stage": "submit-project",
   "completed_stages": [
     "start-hackathon",
     "review",
@@ -34,7 +34,11 @@
   },
   "submission": {
     "draft_file": "devpost-submission.md",
-    "status": "drafting"
+    "status": "needs-work",
+    "pending": [
+      "Explicit approval to make YouTube video public",
+      "Final official-rules and terms acceptance and submission confirmation"
+    ]
   },
-  "next_command": "prepare-submission"
+  "next_command": "submit-project"
 }

@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-08",
+  "project": "secops-triage",
+  "draft_steps_complete": 4,
+  "draft_steps_total": 5,
+  "video_url": "https://youtu.be/9h4XXvpbt5k",
+  "video_visibility": "unlisted; public change blocked by automatic approval review pending explicit owner approval",
+  "thumbnail_uploaded": "docs/assets/devpost-media-v2/thumbnail.png",
+  "new_gallery_uploaded": 4,
+  "earlier_gallery_preserved": true,
+  "gallery_captions_saved_and_read_back": true,
+  "track": "Professional Agents",
+  "builder_id_value": "arielsm",
+  "builder_id_format": "Owner-provided alias; live form and rules give no format guidance",
+  "repository_visibility": "PUBLIC",
+  "license": "MIT",
+  "security_scan": {
+    "scope": "184 tracked files in submission repository",
+    "high_confidence_matches": 0,
+    "credential_filenames": 0,
+    "generic_matches": 11,
+    "generic_findings": "test-only fake keys and deliberate canary strings, inspected in test source"
+  },
+  "application_runtime_changed": false,
+  "new_paid_calls": 0,
+  "aws_actions": false,
+  "final_terms_checked": false,
+  "submitted_at": null,
+  "next": "Get explicit owner approval for public video visibility and final rules/terms acceptance; then submit and verify live."
+}
