@@ -28,7 +28,7 @@ def srt_time(t):
  ms=round(t*1000);h,ms=divmod(ms,3600000);m,ms=divmod(ms,60000);s,ms=divmod(ms,1000)
  return f'{h:02}:{m:02}:{s:02},{ms:03}'
 def main():
- p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('--capture',type=Path,required=True);p.add_argument('--narration',type=Path,required=True);p.add_argument('--artwork',type=Path,required=True);p.add_argument('--captions',action='store_true');p.add_argument('--timing',type=Path);a=p.parse_args();a.root.mkdir(parents=True,exist_ok=False)
+ p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('--capture',type=Path,required=True);p.add_argument('--narration',type=Path,required=True);p.add_argument('--artwork',type=Path,required=True);p.add_argument('--captions',action='store_true');p.add_argument('--timing',type=Path);p.add_argument('--focus',action='store_true');a=p.parse_args();a.root.mkdir(parents=True,exist_ok=False)
  story=json.loads(Path('ops/demo_video/story.json').read_text());overrides=json.loads(Path('ops/demo_video/caption_overrides.json').read_text());scenes=story['scenes'];durations=[float(probe(a.narration/(s['id']+'.wav'))) for s in scenes]
  if sum(durations)>116:raise ValueError('Narration too long; preserve audio and review pacing before editing')
  padding=(120-sum(durations))/8;frames=[round((d+padding)*30) for d in durations];frames[-1]=3600-sum(frames[:-1]);srt=[];timeline=[];offset=0;index=1
@@ -44,18 +44,23 @@ def main():
   if is_screen:cmd+=['-ss','0.3','-i',str(source)]
   else:cmd+=['-loop','1','-framerate','30','-i',str(source)]
   cmd+=['-loop','1','-framerate','30','-i',str(a.artwork/(sid+'-overlay.png')),'-i',str(a.narration/(sid+'.wav'))]
+  focus=a.artwork/(sid+'-focus.png');focus_at={'03-trace':3,'04-messages':0,'05-evidence':3,'06-handoff':8}.get(sid) if a.focus else None
+  if focus_at is not None:cmd+=['-loop','1','-framerate','30','-i',str(focus)]
   chunks=split(overrides.get(sid,s['narration']));weight=sum(len(x) for x in chunks);elapsed=0;captions=[]
   for n,text in enumerate(chunks if a.captions else []):
    begin=.30+elapsed;elapsed+=raw_duration*len(text)/weight;end=.30+elapsed
    file=a.root/f'{sid}-caption-{n}.png';caption(text,file);cmd+=['-loop','1','-framerate','30','-i',str(file)]
    captions.append((begin,end));srt.extend([str(index),f'{srt_time(offset+begin)} --> {srt_time(offset+end)}',text,'']);index+=1
-  filters=[f'[0:v]scale=1536:780:flags=lanczos,setsar=1,fps=30,tpad=stop_mode=clone:stop_duration=30,trim=duration={duration},setpts=PTS-STARTPTS,pad=1920:1080:192:140:color=0x10232b[base]',f'[base][1:v]overlay=0:0:shortest=1[v0]']
-  for n,(begin,end) in enumerate(captions):filters.append(f"[v{n}][{n+3}:v]overlay=0:0:enable='between(t,{begin:.6f},{end:.6f})':shortest=1[v{n+1}]")
+  filters=[f'[0:v]scale=1536:780:flags=lanczos,setsar=1,fps=30,tpad=stop_mode=clone:stop_duration=30,trim=duration={duration},setpts=PTS-STARTPTS,pad=1920:1080:192:140:color=0x10232b[base]']
+  if focus_at is not None:
+   filters.extend(['[3:v]pad=1920:1080:192:140:color=0x10232b[focus]',f"[base][focus]overlay=0:0:enable='gte(t,{focus_at})':shortest=1[focused]",'[focused][1:v]overlay=0:0:shortest=1[v0]'])
+  else:filters.append('[base][1:v]overlay=0:0:shortest=1[v0]')
+  for n,(begin,end) in enumerate(captions):filters.append(f"[v{n}][{n+3+(focus_at is not None)}:v]overlay=0:0:enable='between(t,{begin:.6f},{end:.6f})':shortest=1[v{n+1}]")
   filters.append(f'[2:a]adelay=300:all=1,apad,atrim=duration={duration},loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000[a]')
   cmd+=['-filter_complex_threads','2','-filter_complex',';'.join(filters),'-map',f'[v{len(captions)}]','-map','[a]','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-r','30','-frames:v',str(count),'-c:a','aac','-b:a','192k','-ar','48000','-ac','2','-t',str(duration),'-movflags','+faststart',str(a.root/(sid+'.mp4'))]
   r=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True);(a.root/(sid+'-render.log')).write_text(r.stdout)
   if r.returncode:raise RuntimeError('render failed: '+sid)
-  timeline.append({'id':sid,'start':offset,'seconds':duration,'audio_seconds':raw_duration,'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'audio_sha256':hashlib.sha256((a.narration/(sid+'.wav')).read_bytes()).hexdigest(),'screen_speed':'original; first 0.3 seconds trimmed, final frame held when needed' if is_screen else 'original graphic'})
+  timeline.append({'id':sid,'start':offset,'focus_at_seconds':focus_at,'focus_image_sha256':hashlib.sha256(focus.read_bytes()).hexdigest() if focus_at is not None else None,'seconds':duration,'audio_seconds':raw_duration,'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'audio_sha256':hashlib.sha256((a.narration/(sid+'.wav')).read_bytes()).hexdigest(),'screen_speed':'original; first 0.3 seconds trimmed, final frame held when needed' if is_screen else 'original graphic'})
   offset+=duration;print(sid+' assembled',flush=True)
  if a.captions:(a.root/'secops-triage-demo.srt').write_text('\n'.join(srt))
  (a.root/'concat.txt').write_text(''.join("file '"+s['id']+".mp4'\n" for s in scenes))

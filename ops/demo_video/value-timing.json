@@ -1,0 +1,36 @@
+{
+  "scenes": [
+    {
+      "id": "01-intro",
+      "seconds": 10
+    },
+    {
+      "id": "02-start",
+      "seconds": 14
+    },
+    {
+      "id": "03-trace",
+      "seconds": 16
+    },
+    {
+      "id": "04-messages",
+      "seconds": 17
+    },
+    {
+      "id": "05-evidence",
+      "seconds": 17
+    },
+    {
+      "id": "06-handoff",
+      "seconds": 15
+    },
+    {
+      "id": "07-architecture",
+      "seconds": 20
+    },
+    {
+      "id": "08-close",
+      "seconds": 11
+    }
+  ]
+}

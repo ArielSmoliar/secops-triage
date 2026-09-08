@@ -8,9 +8,9 @@
     {
       "id": "01-intro",
       "seconds": 15,
-      "heading": "From incident to a reviewable handoff",
-      "subheading": "SecOps Triage  /  Agents for Humans",
-      "narration": "Security analysts need more than another alert summary. They need the evidence behind the next decision. SecOps Triage turns an existing security incident into a reviewable investigation and handoff."
+      "heading": "Two similar emails. Different evidence.",
+      "subheading": "The analyst needs the evidence that separates them.",
+      "narration": "Two similar emails arrive. One is approved training. The follow-up was clicked. SecOps Triage gathers the evidence an analyst needs to tell them apart."
     },
     {
       "id": "02-start",
@@ -22,30 +22,30 @@
     {
       "id": "03-trace",
       "seconds": 14,
-      "heading": "Real SDK calls. Inspectable evidence.",
-      "subheading": "4 scoped tools  /  9 recorded evidence reads",
-      "narration": "Strands calls four scoped tools: inspect incident, look up entity, query activity, and find related cases. The trace shows nine actual evidence reads. Every result remains available for inspection."
+      "heading": "The agent gathers the context behind the alert.",
+      "subheading": "4 scoped tools  \u2192  9 evidence reads  \u2192  One inspectable packet",
+      "narration": "The Strands agent gathers incident details, entity context, activity, and related cases through four scoped tools. Nine evidence reads bring messages, clicks, intelligence, and business authorization into one inspectable packet."
     },
     {
       "id": "04-messages",
       "seconds": 17,
-      "heading": "Similar messages. Different authorization.",
-      "subheading": "Approval for the first message does not cover the follow-up",
-      "narration": "The two messages look similar, but their identities and links differ. Authorization covers the first training message. The second was delivered and clicked, and a synthetic provider labels its exact link malicious. That approval does not transfer."
+      "heading": "Approved training does not cover this follow-up.",
+      "subheading": "Same sender and subject  /  Different link, click and authorization scope",
+      "narration": "The first message has explicit training approval. The follow-up has a different link and a recorded click. The approval names only the first message. It does not cover the follow-up."
     },
     {
       "id": "05-evidence",
       "seconds": 16,
-      "heading": "Follow the citation. Keep the uncertainty.",
-      "subheading": "Provider output, deterministic policy and final packet stay separate",
-      "narration": "Open the cited source to inspect the evidence behind escalation. The interface separates provider output from deterministic policy and the final packet. A click alone does not establish stolen credentials, and unresolved questions stay visible."
+      "heading": "Inspect the exact link behind the recommendation.",
+      "subheading": "Agent-retrieved source  /  Host-policy recommendation  /  Analyst review",
+      "narration": "The agent retrieved intelligence for the exact follow-up link. Open its citation: the synthetic source says malicious. Host policy recommends investigation; the analyst can inspect why. Credential theft remains unproven."
     },
     {
       "id": "06-handoff",
       "seconds": 14,
-      "heading": "A durable handoff. An explicit next step.",
-      "subheading": "Demonstration operator  /  Saved locally  /  Source SIEM unchanged",
-      "narration": "The operator records missing context and a concrete next check, then saves an unresolved handoff. It is bound to this exact evidence packet. This demonstration record is local; the source SIEM stays unchanged."
+      "heading": "Leave the next analyst a concrete next step.",
+      "subheading": "Automated demonstration  /  Saved locally  /  Source SIEM unchanged",
+      "narration": "The next step is concrete: request an authorized identity audit export and inspect the follow-up link. The operator saves the reason, missing context, and next action with this evidence packet."
     },
     {
       "id": "07-architecture",
@@ -59,7 +59,7 @@
       "seconds": 12,
       "heading": "From alert to evidence-backed analyst handoff.",
       "subheading": "SecOps Triage  /  github.com/ArielSmoliar/secops-triage",
-      "narration": "SecOps Triage connects scoped investigation, inspectable evidence, and a durable handoff. Follow the sources and keep judgment with the analyst. From alert to evidence-backed analyst handoff."
+      "narration": "Gather the context. Inspect the evidence. Preserve the next step. SecOps Triage: from alert to evidence-backed analyst handoff."
     }
   ]
 }
