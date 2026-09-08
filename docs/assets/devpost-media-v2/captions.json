@@ -1,0 +1,38 @@
+[
+  {
+    "file": "01-investigation.png",
+    "caption": "Four scoped Strands tools gather nine evidence reads into one inspectable packet. Recorded scripted execution; synthetic evidence.",
+    "title": "Gather the context",
+    "source": "data/demo-video-20260908/artwork-clarity-a/03-trace-focus.png",
+    "source_sha256": "a2a0d24fdc05478772dfd16d0a11bca29a9566f059aea00f3b151a6f4022117d",
+    "sha256": "188def397258f26927a418cb3bdf34e3eca7f4addf42468a11b69e75521c52eb",
+    "bytes": 312103
+  },
+  {
+    "file": "02-email-comparison.png",
+    "caption": "The first email is approved training. The second has a different clicked link; that training approval does not cover it.",
+    "title": "Separate training from the suspicious follow-up",
+    "source": "data/demo-video-20260908/artwork-clarity-a/04-messages-focus.png",
+    "source_sha256": "9592bb55a2eb42fac33bd2bd751fec1b5f3987618471d128c6a41e3f7cc65911",
+    "sha256": "bdabf661b7296004c35dc8afe5545a4048a5281a996516ac3015ef34fbe5e06c",
+    "bytes": 357237
+  },
+  {
+    "file": "03-exact-evidence.png",
+    "caption": "The exact-link citation exposes the synthetic intelligence verdict, while host policy recommends further investigation.",
+    "title": "Inspect the evidence behind investigation",
+    "source": "data/demo-video-20260908/artwork-clarity-a/05-evidence-focus.png",
+    "source_sha256": "9ca6c8d39327c177372af41c6831372edf2b36bd8d2bb5aa7736bddb281e391e",
+    "sha256": "6dc5e2997ccde2a96e08c19b52b760e385beeeca61c21271f6b808d3ed06dcaf",
+    "bytes": 290200
+  },
+  {
+    "file": "04-analyst-handoff.png",
+    "caption": "An automated demo operator saves the reason, missing context and next action with the evidence packet. The source SIEM stays unchanged.",
+    "title": "Preserve a concrete next step",
+    "source": "data/demo-video-20260908/artwork-clarity-a/06-handoff-focus.png",
+    "source_sha256": "3b9cf95dfd20f41959a07a7ee617b3ba5c9bfb8ee174083e5bea48a5a806b50d",
+    "sha256": "6718b0bc697b2345e9639f63445a8c57b7e11d4cfa2699abe3e0ec263302d661",
+    "bytes": 336768
+  }
+]

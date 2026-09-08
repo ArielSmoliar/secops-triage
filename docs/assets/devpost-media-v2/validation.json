@@ -1,0 +1,59 @@
+{
+  "checks": [
+    "PNG decode",
+    "1536x1024",
+    "under 5 MB each",
+    "caption <=140 characters",
+    "source/output hashes match",
+    "visual inspection: no title/caption overflow"
+  ],
+  "assets": [
+    {
+      "file": "01-investigation.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 312103,
+      "sha256": "188def397258f26927a418cb3bdf34e3eca7f4addf42468a11b69e75521c52eb"
+    },
+    {
+      "file": "02-email-comparison.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 357237,
+      "sha256": "bdabf661b7296004c35dc8afe5545a4048a5281a996516ac3015ef34fbe5e06c"
+    },
+    {
+      "file": "03-exact-evidence.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 290200,
+      "sha256": "6dc5e2997ccde2a96e08c19b52b760e385beeeca61c21271f6b808d3ed06dcaf"
+    },
+    {
+      "file": "04-analyst-handoff.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 336768,
+      "sha256": "6718b0bc697b2345e9639f63445a8c57b7e11d4cfa2699abe3e0ec263302d661"
+    },
+    {
+      "file": "thumbnail.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1786245,
+      "sha256": "d4974b1e7090eee1808241a18331d3ecb1cd3bf0d3bf2c62f6e5de321aaa7f0a"
+    }
+  ],
+  "independent_review": "No blockers: independently inspected five images, dimensions, sizes, caption limits, source/output hashes and truthful execution disclosures.",
+  "generator_sha256": "124d3c8f35daf4086fa4ae0869b30f5af7e8202a53780ebb2b7414cdd5a1add2"
+}
