@@ -1,5 +1,13 @@
 # SecOps Triage: Ohio AWS integration
 
+## September 8 preflight amendment — proposed, not deployed
+
+Read [the concrete Ohio preflight proposal](../SECOPS-AWS-PREFLIGHT-20260908.md). Signed-in read-only verification found no NAT/endpoints in the existing VPC. The original host-only package cannot reach SSM with that network. A separately reviewed `infra/aws/temporary-egress.json` now proposes six additional resources: a private subnet, route table, association, default route, NAT gateway and Elastic IP.
+
+This amendment proposes expanding the older network exclusion below; it grants no creation authority.
+
+The final proposal controls account-specific scope, current prices, two-hour compute/three-billed-hour NAT bounds from first network creation, and failure teardown. Network-stack deletion retains subnet/table/association for the stopped host, removes its default route/NAT/EIP, and leaves the host without outbound connectivity. Capture every retained ID before deletion, independently verify route removal/NAT deletion/EIP release, and never blindly recreate the same CIDR. Retained evidence deletion and future network restoration need their own owner decisions. No cloud resources have been deployed.
+
 ## Metadata
 
 - **Status:** Draft — offline package implemented; deployment not executed or authorized.

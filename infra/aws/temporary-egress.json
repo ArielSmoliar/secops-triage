@@ -1,0 +1,125 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Optional temporary Ohio NAT egress for private SecOps smoke. Separate approval required. Delete egress stack after stopping host.",
+  "Parameters": {
+    "VpcId": {
+      "Type": "AWS::EC2::VPC::Id"
+    },
+    "PublicSubnetId": {
+      "Type": "AWS::EC2::Subnet::Id",
+      "Description": "Existing public subnet with Internet Gateway route in the same AZ as PrivateAvailabilityZone."
+    },
+    "PrivateAvailabilityZone": {
+      "Type": "AWS::EC2::AvailabilityZone::Name"
+    },
+    "PrivateSubnetCidr": {
+      "Type": "String",
+      "Description": "Verified unused IPv4 subnet inside VpcId."
+    }
+  },
+  "Resources": {
+    "PrivateSubnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+        "AvailabilityZone": {
+          "Ref": "PrivateAvailabilityZone"
+        },
+        "CidrBlock": {
+          "Ref": "PrivateSubnetCidr"
+        },
+        "MapPublicIpOnLaunch": false
+      },
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "EgressAddress": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc"
+      }
+    },
+    "NatGateway": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "EgressAddress",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "PublicSubnetId"
+        },
+        "ConnectivityType": "public"
+      }
+    },
+    "PrivateRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VpcId"
+        }
+      },
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "PrivateDefaultRoute": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PrivateRouteTable"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "NatGateway"
+        }
+      }
+    },
+    "PrivateRouteAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateSubnet"
+        },
+        "RouteTableId": {
+          "Ref": "PrivateRouteTable"
+        }
+      },
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain"
+    }
+  },
+  "Outputs": {
+    "PrivateSubnetId": {
+      "Value": {
+        "Ref": "PrivateSubnet"
+      }
+    },
+    "NatGatewayId": {
+      "Value": {
+        "Ref": "NatGateway"
+      }
+    },
+    "EgressAllocationId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "EgressAddress",
+          "AllocationId"
+        ]
+      }
+    },
+    "PrivateRouteTableId": {
+      "Value": {
+        "Ref": "PrivateRouteTable"
+      }
+    },
+    "PrivateRouteAssociationId": {
+      "Value": {
+        "Ref": "PrivateRouteAssociation"
+      }
+    }
+  }
+}
