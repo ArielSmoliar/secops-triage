@@ -1,0 +1,65 @@
+{
+  "title": "SecOps Triage",
+  "duration_seconds": 120,
+  "model": "gpt-4o-mini-tts-2025-12-15",
+  "voice": "cedar",
+  "voice_instructions": "Warm, clear, confident technical product narration in natural American English. Speak at about 145 words per minute, with brief pauses between sentences. Avoid a sales pitch or exaggerated excitement. Pronounce SecOps as seck-ops, SIEM as seem, SDK as S D K, AWS as A W S, EC2 as E C two, EBS as E B S, and SSM as S S M. Read only the supplied text. Do not add words, music, or sound effects.",
+  "scenes": [
+    {
+      "id": "01-intro",
+      "seconds": 15,
+      "heading": "From incident to a reviewable handoff",
+      "subheading": "SecOps Triage  /  Agents for Humans",
+      "narration": "Security analysts need more than another alert summary. They need the evidence behind the next decision. SecOps Triage turns an existing security incident into a reviewable investigation and handoff."
+    },
+    {
+      "id": "02-start",
+      "seconds": 14,
+      "heading": "One incident. One investigation.",
+      "subheading": "Recorded local workflow  /  Synthetic evidence  /  Scripted provider",
+      "narration": "Here, we select a reported phishing incident and start the investigation. This recording uses synthetic evidence and a scripted provider through the real Strands Agents SDK. No live model inference runs here."
+    },
+    {
+      "id": "03-trace",
+      "seconds": 14,
+      "heading": "Real SDK calls. Inspectable evidence.",
+      "subheading": "4 scoped tools  /  9 recorded evidence reads",
+      "narration": "Strands calls four scoped tools: inspect incident, look up entity, query activity, and find related cases. The trace shows nine actual evidence reads. Every result remains available for inspection."
+    },
+    {
+      "id": "04-messages",
+      "seconds": 17,
+      "heading": "Similar messages. Different authorization.",
+      "subheading": "Approval for the first message does not cover the follow-up",
+      "narration": "The two messages look similar, but their identities and links differ. Authorization covers the first training message. The second was delivered and clicked, and a synthetic provider labels its exact link malicious. That approval does not transfer."
+    },
+    {
+      "id": "05-evidence",
+      "seconds": 16,
+      "heading": "Follow the citation. Keep the uncertainty.",
+      "subheading": "Provider output, deterministic policy and final packet stay separate",
+      "narration": "Open the cited source to inspect the evidence behind escalation. The interface separates provider output from deterministic policy and the final packet. A click alone does not establish stolen credentials, and unresolved questions stay visible."
+    },
+    {
+      "id": "06-handoff",
+      "seconds": 14,
+      "heading": "A durable handoff. An explicit next step.",
+      "subheading": "Demonstration operator  /  Saved locally  /  Source SIEM unchanged",
+      "narration": "The operator records missing context and a concrete next check, then saves an unresolved handoff. It is bound to this exact evidence packet. This demonstration record is local; the source SIEM stays unchanged."
+    },
+    {
+      "id": "07-architecture",
+      "seconds": 18,
+      "heading": "Framework, provider and host: explicit boundaries",
+      "subheading": "Current UI: local  /  AWS service verification: completed separately",
+      "narration": "Strands orchestrates the tools; the provider is scripted; host controls enforce scope, storage, and decisions. Separately, we verified a scripted run on AWS EC2, with encrypted EBS, SSM access, and CloudWatch delivery. That host is now stopped."
+    },
+    {
+      "id": "08-close",
+      "seconds": 12,
+      "heading": "Evidence first. Judgment stays with the analyst.",
+      "subheading": "SecOps Triage  /  github.com/ArielSmoliar/secops-triage",
+      "narration": "The prototype passed three hundred ten tests. Scripted findings fail our completeness rubric; live-model evaluation and human usefulness remain unproven. SecOps Triage: evidence first, judgment with the analyst."
+    }
+  ]
+}

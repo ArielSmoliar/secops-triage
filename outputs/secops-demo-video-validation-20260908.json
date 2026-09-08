@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-08",
+  "title": "SecOps Triage two-minute narrated hackathon demo",
+  "application_commit": "c97868c809ce4f753ed05ee76a9b64ca303bb4dc",
+  "video": {
+    "file": "data/demo-video-20260908/final/secops-triage-demo-2min.mp4",
+    "sha256": "edc6d7591772ed8861fe50e2628feafa4f75e0de563ffbafcea5bffa5e5d8e81",
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "30/1",
+          "start_time": "0.021354",
+          "duration": "120.000000",
+          "nb_frames": "3600"
+        },
+        {
+          "codec_name": "aac",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "start_time": "0.000000",
+          "duration": "119.953333",
+          "nb_frames": "5623"
+        }
+      ],
+      "format": {
+        "duration": "120.021354",
+        "size": "11120349"
+      }
+    },
+    "decode_errors": 0,
+    "target_seconds": 120,
+    "container_tolerance": "AAC padding may extend the container by a few milliseconds."
+  },
+  "narration": {
+    "provider": "OpenAI",
+    "model": "gpt-4o-mini-tts-2025-12-15",
+    "voice": "cedar",
+    "completed_requests": 8,
+    "automatic_retries": 0,
+    "source_audio_seconds": 113.55,
+    "authorization": "Owner requested creation of the two-minute demo video with voice, following selection of OpenAI narration. This authorizes narration for this deliverable, not investigation inference.",
+    "actual_billing": "Token usage not returned by binary speech responses; no exact cost asserted.",
+    "rates_source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts"
+  },
+  "recording": {
+    "source_commit": "c97868c809ce4f753ed05ee76a9b64ca303bb4dc",
+    "run_id": "79acf7ae89901700f2670419aa72ce1a",
+    "packet_hash": "4d835f2f12642beeea9b228555a58adeedfc1a5d9f634e7769ef4ed1defa716b",
+    "tools": [
+      "inspect_incident",
+      "lookup_entity",
+      "query_activity",
+      "find_related_cases"
+    ],
+    "evidence_reads": 9,
+    "sessions": [
+      {
+        "id": "b744c93303ccb14c46a377aeed067849",
+        "mode": "Strands SDK with scripted provider (no live model)",
+        "model_calls": 10,
+        "state": "assessed",
+        "tool_calls": 9
+      }
+    ],
+    "local_handoff_actor": "Demo operator (automated)",
+    "human_acceptance": false,
+    "aws_actions": false,
+    "paid_investigation_calls": 0,
+    "shots": [
+      {
+        "id": "02-start",
+        "recording": "02-start.webm",
+        "execution": "actual local UI recording; real Strands SDK with scripted provider",
+        "elapsed_ms": 14317
+      },
+      {
+        "id": "03-trace",
+        "recording": "03-trace.webm",
+        "execution": "actual local UI recording; real Strands SDK with scripted provider",
+        "elapsed_ms": 14299
+      },
+      {
+        "id": "04-messages",
+        "recording": "04-messages.webm",
+        "execution": "actual local UI recording; real Strands SDK with scripted provider",
+        "elapsed_ms": 17603
+      },
+      {
+        "id": "05-evidence",
+        "recording": "05-evidence.webm",
+        "execution": "actual local UI recording; real Strands SDK with scripted provider",
+        "elapsed_ms": 16330
+      },
+      {
+        "id": "06-handoff",
+        "recording": "06-handoff.webm",
+        "execution": "actual local UI recording; real Strands SDK with scripted provider",
+        "elapsed_ms": 14533
+      }
+    ],
+    "errors": []
+  },
+  "verification": {
+    "media_sources_unchanged_during_final_render": true,
+    "media_source_sha256": {
+      "ops/demo_video/caption_overrides.json": "eee8aa1afe6c49c7ac271850c18d187e3e50ba683cd3a903500e95e99509a052",
+      "ops/demo_video/artwork.py": "a06bb145803a7b86a8276e7f0dc21cfb68d1ad6a9c12c86b0cbaf2a636df022b",
+      "ops/demo_video/render.py": "49635b3e6d3553462287093eb7d2ab060327ec2553173712f275e5ed685ce1c9",
+      "ops/demo_video/capture.cjs": "0bfa15965f11a87d2d02e2c9310dc144ad67e744c13b0a2e2fa08dbe6d48e96f",
+      "ops/demo_video/story.json": "48f1791730c78e63dd650e9ef2a74c94fac3d1508465600ebd8ab8efa2afac9f",
+      "ops/demo_video/narrate.py": "aea22edf3a98daff7b11918905347067a84fc1dcb84073511a335b6abcacf920"
+    },
+    "all_71_previously_verified_application_files_unchanged": true,
+    "prior_application_tests": 310,
+    "prior_browser_checks": 14,
+    "whole_video_decoded": true,
+    "audio_first_cut_integrated_lufs": -16.34,
+    "audio_first_cut_true_peak_dbtp": -4.3,
+    "offline_asr": "faster-whisper base.en on local CPU, no paid transcription. Main narration and disclosures recovered; machine transcription is not a human listening review.",
+    "caption_correction": "The TTS audio omitted the final sentence in scene04 (That approval does not transfer). The original request and audio are preserved; final captions omit that unspoken sentence. Scope remains explicitly labeled on screen.",
+    "caption_timing": "Approximate phrase timing, not certified word alignment.",
+    "independent_review": "AI source/story/artwork review; identified wording and durable-dispatch fixes resolved. Primary agent inspected final citation/authorization frames and completed decode/audio checks.",
+    "full_human_video_review": false,
+    "syntax_checks": "Python AST parsing and node --check passed; a prior read-only py_compile attempt was denied cache-file creation by the sandbox, with source unchanged.",
+    "independent_final_review": "AI reviewer verified final video hash, all six media source hashes, capture metadata, final authorization/citation frames and production documentation; no blocker. No full-video listening or human acceptance claimed."
+  },
+  "publication": {
+    "youtube_or_vimeo_upload": false,
+    "devpost_submission": false,
+    "local_video_only": true
+  },
+  "authority": {
+    "paid_investigation_calls": 0,
+    "campaign_grants_modified": false,
+    "aws_actions": false,
+    "human_acceptance": false
+  },
+  "preserved_evidence": [
+    "capture-a",
+    "narration-a",
+    "artwork-a",
+    "artwork-b",
+    "render-a",
+    "render-b"
+  ]
+}
